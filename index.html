@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>RandomGDPS</title>
 
 <style>
@@ -26,12 +25,19 @@
     box-sizing:border-box;
 }
 
+html,
+body {
+    width:100%;
+    height:100%;
+    margin:0;
+    overflow:hidden;
+}
+
 html {
     scroll-behavior:smooth;
 }
 
 body {
-    margin:0;
     min-height:100vh;
     background:
         radial-gradient(
@@ -67,57 +73,43 @@ textarea:focus {
     outline:none;
 }
 
-
 /* =========================================
    ШАПКА
-   ========================================= */
+========================================= */
 
 header {
-    position:sticky;
-    top:0;
+    position:relative;
     z-index:100;
-
     width:100%;
-
+    height:62px;
     background:rgba(8,10,18,.78);
     backdrop-filter:blur(18px);
     -webkit-backdrop-filter:blur(18px);
-
     border-bottom:1px solid var(--border);
 }
 
 .nav {
     width:min(760px,calc(100% - 20px));
+    height:100%;
     margin:auto;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     gap:4px;
-
     white-space:nowrap;
 }
 
 .nav-button {
     position:relative;
-
     flex:1 1 0;
-
     min-width:0;
-
     border:0;
     background:transparent;
-
     color:#9da6bd;
-
     padding:17px 8px;
-
     cursor:pointer;
-
     font-size:14px;
     font-weight:500;
-
     transition:
         color .2s ease,
         background .2s ease;
@@ -133,45 +125,64 @@ header {
 
 .nav-button.active::after {
     content:"";
-
     position:absolute;
-
     left:22%;
     right:22%;
     bottom:-1px;
-
     height:2px;
-
     border-radius:2px;
-
     background:
         linear-gradient(
             90deg,
             var(--accent),
             var(--accent-light)
         );
-
     box-shadow:
         0 0 12px
         rgba(113,104,255,.65);
 }
 
-
 /* =========================================
-   СТРАНИЦЫ
-   ========================================= */
+   ОСНОВНАЯ ПРОКРУТКА САЙТА
+========================================= */
 
 main {
     width:min(1180px,calc(100% - 30px));
+    height:calc(100vh - 62px);
     margin:auto;
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(113,104,255,.4) transparent;
 }
+
+main::-webkit-scrollbar {
+    width:7px;
+}
+
+main::-webkit-scrollbar-track {
+    background:transparent;
+}
+
+main::-webkit-scrollbar-thumb {
+    background:rgba(113,104,255,.4);
+    border-radius:10px;
+}
+
+main::-webkit-scrollbar-thumb:hover {
+    background:rgba(113,104,255,.6);
+}
+
+/* =========================================
+   СТРАНИЦЫ
+========================================= */
 
 .page {
     display:none;
     min-height:calc(100vh - 62px);
-
-    animation:
-        pageIn .25s ease;
+    animation:pageIn .25s ease;
 }
 
 .page.active {
@@ -190,100 +201,67 @@ main {
     }
 }
 
-
 /* =========================================
    ГЛАВНАЯ
-   ========================================= */
+========================================= */
 
 .home {
     min-height:calc(100vh - 62px);
-
     display:flex;
     flex-direction:column;
-
     align-items:center;
     justify-content:center;
-
     text-align:center;
-
     padding:40px 20px;
 }
 
 .home-greeting {
     margin-bottom:14px;
-
     color:#9da6bd;
-
     font-size:18px;
     font-weight:500;
 }
 
 .home h1 {
     margin:0;
-
-    font-size:
-        clamp(
-            42px,
-            7vw,
-            78px
-        );
-
+    font-size:clamp(42px,7vw,78px);
     line-height:1;
-
     font-weight:700;
-
     letter-spacing:-3px;
-
     background:
         linear-gradient(
             135deg,
             #ffffff,
             #928bff
         );
-
     -webkit-background-clip:text;
     background-clip:text;
-
     color:transparent;
 }
 
 .home-subtext {
     margin-top:20px;
-
     color:var(--muted);
-
     font-size:18px;
     font-weight:400;
-
     min-height:24px;
 }
 
 .admin-home-button {
     position:fixed;
-
     right:22px;
     bottom:22px;
-
     border:1px solid var(--border);
-
     border-radius:13px;
-
-    background:
-        rgba(17,21,34,.9);
-
+    background:rgba(17,21,34,.9);
     color:#cfd4e3;
-
     padding:11px 16px;
-
     cursor:pointer;
-
     font-size:14px;
     font-weight:500;
-
     box-shadow:
         0 10px 30px
         rgba(0,0,0,.25);
-
     transition:
         background .2s ease,
         border-color .2s ease,
@@ -296,10 +274,9 @@ main {
     transform:translateY(-2px);
 }
 
-
 /* =========================================
    СКАЧИВАНИЕ
-   ========================================= */
+========================================= */
 
 .download-page {
     padding:90px 20px;
@@ -308,26 +285,15 @@ main {
 
 .section-title {
     margin:0 0 12px;
-
-    font-size:
-        clamp(
-            30px,
-            5vw,
-            48px
-        );
-
+    font-size:clamp(30px,5vw,48px);
     font-weight:700;
-
     letter-spacing:-1px;
 }
 
 .section-description {
     margin:0 auto 35px;
-
     max-width:600px;
-
     color:var(--muted);
-
     font-size:16px;
     font-weight:400;
 }
@@ -336,41 +302,30 @@ main {
     display:flex;
     justify-content:center;
     flex-wrap:wrap;
-
     gap:12px;
 }
 
 .primary-button {
     display:inline-flex;
-
     align-items:center;
     justify-content:center;
-
     min-width:190px;
-
     padding:13px 22px;
-
     border:0;
     border-radius:13px;
-
     background:
         linear-gradient(
             135deg,
             #665cff,
             #827aff
         );
-
     color:#fff;
-
     text-decoration:none;
-
     font-size:15px;
     font-weight:600;
-
     box-shadow:
         0 10px 30px
         rgba(113,104,255,.18);
-
     transition:
         transform .2s ease,
         box-shadow .2s ease;
@@ -378,7 +333,6 @@ main {
 
 .primary-button:hover {
     transform:translateY(-2px);
-
     box-shadow:
         0 14px 34px
         rgba(113,104,255,.28);
@@ -391,33 +345,27 @@ main {
     font-weight:700;
 }
 
-
 /* =========================================
    СТАТИСТИКА
-   ========================================= */
+========================================= */
 
 .stats-page {
     min-height:calc(100vh - 62px);
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     text-align:center;
 }
 
 .stats {
     color:#fff;
-
     font-size:42px;
-
     font-weight:500;
 }
 
-
 /* =========================================
    НОВОСТИ
-   ========================================= */
+========================================= */
 
 .news-page {
     padding:70px 0 90px;
@@ -430,36 +378,23 @@ main {
 
 .news-header h2 {
     margin:0 0 10px;
-
-    font-size:
-        clamp(
-            30px,
-            5vw,
-            48px
-        );
-
+    font-size:clamp(30px,5vw,48px);
     font-weight:700;
-
     letter-spacing:-1px;
 }
 
 .news-header p {
     margin:0;
-
     color:var(--muted);
-
     font-size:16px;
     font-weight:400;
 }
 
 .search-container {
     max-width:720px;
-
     margin:0 auto 28px;
-
     display:flex;
     align-items:center;
-
     gap:8px;
 }
 
@@ -470,18 +405,12 @@ main {
 
 #newsSearch {
     width:100%;
-
     padding:13px 45px 13px 15px;
-
     border:1px solid var(--border);
     border-radius:13px;
-
     background:var(--panel);
-
     color:#fff;
-
     font-size:15px;
-
     transition:
         border-color .2s ease,
         background .2s ease;
@@ -498,24 +427,16 @@ main {
 
 #clearSearch {
     position:absolute;
-
     right:10px;
     top:50%;
-
     transform:translateY(-50%);
-
     width:28px;
     height:28px;
-
     border:0;
     border-radius:8px;
-
     background:transparent;
-
     color:#777f94;
-
     cursor:pointer;
-
     font-size:20px;
 }
 
@@ -525,19 +446,13 @@ main {
 
 .search-arrow {
     position:relative;
-
     width:42px;
     height:42px;
-
     flex:0 0 42px;
-
     border:1px solid var(--border);
     border-radius:12px;
-
     background:var(--panel);
-
     cursor:pointer;
-
     transition:
         background .2s ease,
         border-color .2s ease;
@@ -555,15 +470,11 @@ main {
 
 .search-arrow::before {
     content:"";
-
     position:absolute;
-
     width:8px;
     height:8px;
-
     border-left:2px solid #fff;
     border-top:2px solid #fff;
-
     left:50%;
     top:50%;
 }
@@ -582,40 +493,30 @@ main {
 
 #searchStatus {
     min-width:55px;
-
     text-align:center;
-
     color:#858da1;
-
     font-size:13px;
 }
 
 .news-list {
     display:grid;
-
-    grid-template-columns:
-        repeat(3,minmax(0,1fr));
-
+    grid-template-columns:repeat(3,minmax(0,1fr));
     gap:18px;
 }
 
 .news-card {
     overflow:hidden;
-
     border:1px solid var(--border);
     border-radius:var(--radius);
-
     background:
         linear-gradient(
             180deg,
             rgba(17,21,34,.98),
             rgba(13,16,27,.98)
         );
-
     box-shadow:
         0 12px 35px
         rgba(0,0,0,.16);
-
     transition:
         transform .2s ease,
         border-color .2s ease,
@@ -624,27 +525,21 @@ main {
 
 .news-card:hover {
     transform:translateY(-3px);
-
     border-color:var(--border-hover);
-
     box-shadow:
         0 16px 40px
         rgba(0,0,0,.23);
 }
 
 .news-card.main-news {
-    border-color:
-        rgba(113,104,255,.4);
-
+    border-color:rgba(113,104,255,.4);
     box-shadow:
         0 12px 40px
         rgba(113,104,255,.1);
 }
 
 .news-card.search-active {
-    border-color:
-        rgba(146,139,255,.9);
-
+    border-color:rgba(146,139,255,.9);
     box-shadow:
         0 0 0 2px
         rgba(113,104,255,.2),
@@ -654,14 +549,10 @@ main {
 
 .news-image {
     display:block;
-
     width:100%;
     height:auto;
-
     max-height:600px;
-
     object-fit:contain;
-
     background:#0a0d15;
 }
 
@@ -671,118 +562,80 @@ main {
 
 .news-main-label {
     display:inline-block;
-
     margin-bottom:10px;
-
     padding:5px 9px;
-
     border-radius:7px;
-
-    background:
-        rgba(113,104,255,.13);
-
+    background:rgba(113,104,255,.13);
     color:#aaa5ff;
-
     font-size:12px;
     font-weight:600;
 }
 
 .news-date {
     margin-bottom:8px;
-
     color:#6f788e;
-
     font-size:13px;
     font-weight:400;
 }
 
 .news-title {
     margin:0 0 10px;
-
     color:#fff;
-
     font-size:20px;
     font-weight:600;
-
     line-height:1.3;
 }
 
 .news-info {
     margin:0;
-
     color:#aeb6c9;
-
     font-size:14px;
     font-weight:400;
-
     line-height:1.6;
-
     white-space:pre-wrap;
 }
 
 .news-timer {
     margin-top:16px;
-
     padding-top:13px;
-
     border-top:1px solid var(--border);
-
     color:#8f98ad;
-
     font-size:13px;
     font-weight:500;
 }
 
 .news-timer-value {
     color:#bcb8ff;
-
-    font-variant-numeric:
-        tabular-nums;
+    font-variant-numeric:tabular-nums;
 }
 
 .highlight {
     border-radius:3px;
-
-    background:
-        rgba(113,104,255,.35);
-
+    background:rgba(113,104,255,.35);
     color:#fff;
-
     padding:1px 2px;
 }
 
 .no-news {
     grid-column:1/-1;
-
     padding:80px 20px;
-
     text-align:center;
-
     color:#70798e;
-
     font-size:17px;
     font-weight:400;
 }
 
 #showMore {
     display:block;
-
     margin:30px auto 0;
-
     padding:11px 20px;
-
     border:1px solid var(--border);
     border-radius:12px;
-
     background:var(--panel);
-
     color:#cbd1df;
-
     cursor:pointer;
-
     font-size:14px;
     font-weight:500;
-
     transition:
         background .2s ease,
         border-color .2s ease;
@@ -793,10 +646,9 @@ main {
     border-color:var(--border-hover);
 }
 
-
 /* =========================================
    ИНФОРМАЦИЯ
-   ========================================= */
+========================================= */
 
 .info-page {
     padding:70px 0 90px;
@@ -804,63 +656,41 @@ main {
 
 .info-container {
     max-width:850px;
-
     margin:auto;
 }
 
 .info-container h2 {
     margin:0 0 25px;
-
     text-align:center;
-
-    font-size:
-        clamp(
-            30px,
-            5vw,
-            48px
-        );
-
+    font-size:clamp(30px,5vw,48px);
     font-weight:700;
 }
 
 .info-text {
     color:#b9c1d3;
-
     font-size:16px;
     font-weight:400;
-
     line-height:1.75;
-
     white-space:pre-wrap;
 }
 
 .info-buttons {
     display:flex;
-
     justify-content:center;
-
     gap:12px;
-
     margin-top:35px;
-
     flex-wrap:wrap;
 }
 
 .action-button {
     padding:11px 18px;
-
     border:1px solid var(--border);
     border-radius:11px;
-
     background:var(--panel);
-
     color:#d2d7e4;
-
     cursor:pointer;
-
     font-size:14px;
     font-weight:600;
-
     transition:
         background .2s ease,
         border-color .2s ease,
@@ -870,32 +700,22 @@ main {
 .action-button:hover {
     background:var(--panel-hover);
     border-color:var(--border-hover);
-
     transform:translateY(-1px);
 }
 
-
 /* =========================================
    МОДАЛЬНЫЕ ОКНА
-   ========================================= */
+========================================= */
 
 .modal {
     position:fixed;
-
     inset:0;
-
     z-index:500;
-
     display:none;
-
     align-items:center;
     justify-content:center;
-
     padding:20px;
-
-    background:
-        rgba(0,0,0,.68);
-
+    background:rgba(0,0,0,.68);
     backdrop-filter:blur(8px);
     -webkit-backdrop-filter:blur(8px);
 }
@@ -906,26 +726,18 @@ main {
 
 .modal-box {
     position:relative;
-
     width:min(600px,100%);
-
-    max-height:
-        min(700px,90vh);
-
+    max-height:min(700px,90vh);
     overflow:auto;
-
     padding:25px;
-
     border:1px solid var(--border);
     border-radius:18px;
-
     background:
         linear-gradient(
             180deg,
             #121725,
             #0e121d
         );
-
     box-shadow:
         0 30px 80px
         rgba(0,0,0,.45);
@@ -933,42 +745,30 @@ main {
 
 .modal-box h3 {
     margin:0 40px 18px 0;
-
     color:#fff;
-
     font-size:24px;
     font-weight:600;
 }
 
 .modal-content {
     color:#b9c1d3;
-
     font-size:15px;
     font-weight:400;
-
     line-height:1.7;
-
     white-space:pre-wrap;
 }
 
 .close-modal {
     position:absolute;
-
     top:16px;
     right:16px;
-
     width:34px;
     height:34px;
-
     border:0;
     border-radius:9px;
-
     background:rgba(255,255,255,.05);
-
     color:#9da6bd;
-
     cursor:pointer;
-
     font-size:22px;
     line-height:1;
 }
@@ -978,10 +778,9 @@ main {
     color:#fff;
 }
 
-
 /* =========================================
    АДМИНКА
-   ========================================= */
+========================================= */
 
 .admin-page {
     padding:50px 0 90px;
@@ -989,9 +788,7 @@ main {
 
 .admin-panel {
     display:none;
-
     max-width:900px;
-
     margin:auto;
 }
 
@@ -1001,35 +798,22 @@ main {
 
 .admin-panel h2 {
     margin:0 0 30px;
-
     text-align:center;
-
-    font-size:
-        clamp(
-            30px,
-            5vw,
-            44px
-        );
-
+    font-size:clamp(30px,5vw,44px);
     font-weight:700;
 }
 
 .admin-section {
     margin-bottom:20px;
-
     padding:20px;
-
     border:1px solid var(--border);
     border-radius:var(--radius);
-
     background:var(--panel);
 }
 
 .admin-section h3 {
     margin:0 0 14px;
-
     color:#fff;
-
     font-size:18px;
     font-weight:600;
 }
@@ -1037,61 +821,42 @@ main {
 .admin-input,
 .admin-textarea {
     width:100%;
-
     margin-bottom:10px;
-
     padding:12px 13px;
-
     border:1px solid var(--border);
     border-radius:10px;
-
     background:#0c101a;
-
     color:#fff;
-
     font-size:14px;
     font-weight:400;
-
-    transition:
-        border-color .2s ease;
+    transition:border-color .2s ease;
 }
 
 .admin-input:focus,
 .admin-textarea:focus {
-    border-color:
-        rgba(113,104,255,.5);
+    border-color:rgba(113,104,255,.5);
 }
 
 .admin-textarea {
     min-height:120px;
-
     resize:vertical;
-
     line-height:1.5;
 }
 
 .admin-row {
     display:flex;
-
     gap:10px;
-
     flex-wrap:wrap;
 }
 
 .admin-checkbox {
     display:flex;
-
     align-items:center;
-
     gap:9px;
-
     margin:5px 0 12px;
-
     color:#b8c0d2;
-
     font-size:14px;
     font-weight:400;
-
     cursor:pointer;
 }
 
@@ -1101,76 +866,55 @@ main {
 
 .file-label {
     display:block;
-
     margin:8px 0 12px;
-
     color:#8e97ab;
-
     font-size:13px;
     font-weight:400;
 }
 
 .file-label input {
     display:block;
-
     margin-top:8px;
-
     color:#9da6bd;
 }
 
 .admin-status {
     margin-top:12px;
-
     color:#858ea3;
-
     font-size:13px;
     font-weight:400;
-
     white-space:pre-wrap;
 }
 
 .admin-news-card {
     margin-top:15px;
-
     padding:16px;
-
     border:1px solid var(--border);
     border-radius:13px;
-
     background:#0d111c;
 }
 
 .admin-news-card strong {
     display:block;
-
     margin-bottom:13px;
-
     color:#fff;
-
     font-size:16px;
     font-weight:600;
 }
 
 .admin-image-preview {
     display:block;
-
     width:100%;
-
     max-height:300px;
-
     object-fit:contain;
-
     margin:12px 0;
-
     border-radius:10px;
-
     background:#080b12;
 }
 
-
 /* =========================================
    АДАПТИВ
-   ========================================= */
+========================================= */
 
 @media (max-width:800px) {
 
@@ -1185,7 +929,6 @@ main {
     .nav-button {
         padding-left:4px;
         padding-right:4px;
-
         font-size:12px;
     }
 
@@ -1248,641 +991,605 @@ main {
 
 <body>
 
-
 <header>
 
-    <nav class="nav">
+<nav class="nav">
 
-        <button
-            class="nav-button active"
-            data-page="home"
-        >
-            Главная
-        </button>
+    <button
+        class="nav-button active"
+        data-page="home"
+    >
+        Главная
+    </button>
 
-        <button
-            class="nav-button"
-            data-page="download"
-        >
-            Скачивание
-        </button>
+    <button
+        class="nav-button"
+        data-page="download"
+    >
+        Скачивание
+    </button>
 
-        <button
-            class="nav-button"
-            data-page="stats"
-        >
-            Статистика
-        </button>
+    <button
+        class="nav-button"
+        data-page="stats"
+    >
+        Статистика
+    </button>
 
-        <button
-            class="nav-button"
-            data-page="news"
-        >
-            Новости
-        </button>
+    <button
+        class="nav-button"
+        data-page="news"
+    >
+        Новости
+    </button>
 
-        <button
-            class="nav-button"
-            data-page="info"
-        >
-            Инфо
-        </button>
+    <button
+        class="nav-button"
+        data-page="info"
+    >
+        Инфо
+    </button>
 
-    </nav>
+</nav>
 
 </header>
 
-
 <main>
-
 
 <!-- =========================================
      ГЛАВНАЯ
-     ========================================= -->
+========================================= -->
 
 <section
     id="home"
     class="page active"
 >
 
-    <div class="home">
+<div class="home">
 
-      
-
-        <h1>
-            Добро пожаловать на сайт RandomGDPS!
-        </h1>
-
-        <div
-            id="homeSubtext"
-            class="home-subtext"
-        ></div>
-
-        <button
-            id="adminButton"
-            class="admin-home-button"
-        >
-            Администратор
-        </button>
-
+    <div class="home-greeting">
+        Добро пожаловать!
     </div>
+
+    <h1>
+        RandomGDPS
+    </h1>
+
+    <div
+        id="homeSubtext"
+        class="home-subtext"
+    ></div>
+
+    <button
+        id="adminButton"
+        class="admin-home-button"
+    >
+        Администратор
+    </button>
+
+</div>
 
 </section>
 
-
 <!-- =========================================
      СКАЧИВАНИЕ
-     ========================================= -->
+========================================= -->
 
 <section
     id="download"
     class="page"
 >
 
-    <div class="download-page">
+<div class="download-page">
 
-        <h2 class="section-title">
-            Скачайте наш GDPS!
-        </h2>
+    <h2 class="section-title">
+        Скачайте наш GDPS!
+    </h2>
 
-        <p class="section-description">
-            Выберите нужную версию для своего устройства.
-        </p>
+    <p class="section-description">
+        Выберите нужную версию для своего устройства.
+    </p>
 
-        <div class="download-buttons">
+    <div class="download-buttons">
 
-            <a
-                class="primary-button"
-                href="https://github.com/RandomGDPS/RandomGDPS/releases/download/1.0/RandomGDPS.apk"
-                download
-            >
-                Android
-            </a>
-
-            <a
-                class="primary-button"
-                href="https://github.com/RandomGDPS/RandomGDPS/releases/download/1.0/RandomGDPS.zip"
-                download
-            >
-                Windows
-            </a>
-
-        </div>
-
-        <div
-            id="orBlock"
-            class="or-text"
-            style="display:none;"
+        <a
+            class="primary-button"
+            href="https://github.com/RandomGDPS/RandomGDPS/releases/download/1.0/RandomGDPS.apk"
+            download
         >
+            Android
+        </a>
 
-            <div>
-                или
-            </div>
-
-            <div id="orText"></div>
-
-        </div>
+        <a
+            class="primary-button"
+            href="https://github.com/RandomGDPS/RandomGDPS/releases/download/1.0/RandomGDPS.zip"
+            download
+        >
+            Windows
+        </a>
 
     </div>
 
-</section>
+    <div
+        id="orBlock"
+        class="or-text"
+        style="display:none;"
+    >
 
+        <div>
+            или
+        </div>
+
+        <div id="orText"></div>
+
+    </div>
+
+</div>
+
+</section>
 
 <!-- =========================================
      СТАТИСТИКА
-     ========================================= -->
+========================================= -->
 
 <section
     id="stats"
     class="page"
 >
 
-    <div class="stats-page">
+<div class="stats-page">
 
-        <div class="stats">
-            Скоро!
-        </div>
-
+    <div class="stats">
+        Скоро!
     </div>
+
+</div>
 
 </section>
 
-
 <!-- =========================================
      НОВОСТИ
-     ========================================= -->
+========================================= -->
 
 <section
     id="news"
     class="page"
 >
 
-    <div class="news-page">
+<div class="news-page">
 
-        <div class="news-header">
+    <div class="news-header">
 
-            <h2>
-                Новости
-            </h2>
+        <h2>
+            Новости
+        </h2>
 
-            <p>
-                Тут вы можете посмотреть историю GDPS!
-            </p>
-
-        </div>
-
-
-        <div class="search-container">
-
-            <div class="search-box">
-
-                <input
-                    id="newsSearch"
-                    type="text"
-                    placeholder="Поиск по новостям..."
-                    autocomplete="off"
-                >
-
-                <button
-                    id="clearSearch"
-                    type="button"
-                    aria-label="Очистить поиск"
-                >
-                    ×
-                </button>
-
-            </div>
-
-
-            <button
-                id="previousSearch"
-                class="search-arrow up"
-                type="button"
-                aria-label="Предыдущая новость"
-                disabled
-            ></button>
-
-
-            <div id="searchStatus"></div>
-
-
-            <button
-                id="nextSearch"
-                class="search-arrow down"
-                type="button"
-                aria-label="Следующая новость"
-                disabled
-            ></button>
-
-        </div>
-
-
-        <div
-            id="newsList"
-            class="news-list"
-        ></div>
-
-
-        <button
-            id="showMore"
-            type="button"
-            style="display:none;"
-        >
-            Посмотреть ещё
-        </button>
+        <p>
+            Тут вы можете посмотреть историю GDPS!
+        </p>
 
     </div>
 
-</section>
+    <div class="search-container">
 
+        <div class="search-box">
+
+            <input
+                id="newsSearch"
+                type="text"
+                placeholder="Поиск по новостям..."
+                autocomplete="off"
+            >
+
+            <button
+                id="clearSearch"
+                type="button"
+                aria-label="Очистить поиск"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <button
+            id="previousSearch"
+            class="search-arrow up"
+            type="button"
+            aria-label="Предыдущая новость"
+            disabled
+        ></button>
+
+        <div id="searchStatus"></div>
+
+        <button
+            id="nextSearch"
+            class="search-arrow down"
+            type="button"
+            aria-label="Следующая новость"
+            disabled
+        ></button>
+
+    </div>
+
+    <div
+        id="newsList"
+        class="news-list"
+    ></div>
+
+    <button
+        id="showMore"
+        type="button"
+        style="display:none;"
+    >
+        Посмотреть ещё
+    </button>
+
+</div>
+
+</section>
 
 <!-- =========================================
      ИНФО
-     ========================================= -->
+========================================= -->
 
 <section
     id="info"
     class="page"
 >
 
-    <div class="info-page">
+<div class="info-page">
 
-        <div class="info-container">
+    <div class="info-container">
 
-            <h2>
-                Информация
-            </h2>
+        <h2>
+            Информация
+        </h2>
 
-            <div
-                id="infoText"
-                class="info-text"
-            ></div>
+        <div
+            id="infoText"
+            class="info-text"
+        ></div>
 
+        <div class="info-buttons">
 
-            <div class="info-buttons">
+            <button
+                id="rulesButton"
+                class="action-button"
+                type="button"
+            >
+                Правила
+            </button>
 
-                <button
-                    id="rulesButton"
-                    class="action-button"
-                    type="button"
-                >
-                    Правила
-                </button>
-
-                <button
-                    id="ratingButton"
-                    class="action-button"
-                    type="button"
-                >
-                    Система оценивания
-                </button>
-
-            </div>
+            <button
+                id="ratingButton"
+                class="action-button"
+                type="button"
+            >
+                Система оценивания
+            </button>
 
         </div>
 
     </div>
 
-</section>
+</div>
 
+</section>
 
 <!-- =========================================
      АДМИНКА
-     ========================================= -->
+========================================= -->
 
 <section
     id="admin"
     class="page"
 >
 
-    <div
-        id="adminPanel"
-        class="admin-panel"
-    >
-
-        <h2>
-            Администратор
-        </h2>
-
-
-        <div class="admin-section">
-
-            <h3>
-                Текст под приветствием
-            </h3>
-
-            <textarea
-                id="adminMLText"
-                class="admin-textarea"
-                placeholder="MLText"
-            ></textarea>
-
-            <button
-                id="saveMLTextButton"
-                class="action-button"
-                type="button"
-            >
-                Сохранить
-            </button>
-
-        </div>
-
-
-        <div class="admin-section">
-
-            <h3>
-                Текст под «или»
-            </h3>
-
-            <textarea
-                id="adminOrText"
-                class="admin-textarea"
-                placeholder="OrText"
-            ></textarea>
-
-            <button
-                id="saveOrTextButton"
-                class="action-button"
-                type="button"
-            >
-                Сохранить
-            </button>
-
-        </div>
-
-
-        <div class="admin-section">
-
-            <h3>
-                Информация
-            </h3>
-
-            <textarea
-                id="adminInfoText"
-                class="admin-textarea"
-                placeholder="Info"
-            ></textarea>
-
-            <button
-                id="saveInfoButton"
-                class="action-button"
-                type="button"
-            >
-                Сохранить
-            </button>
-
-        </div>
-
-
-        <div class="admin-section">
-
-            <h3>
-                Правила
-            </h3>
-
-            <textarea
-                id="adminRulesText"
-                class="admin-textarea"
-                placeholder="Rules"
-            ></textarea>
-
-            <button
-                id="saveRulesButton"
-                class="action-button"
-                type="button"
-            >
-                Сохранить
-            </button>
-
-        </div>
-
-
-        <div class="admin-section">
-
-            <h3>
-                Система оценивания
-            </h3>
-
-            <textarea
-                id="adminRatingText"
-                class="admin-textarea"
-                placeholder="AssessmentSystem"
-            ></textarea>
-
-            <button
-                id="saveRatingButton"
-                class="action-button"
-                type="button"
-            >
-                Сохранить
-            </button>
-
-        </div>
-
-
-        <div class="admin-section">
-
-            <h3>
-                Добавить новость
-            </h3>
-
-
-            <input
-                id="newNewsTitle"
-                class="admin-input"
-                placeholder="Заголовок"
-            >
-
-
-            <input
-                id="newNewsDate"
-                class="admin-input"
-                placeholder="Дата"
-            >
-
-
-            <textarea
-                id="newNewsInfo"
-                class="admin-textarea"
-                placeholder="Информация"
-            ></textarea>
-
-
-            <input
-                id="newNewsTimer"
-                class="admin-input"
-                placeholder="Таймер"
-            >
-
-
-            <input
-                id="newNewsTime"
-                class="admin-input"
-                type="number"
-                min="0"
-                step="1"
-                placeholder="Время в минутах"
-            >
-
-
-            <label class="admin-checkbox">
-
-                <input
-                    id="newNewsMain"
-                    type="checkbox"
-                >
-
-                <span>
-                    Главная новость
-                </span>
-
-            </label>
-
-
-            <label class="file-label">
-
-                Изображение
-
-                <input
-                    id="newNewsImage"
-                    type="file"
-                    accept="image/*"
-                >
-
-            </label>
-
-
-            <button
-                id="addNewsButton"
-                class="action-button"
-                type="button"
-            >
-                Добавить новость
-            </button>
-
-        </div>
-
-
-        <div class="admin-section">
-
-            <h3>
-                Новости
-            </h3>
-
-            <div
-                id="adminNewsList"
-            ></div>
-
-        </div>
-
-
-        <div
-            id="adminStatus"
-            class="admin-status"
-        ></div>
-
+<div
+    id="adminPanel"
+    class="admin-panel"
+>
+
+    <h2>
+        Администратор
+    </h2>
+
+    <div class="admin-section">
+
+        <h3>
+            Текст под приветствием
+        </h3>
+
+        <textarea
+            id="adminMLText"
+            class="admin-textarea"
+            placeholder="MLText"
+        ></textarea>
 
         <button
-            id="logoutButton"
+            id="saveMLTextButton"
             class="action-button"
             type="button"
         >
-            Выйти
+            Сохранить
         </button>
 
     </div>
+
+    <div class="admin-section">
+
+        <h3>
+            Текст под «или»
+        </h3>
+
+        <textarea
+            id="adminOrText"
+            class="admin-textarea"
+            placeholder="OrText"
+        ></textarea>
+
+        <button
+            id="saveOrTextButton"
+            class="action-button"
+            type="button"
+        >
+            Сохранить
+        </button>
+
+    </div>
+
+    <div class="admin-section">
+
+        <h3>
+            Информация
+        </h3>
+
+        <textarea
+            id="adminInfoText"
+            class="admin-textarea"
+            placeholder="Info"
+        ></textarea>
+
+        <button
+            id="saveInfoButton"
+            class="action-button"
+            type="button"
+        >
+            Сохранить
+        </button>
+
+    </div>
+
+    <div class="admin-section">
+
+        <h3>
+            Правила
+        </h3>
+
+        <textarea
+            id="adminRulesText"
+            class="admin-textarea"
+            placeholder="Rules"
+        ></textarea>
+
+        <button
+            id="saveRulesButton"
+            class="action-button"
+            type="button"
+        >
+            Сохранить
+        </button>
+
+    </div>
+
+    <div class="admin-section">
+
+        <h3>
+            Система оценивания
+        </h3>
+
+        <textarea
+            id="adminRatingText"
+            class="admin-textarea"
+            placeholder="AssessmentSystem"
+        ></textarea>
+
+        <button
+            id="saveRatingButton"
+            class="action-button"
+            type="button"
+        >
+            Сохранить
+        </button>
+
+    </div>
+
+    <div class="admin-section">
+
+        <h3>
+            Добавить новость
+        </h3>
+
+        <input
+            id="newNewsTitle"
+            class="admin-input"
+            placeholder="Заголовок"
+        >
+
+        <input
+            id="newNewsDate"
+            class="admin-input"
+            placeholder="Дата"
+        >
+
+        <textarea
+            id="newNewsInfo"
+            class="admin-textarea"
+            placeholder="Информация"
+        ></textarea>
+
+        <input
+            id="newNewsTimer"
+            class="admin-input"
+            placeholder="Таймер"
+        >
+
+        <input
+            id="newNewsTime"
+            class="admin-input"
+            type="number"
+            min="0"
+            step="1"
+            placeholder="Время в минутах"
+        >
+
+        <label class="admin-checkbox">
+
+            <input
+                id="newNewsMain"
+                type="checkbox"
+            >
+
+            <span>
+                Главная новость
+            </span>
+
+        </label>
+
+        <label class="file-label">
+
+            Изображение
+
+            <input
+                id="newNewsImage"
+                type="file"
+                accept="image/*"
+            >
+
+        </label>
+
+        <button
+            id="addNewsButton"
+            class="action-button"
+            type="button"
+        >
+            Добавить новость
+        </button>
+
+    </div>
+
+    <div class="admin-section">
+
+        <h3>
+            Новости
+        </h3>
+
+        <div id="adminNewsList"></div>
+
+    </div>
+
+    <div
+        id="adminStatus"
+        class="admin-status"
+    ></div>
+
+    <button
+        id="logoutButton"
+        class="action-button"
+        type="button"
+    >
+        Выйти
+    </button>
+
+</div>
 
 </section>
 
 </main>
 
-
 <!-- =========================================
      МОДАЛЬНОЕ ОКНО ИНФОРМАЦИИ
-     ========================================= -->
+========================================= -->
 
 <div
     id="infoModal"
     class="modal"
 >
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <button
-            class="close-modal"
-            data-close="infoModal"
-            type="button"
-        >
-            ×
-        </button>
+    <button
+        class="close-modal"
+        data-close="infoModal"
+        type="button"
+    >
+        ×
+    </button>
 
-        <h3 id="infoModalTitle"></h3>
+    <h3 id="infoModalTitle"></h3>
 
-        <div
-            id="infoModalContent"
-            class="modal-content"
-        ></div>
-
-    </div>
+    <div
+        id="infoModalContent"
+        class="modal-content"
+    ></div>
 
 </div>
 
+</div>
 
 <!-- =========================================
      МОДАЛЬНОЕ ОКНО ВХОДА
-     ========================================= -->
+========================================= -->
 
 <div
     id="loginModal"
     class="modal"
 >
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <button
-            class="close-modal"
-            data-close="loginModal"
-            type="button"
-        >
-            ×
-        </button>
+    <button
+        class="close-modal"
+        data-close="loginModal"
+        type="button"
+    >
+        ×
+    </button>
 
-        <h3>
-            Вход администратора
-        </h3>
+    <h3>
+        Вход администратора
+    </h3>
 
-        <input
-            id="githubTokenInput"
-            class="admin-input"
-            type="password"
-            placeholder="GitHub Token"
-            autocomplete="off"
-        >
+    <input
+        id="githubTokenInput"
+        class="admin-input"
+        type="password"
+        placeholder="GitHub Token"
+        autocomplete="off"
+    >
 
-        <button
-            id="loginButton"
-            class="action-button"
-            type="button"
-        >
-            Войти
-        </button>
+    <button
+        id="loginButton"
+        class="action-button"
+        type="button"
+    >
+        Войти
+    </button>
 
-        <div
-            id="loginStatus"
-            class="admin-status"
-        ></div>
-
-    </div>
+    <div
+        id="loginStatus"
+        class="admin-status"
+    ></div>
 
 </div>
 
+</div>
 
 <script>
 
-
 /* =========================================
    НАСТРОЙКИ
-   ========================================= */
+========================================= */
 
 let MLText = "";
 let OrText = "";
@@ -1892,23 +1599,17 @@ let AssessmentSystem = "";
 
 let News = [];
 
-
 let PokazanoNovostei = 3;
 let SearchResults = [];
 let SearchIndex = -1;
 let TimerInterval = null;
 
-
-const DATA_FILE =
-    "randomgdps-data.json";
-
-const IMAGE_FOLDER =
-    "news-images";
-
+const DATA_FILE = "randomgdps-data.json";
+const IMAGE_FOLDER = "news-images";
 
 /* =========================================
    GITHUB
-   ========================================= */
+========================================= */
 
 function getGitHubRepository() {
 
@@ -1916,16 +1617,16 @@ function getGitHubRepository() {
         owner:"RandomGDPS",
         repo:"RandomGDPS"
     };
-}
 
+}
 
 function getGitHubToken() {
 
     return sessionStorage.getItem(
         "randomgdps_github_token"
     );
-}
 
+}
 
 async function githubRequest(
     url,
@@ -1938,19 +1639,13 @@ async function githubRequest(
     const headers = {
         Accept:
             "application/vnd.github+json",
-
-        ...(
-            options.headers || {}
-        )
+        ...(options.headers || {})
     };
 
-
     if (token) {
-
         headers.Authorization =
             `Bearer ${token}`;
     }
-
 
     const response =
         await fetch(
@@ -1960,7 +1655,6 @@ async function githubRequest(
                 headers
             }
         );
-
 
     if (!response.ok) {
 
@@ -1973,23 +1667,21 @@ async function githubRequest(
                 await response.json();
 
             if (data.message) {
-
                 message =
                     data.message;
             }
 
         } catch {}
 
-
         throw new Error(
             message
         );
+
     }
 
-
     return response;
-}
 
+}
 
 async function checkGitHubToken(
     token
@@ -2002,29 +1694,27 @@ async function checkGitHubToken(
                 headers:{
                     Accept:
                         "application/vnd.github+json",
-
                     Authorization:
                         `Bearer ${token}`
                 }
             }
         );
 
-
     if (!response.ok) {
 
         throw new Error(
             "Неверный GitHub Token или нет доступа к репозиторию."
         );
+
     }
 
-
     return true;
-}
 
+}
 
 /* =========================================
    ЗАГРУЗКА ДАННЫХ
-   ========================================= */
+========================================= */
 
 async function loadSiteData() {
 
@@ -2035,42 +1725,36 @@ async function loadSiteData() {
                 `${DATA_FILE}?t=${Date.now()}`
             );
 
-
         if (!response.ok) {
 
             throw new Error(
                 "Файл данных не найден."
             );
-        }
 
+        }
 
         const data =
             await response.json();
-
 
         MLText =
             String(
                 data.MLText ?? MLText
             );
 
-
         OrText =
             String(
                 data.OrText ?? OrText
             );
-
 
         Info =
             String(
                 data.Info ?? Info
             );
 
-
         Rules =
             String(
                 data.Rules ?? Rules
             );
-
 
         AssessmentSystem =
             String(
@@ -2078,23 +1762,12 @@ async function loadSiteData() {
                 AssessmentSystem
             );
 
-
         News =
             Array.isArray(data.News)
                 ? data.News.map(
                     prepareNews
                 )
                 : [];
-
-
-        /*
-           Старым новостям,
-           у которых ещё нет Создано,
-           ставим время один раз.
-        */
-
-        let changed = false;
-
 
         News =
             News.map(
@@ -2104,26 +1777,19 @@ async function loadSiteData() {
                         Number(news.Создано) <= 0 &&
                         Number(news.Время) > 0
                     ) {
-
-                        changed = true;
-
                         news.Создано =
                             Date.now();
                     }
 
                     return news;
+
                 }
             );
 
-
         updateMainInfo();
-
         removeExpiredNews(false);
-
         renderNews();
-
         renderAdminNews();
-
         updateSearchStatus();
 
     } catch (error) {
@@ -2132,17 +1798,16 @@ async function loadSiteData() {
             "Файл данных пока не найден.",
             error
         );
-    }
-}
 
+    }
+
+}
 
 /* =========================================
    ПОДГОТОВКА НОВОСТИ
-   ========================================= */
+========================================= */
 
-function prepareNews(
-    news
-) {
+function prepareNews(news) {
 
     return {
 
@@ -2188,16 +1853,14 @@ function prepareNews(
             )
 
     };
-}
 
+}
 
 /* =========================================
    ПРОВЕРКА СРОКА
-   ========================================= */
+========================================= */
 
-function isNewsExpired(
-    news
-) {
+function isNewsExpired(news) {
 
     const minutes =
         Number(news.Время);
@@ -2209,7 +1872,6 @@ function isNewsExpired(
         return false;
     }
 
-
     const created =
         Number(news.Создано);
 
@@ -2220,15 +1882,13 @@ function isNewsExpired(
         return false;
     }
 
-
     const expiration =
         created +
         minutes * 60 * 1000;
 
-
     return Date.now() >= expiration;
-}
 
+}
 
 function removeExpiredNews(
     saveToGitHub = true
@@ -2237,26 +1897,21 @@ function removeExpiredNews(
     const before =
         News.length;
 
-
     News =
         News.filter(
             news =>
                 !isNewsExpired(news)
         );
 
-
     const removed =
         before !== News.length;
-
 
     if (removed) {
 
         PokazanoNovostei = 3;
 
         renderNews();
-
         renderAdminNews();
-
 
         if (
             saveToGitHub &&
@@ -2274,17 +1929,18 @@ function removeExpiredNews(
 
                     }
                 );
+
         }
+
     }
 
-
     return removed;
-}
 
+}
 
 /* =========================================
    ТАЙМЕР
-   ========================================= */
+========================================= */
 
 function formatNewsTime(
     totalSeconds
@@ -2298,109 +1954,85 @@ function formatNewsTime(
             )
         );
 
-
     const seconds =
         totalSeconds % 60;
-
 
     const totalMinutes =
         Math.floor(
             totalSeconds / 60
         );
 
-
     const minutes =
         totalMinutes % 60;
-
 
     const totalHours =
         Math.floor(
             totalMinutes / 60
         );
 
-
     const hours =
         totalHours % 24;
-
 
     const totalDays =
         Math.floor(
             totalHours / 24
         );
 
-
     const days =
         totalDays % 365;
-
 
     const years =
         Math.floor(
             totalDays / 365
         );
 
-
     const ss =
         String(seconds)
             .padStart(2,"0");
-
 
     const mm =
         String(minutes)
             .padStart(2,"0");
 
-
     const hh =
         String(hours)
             .padStart(2,"0");
-
 
     const dd =
         String(days)
             .padStart(3,"0");
 
-
     if (years > 0) {
-
         return `${years}:${dd}:${hh}:${mm}:${ss}`;
     }
 
-
     if (days > 0) {
-
         return `${days}:${hh}:${mm}:${ss}`;
     }
 
-
     return `${hh}:${mm}:${ss}`;
+
 }
 
-
-function getNewsRemainingSeconds(
-    news
-) {
+function getNewsRemainingSeconds(news) {
 
     const minutes =
         Number(news.Время);
 
-
     const created =
         Number(news.Создано);
-
 
     if (
         !Number.isFinite(minutes) ||
         minutes <= 0 ||
         !Number.isFinite(created)
     ) {
-
         return null;
     }
-
 
     const expiration =
         created +
         minutes * 60 * 1000;
-
 
     return Math.max(
         0,
@@ -2411,28 +2043,24 @@ function getNewsRemainingSeconds(
             ) / 1000
         )
     );
-}
 
+}
 
 /* =========================================
    НАВИГАЦИЯ
-   ========================================= */
+========================================= */
 
 const navButtons =
     document.querySelectorAll(
         ".nav-button"
     );
 
-
 const pages =
     document.querySelectorAll(
         ".page"
     );
 
-
-function openPage(
-    pageName
-) {
+function openPage(pageName) {
 
     pages.forEach(
         page => {
@@ -2445,31 +2073,21 @@ function openPage(
         }
     );
 
-
     navButtons.forEach(
         button => {
 
             button.classList.toggle(
                 "active",
-                button.dataset.page ===
-                pageName
+                button.dataset.page === pageName
             );
 
         }
     );
 
-
-    /*
-       Кнопка администратора
-       существует только визуально
-       на главной.
-    */
-
     const adminButton =
         document.getElementById(
             "adminButton"
         );
-
 
     if (adminButton) {
 
@@ -2477,15 +2095,27 @@ function openPage(
             pageName === "home"
                 ? "block"
                 : "none";
+
     }
 
+    /*
+       Прокручиваем именно main,
+       а не всё окно браузера.
+    */
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+    const main =
+        document.querySelector("main");
+
+    if (main) {
+
+        main.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+
+    }
+
 }
-
 
 navButtons.forEach(
     button => {
@@ -2504,10 +2134,9 @@ navButtons.forEach(
     }
 );
 
-
 /* =========================================
    ОСНОВНАЯ ИНФОРМАЦИЯ
-   ========================================= */
+========================================= */
 
 function updateMainInfo() {
 
@@ -2516,73 +2145,45 @@ function updateMainInfo() {
     ).textContent =
         MLText;
 
-
     const orBlock =
         document.getElementById(
             "orBlock"
         );
-
 
     const orText =
         document.getElementById(
             "orText"
         );
 
-
     orText.textContent =
         OrText;
-
-
-    /*
-       Если OrText пустой,
-       исчезает весь блок,
-       включая «или».
-    */
 
     orBlock.style.display =
         OrText.trim()
             ? "block"
             : "none";
 
-
     document.getElementById(
         "infoText"
     ).textContent =
         Info;
-}
 
+}
 
 /* =========================================
    БЕЗОПАСНЫЙ HTML
-   ========================================= */
+========================================= */
 
-function escapeHtml(
-    text
-) {
+function escapeHtml(text) {
 
     return String(text ?? "")
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-}
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
+}
 
 function highlightText(
     text,
@@ -2590,26 +2191,20 @@ function highlightText(
 ) {
 
     if (!query) {
-
         return escapeHtml(text);
     }
-
 
     const safeText =
         String(text ?? "");
 
-
     const lowerText =
         safeText.toLowerCase();
-
 
     const lowerQuery =
         query.toLowerCase();
 
-
     let result = "";
     let position = 0;
-
 
     while (true) {
 
@@ -2619,19 +2214,16 @@ function highlightText(
                 position
             );
 
-
         if (index === -1) {
 
             result +=
                 escapeHtml(
-                    safeText.slice(
-                        position
-                    )
+                    safeText.slice(position)
                 );
 
             break;
-        }
 
+        }
 
         result +=
             escapeHtml(
@@ -2640,7 +2232,6 @@ function highlightText(
                     index
                 )
             );
-
 
         result +=
             '<span class="highlight">' +
@@ -2652,20 +2243,18 @@ function highlightText(
             ) +
             "</span>";
 
-
         position =
-            index +
-            query.length;
+            index + query.length;
+
     }
 
-
     return result;
-}
 
+}
 
 /* =========================================
    СОРТИРОВКА
-   ========================================= */
+========================================= */
 
 function getSortedNews() {
 
@@ -2683,47 +2272,37 @@ function getSortedNews() {
             (a,b) => {
 
                 const aMain =
-                    a.news.Главная
-                        ? 1
-                        : 0;
-
+                    a.news.Главная ? 1 : 0;
 
                 const bMain =
-                    b.news.Главная
-                        ? 1
-                        : 0;
-
+                    b.news.Главная ? 1 : 0;
 
                 if (
                     aMain !== bMain
                 ) {
-
                     return bMain - aMain;
                 }
-
 
                 const aCreated =
                     Number(
                         a.news.Создано
                     ) || 0;
 
-
                 const bCreated =
                     Number(
                         b.news.Создано
                     ) || 0;
 
-
                 return bCreated - aCreated;
 
             }
         );
-}
 
+}
 
 /* =========================================
    НОВОСТИ
-   ========================================= */
+========================================= */
 
 function renderNews() {
 
@@ -2732,47 +2311,39 @@ function renderNews() {
             "newsList"
         );
 
-
     const showMore =
         document.getElementById(
             "showMore"
         );
-
 
     const search =
         document.getElementById(
             "newsSearch"
         );
 
-
     const query =
         search
             ? search.value.trim()
             : "";
 
-
     list.innerHTML = "";
-
 
     const sorted =
         getSortedNews();
-
 
     if (!sorted.length) {
 
         list.innerHTML =
             '<div class="no-news">Тут пока ничего нет!</div>';
 
-
         showMore.style.display =
             "none";
-
 
         updateSearchStatus();
 
         return;
-    }
 
+    }
 
     const mainNews =
         sorted.filter(
@@ -2780,13 +2351,11 @@ function renderNews() {
                 item.news.Главная
         );
 
-
     const normalNews =
         sorted.filter(
             item =>
                 !item.news.Главная
         );
-
 
     const visibleNormal =
         normalNews.slice(
@@ -2794,12 +2363,10 @@ function renderNews() {
             PokazanoNovostei
         );
 
-
     const visible = [
         ...mainNews,
         ...visibleNormal
     ];
-
 
     visible.forEach(
         item => {
@@ -2807,32 +2374,27 @@ function renderNews() {
             const news =
                 item.news;
 
-
             const originalIndex =
                 item.originalIndex;
-
 
             const card =
                 document.createElement(
                     "article"
                 );
 
-
             card.className =
                 "news-card";
-
 
             if (news.Главная) {
 
                 card.classList.add(
                     "main-news"
                 );
-            }
 
+            }
 
             card.dataset.index =
                 originalIndex;
-
 
             if (news.Изображение) {
 
@@ -2841,39 +2403,32 @@ function renderNews() {
                         "img"
                     );
 
-
                 image.className =
                     "news-image";
 
-
                 image.src =
                     news.Изображение;
-
 
                 image.alt =
                     news.Заголовок ||
                     "Новость";
 
-
                 image.onerror =
                     () => image.remove();
-
 
                 card.appendChild(
                     image
                 );
-            }
 
+            }
 
             const content =
                 document.createElement(
                     "div"
                 );
 
-
             content.className =
                 "news-content";
-
 
             if (news.Главная) {
 
@@ -2882,30 +2437,25 @@ function renderNews() {
                         "div"
                     );
 
-
                 label.className =
                     "news-main-label";
-
 
                 label.textContent =
                     "Главная новость";
 
-
                 content.appendChild(
                     label
                 );
-            }
 
+            }
 
             const date =
                 document.createElement(
                     "div"
                 );
 
-
             date.className =
                 "news-date";
-
 
             date.innerHTML =
                 highlightText(
@@ -2913,21 +2463,17 @@ function renderNews() {
                     query
                 );
 
-
             content.appendChild(
                 date
             );
-
 
             const title =
                 document.createElement(
                     "h3"
                 );
 
-
             title.className =
                 "news-title";
-
 
             title.innerHTML =
                 highlightText(
@@ -2935,21 +2481,17 @@ function renderNews() {
                     query
                 );
 
-
             content.appendChild(
                 title
             );
-
 
             const info =
                 document.createElement(
                     "p"
                 );
 
-
             info.className =
                 "news-info";
-
 
             info.innerHTML =
                 highlightText(
@@ -2957,11 +2499,9 @@ function renderNews() {
                     query
                 );
 
-
             content.appendChild(
                 info
             );
-
 
             if (
                 news.Таймер &&
@@ -2973,74 +2513,62 @@ function renderNews() {
                         "div"
                     );
 
-
                 timer.className =
                     "news-timer";
-
 
                 const timerText =
                     document.createElement(
                         "span"
                     );
 
-
                 timerText.textContent =
                     news.Таймер + " ";
-
 
                 const timerValue =
                     document.createElement(
                         "span"
                     );
 
-
                 timerValue.className =
                     "news-timer-value";
 
-
                 timerValue.dataset.newsIndex =
                     originalIndex;
-
 
                 const remaining =
                     getNewsRemainingSeconds(
                         news
                     );
 
-
                 timerValue.textContent =
                     formatNewsTime(
                         remaining ?? 0
                     );
 
-
                 timer.appendChild(
                     timerText
                 );
-
 
                 timer.appendChild(
                     timerValue
                 );
 
-
                 content.appendChild(
                     timer
                 );
-            }
 
+            }
 
             card.appendChild(
                 content
             );
 
-
             list.appendChild(
                 card
             );
+
         }
     );
-
 
     showMore.style.display =
         PokazanoNovostei <
@@ -3048,19 +2576,17 @@ function renderNews() {
             ? "block"
             : "none";
 
-
     updateActiveSearchCard();
-}
 
+}
 
 /* =========================================
    ТАЙМЕРЫ
-   ========================================= */
+========================================= */
 
 function updateNewsTimers() {
 
     let expired = false;
-
 
     News.forEach(
         news => {
@@ -3068,21 +2594,18 @@ function updateNewsTimers() {
             if (
                 isNewsExpired(news)
             ) {
-
                 expired = true;
             }
 
         }
     );
 
-
     if (expired) {
 
         removeExpiredNews(true);
-
         return;
-    }
 
+    }
 
     document
         .querySelectorAll(
@@ -3096,21 +2619,17 @@ function updateNewsTimers() {
                         element.dataset.newsIndex
                     );
 
-
                 const news =
                     News[index];
-
 
                 if (!news) {
                     return;
                 }
 
-
                 const remaining =
                     getNewsRemainingSeconds(
                         news
                     );
-
 
                 if (
                     remaining === null
@@ -3118,15 +2637,15 @@ function updateNewsTimers() {
                     return;
                 }
 
-
                 element.textContent =
                     formatNewsTime(
                         remaining
                     );
+
             }
         );
-}
 
+}
 
 function startNewsTimer() {
 
@@ -3135,20 +2654,20 @@ function startNewsTimer() {
         clearInterval(
             TimerInterval
         );
-    }
 
+    }
 
     TimerInterval =
         setInterval(
             updateNewsTimers,
             1000
         );
-}
 
+}
 
 /* =========================================
    ЕЩЁ
-   ========================================= */
+========================================= */
 
 document.getElementById(
     "showMore"
@@ -3157,16 +2676,14 @@ document.getElementById(
     () => {
 
         PokazanoNovostei += 3;
-
         renderNews();
 
     }
 );
 
-
 /* =========================================
    ПОИСК
-   ========================================= */
+========================================= */
 
 function performSearch() {
 
@@ -3177,13 +2694,10 @@ function performSearch() {
         .trim()
         .toLowerCase();
 
-
     SearchResults = [];
-
 
     const sorted =
         getSortedNews();
-
 
     if (query) {
 
@@ -3193,18 +2707,15 @@ function performSearch() {
                 const news =
                     item.news;
 
-
                 const title =
                     String(
                         news.Заголовок || ""
                     ).toLowerCase();
 
-
                 const info =
                     String(
                         news.Информация || ""
                     ).toLowerCase();
-
 
                 if (
                     title.includes(query) ||
@@ -3214,24 +2725,23 @@ function performSearch() {
                     SearchResults.push(
                         item.originalIndex
                     );
+
                 }
 
             }
         );
-    }
 
+    }
 
     SearchIndex =
         SearchResults.length
             ? 0
             : -1;
 
-
     renderNews();
-
     updateSearchStatus();
-}
 
+}
 
 function updateActiveSearchCard() {
 
@@ -3249,11 +2759,10 @@ function updateActiveSearchCard() {
             }
         );
 
-
     if (
         SearchIndex >= 0 &&
         SearchIndex <
-            SearchResults.length
+        SearchResults.length
     ) {
 
         const index =
@@ -3261,22 +2770,22 @@ function updateActiveSearchCard() {
                 SearchIndex
             ];
 
-
         const card =
             document.querySelector(
                 `.news-card[data-index="${index}"]`
             );
-
 
         if (card) {
 
             card.classList.add(
                 "search-active"
             );
-        }
-    }
-}
 
+        }
+
+    }
+
+}
 
 function updateSearchStatus() {
 
@@ -3285,51 +2794,43 @@ function updateSearchStatus() {
             "searchStatus"
         );
 
-
     status.textContent =
         SearchResults.length
             ? `${SearchIndex + 1} / ${SearchResults.length}`
             : "";
 
-
     const disabled =
         SearchResults.length === 0;
-
 
     document.getElementById(
         "previousSearch"
     ).disabled =
         disabled;
 
-
     document.getElementById(
         "nextSearch"
     ).disabled =
         disabled;
-}
 
+}
 
 function scrollToSearchResult() {
 
     if (
         SearchIndex < 0 ||
         SearchIndex >=
-            SearchResults.length
+        SearchResults.length
     ) {
-
         return;
     }
-
 
     const index =
         SearchResults[
             SearchIndex
         ];
 
-
     const sorted =
         getSortedNews();
-
 
     const normalPosition =
         sorted
@@ -3343,7 +2844,6 @@ function scrollToSearchResult() {
                     index
             );
 
-
     const isMain =
         sorted.some(
             item =>
@@ -3352,40 +2852,53 @@ function scrollToSearchResult() {
                 item.news.Главная
         );
 
-
     if (
         !isMain &&
         normalPosition >=
-            PokazanoNovostei
+        PokazanoNovostei
     ) {
 
         PokazanoNovostei =
             normalPosition + 1;
 
-
         renderNews();
-    }
 
+    }
 
     const card =
         document.querySelector(
             `.news-card[data-index="${index}"]`
         );
 
-
     if (card) {
 
-        card.scrollIntoView({
-            behavior:"smooth",
-            block:"center"
-        });
-    }
+        const main =
+            document.querySelector(
+                "main"
+            );
 
+        const cardTop =
+            card.getBoundingClientRect().top;
+
+        const mainTop =
+            main.getBoundingClientRect().top;
+
+        main.scrollTo({
+            top:
+                main.scrollTop +
+                cardTop -
+                mainTop -
+                main.clientHeight / 2 +
+                card.offsetHeight / 2,
+            behavior:"smooth"
+        });
+
+    }
 
     updateActiveSearchCard();
     updateSearchStatus();
-}
 
+}
 
 function nextSearchResult() {
 
@@ -3393,24 +2906,21 @@ function nextSearchResult() {
         return;
     }
 
-
     SearchIndex =
         (
             SearchIndex + 1
         ) %
         SearchResults.length;
 
-
     scrollToSearchResult();
-}
 
+}
 
 function previousSearchResult() {
 
     if (!SearchResults.length) {
         return;
     }
-
 
     SearchIndex =
         (
@@ -3420,10 +2930,9 @@ function previousSearchResult() {
         ) %
         SearchResults.length;
 
-
     scrollToSearchResult();
-}
 
+}
 
 document.getElementById(
     "newsSearch"
@@ -3431,7 +2940,6 @@ document.getElementById(
     "input",
     performSearch
 );
-
 
 document.getElementById(
     "clearSearch"
@@ -3443,9 +2951,7 @@ document.getElementById(
             "newsSearch"
         ).value = "";
 
-
         performSearch();
-
 
         document.getElementById(
             "newsSearch"
@@ -3454,7 +2960,6 @@ document.getElementById(
     }
 );
 
-
 document.getElementById(
     "nextSearch"
 ).addEventListener(
@@ -3462,14 +2967,12 @@ document.getElementById(
     nextSearchResult
 );
 
-
 document.getElementById(
     "previousSearch"
 ).addEventListener(
     "click",
     previousSearchResult
 );
-
 
 document.getElementById(
     "newsSearch"
@@ -3483,10 +2986,9 @@ document.getElementById(
         ) {
 
             event.preventDefault();
-
             nextSearchResult();
-        }
 
+        }
 
         if (
             event.key ===
@@ -3494,17 +2996,16 @@ document.getElementById(
         ) {
 
             event.preventDefault();
-
             previousSearchResult();
+
         }
 
     }
 );
 
-
 /* =========================================
    МОДАЛКИ
-   ========================================= */
+========================================= */
 
 function openModal(id) {
 
@@ -3513,8 +3014,8 @@ function openModal(id) {
     ).classList.add(
         "active"
     );
-}
 
+}
 
 function closeModal(id) {
 
@@ -3523,8 +3024,8 @@ function closeModal(id) {
     ).classList.remove(
         "active"
     );
-}
 
+}
 
 document
     .querySelectorAll(
@@ -3547,7 +3048,6 @@ document
         }
     );
 
-
 document
     .querySelectorAll(
         ".modal"
@@ -3567,6 +3067,7 @@ document
                         modal.classList.remove(
                             "active"
                         );
+
                     }
 
                 }
@@ -3574,7 +3075,6 @@ document
 
         }
     );
-
 
 document.addEventListener(
     "keydown",
@@ -3598,15 +3098,15 @@ document.addEventListener(
 
                     }
                 );
+
         }
 
     }
 );
 
-
 /* =========================================
    ПРАВИЛА
-   ========================================= */
+========================================= */
 
 document.getElementById(
     "rulesButton"
@@ -3619,12 +3119,10 @@ document.getElementById(
         ).textContent =
             "Правила";
 
-
         document.getElementById(
             "infoModalContent"
         ).textContent =
             Rules;
-
 
         openModal(
             "infoModal"
@@ -3633,10 +3131,9 @@ document.getElementById(
     }
 );
 
-
 /* =========================================
    ОЦЕНИВАНИЕ
-   ========================================= */
+========================================= */
 
 document.getElementById(
     "ratingButton"
@@ -3649,12 +3146,10 @@ document.getElementById(
         ).textContent =
             "Система оценивания";
 
-
         document.getElementById(
             "infoModalContent"
         ).textContent =
             AssessmentSystem;
-
 
         openModal(
             "infoModal"
@@ -3663,22 +3158,19 @@ document.getElementById(
     }
 );
 
-
 /* =========================================
    АДМИНИСТРАТОР
-   ========================================= */
+========================================= */
 
 const adminButton =
     document.getElementById(
         "adminButton"
     );
 
-
 const adminPanel =
     document.getElementById(
         "adminPanel"
     );
-
 
 adminButton.addEventListener(
     "click",
@@ -3692,11 +3184,9 @@ adminButton.addEventListener(
                 "admin"
             );
 
-
             adminPanel.classList.add(
                 "active"
             );
-
 
             fillAdminFields();
 
@@ -3705,15 +3195,15 @@ adminButton.addEventListener(
             openModal(
                 "loginModal"
             );
+
         }
 
     }
 );
 
-
 /* =========================================
    ВХОД
-   ========================================= */
+========================================= */
 
 document.getElementById(
     "loginButton"
@@ -3726,16 +3216,13 @@ document.getElementById(
                 "githubTokenInput"
             );
 
-
         const status =
             document.getElementById(
                 "loginStatus"
             );
 
-
         const token =
             input.value.trim();
-
 
         if (!token) {
 
@@ -3743,12 +3230,11 @@ document.getElementById(
                 "Введи GitHub Token.";
 
             return;
-        }
 
+        }
 
         status.textContent =
             "Проверяем токен...";
-
 
         try {
 
@@ -3756,19 +3242,15 @@ document.getElementById(
                 token
             );
 
-
             sessionStorage.setItem(
                 "randomgdps_github_token",
                 token
             );
 
-
             status.textContent =
                 "Успешный вход!";
 
-
             input.value = "";
-
 
             setTimeout(
                 () => {
@@ -3777,16 +3259,13 @@ document.getElementById(
                         "loginModal"
                     );
 
-
                     openPage(
                         "admin"
                     );
 
-
                     adminPanel.classList.add(
                         "active"
                     );
-
 
                     fillAdminFields();
 
@@ -3799,33 +3278,29 @@ document.getElementById(
             status.textContent =
                 error.message ||
                 "Ошибка входа.";
+
         }
 
     }
 );
 
-
 /* =========================================
    GITHUB ФАЙЛЫ
-   ========================================= */
+========================================= */
 
-async function getGitHubFile(
-    path
-) {
+async function getGitHubFile(path) {
 
     const repository =
         getGitHubRepository();
-
 
     const response =
         await githubRequest(
             `https://api.github.com/repos/${repository.owner}/${repository.repo}/contents/${path}`
         );
 
-
     return response.json();
-}
 
+}
 
 async function saveGitHubFile(
     path,
@@ -3837,7 +3312,6 @@ async function saveGitHubFile(
     const repository =
         getGitHubRepository();
 
-
     const encoded =
         btoa(
             unescape(
@@ -3847,19 +3321,14 @@ async function saveGitHubFile(
             )
         );
 
-
     const body = {
         message,
         content:encoded
     };
 
-
     if (sha) {
-
-        body.sha =
-            sha;
+        body.sha = sha;
     }
-
 
     const response =
         await githubRequest(
@@ -3879,22 +3348,18 @@ async function saveGitHubFile(
             }
         );
 
-
     return response.json();
-}
 
+}
 
 /* =========================================
    ИЗОБРАЖЕНИЯ
-   ========================================= */
+========================================= */
 
-async function uploadGitHubImage(
-    file
-) {
+async function uploadGitHubImage(file) {
 
     const repository =
         getGitHubRepository();
-
 
     const extension =
         file.name.includes(".")
@@ -3904,33 +3369,26 @@ async function uploadGitHubImage(
                 .toLowerCase()
             : "png";
 
-
     const filename =
         `news-${Date.now()}-${Math.random()
             .toString(36)
             .slice(2,10)}.${extension}`;
 
-
     const path =
         `${IMAGE_FOLDER}/${filename}`;
-
 
     const buffer =
         await file.arrayBuffer();
 
-
     let binary = "";
-
 
     const bytes =
         new Uint8Array(
             buffer
         );
 
-
     const chunkSize =
         0x8000;
-
 
     for (
         let i = 0;
@@ -3948,8 +3406,8 @@ async function uploadGitHubImage(
                     )
                 )
             );
-    }
 
+    }
 
     await githubRequest(
         `https://api.github.com/repos/${repository.owner}/${repository.repo}/contents/${path}`,
@@ -3972,19 +3430,17 @@ async function uploadGitHubImage(
         }
     );
 
-
     return path;
-}
 
+}
 
 /* =========================================
    СОХРАНЕНИЕ
-   ========================================= */
+========================================= */
 
 async function saveSiteDataToGitHub() {
 
     let sha = null;
-
 
     try {
 
@@ -3993,29 +3449,21 @@ async function saveSiteDataToGitHub() {
                 DATA_FILE
             );
 
-
         sha =
             existing.sha;
 
     } catch {}
 
-
     const data = {
 
         MLText,
-
         OrText,
-
         Info,
-
         Rules,
-
         AssessmentSystem,
-
         News
 
     };
-
 
     await saveGitHubFile(
         DATA_FILE,
@@ -4030,12 +3478,12 @@ async function saveSiteDataToGitHub() {
 
         "Обновлены данные RandomGDPS"
     );
-}
 
+}
 
 /* =========================================
    ПОЛЯ АДМИНКИ
-   ========================================= */
+========================================= */
 
 function fillAdminFields() {
 
@@ -4044,68 +3492,55 @@ function fillAdminFields() {
     ).value =
         MLText;
 
-
     document.getElementById(
         "adminOrText"
     ).value =
         OrText;
-
 
     document.getElementById(
         "adminInfoText"
     ).value =
         Info;
 
-
     document.getElementById(
         "adminRulesText"
     ).value =
         Rules;
-
 
     document.getElementById(
         "adminRatingText"
     ).value =
         AssessmentSystem;
 
-
     renderAdminNews();
+
 }
 
-
-function setAdminStatus(
-    message
-) {
+function setAdminStatus(message) {
 
     document.getElementById(
         "adminStatus"
     ).textContent =
         message;
+
 }
 
-
-async function saveAdminData(
-    message
-) {
+async function saveAdminData(message) {
 
     setAdminStatus(
         "Сохраняем изменения в GitHub..."
     );
 
-
     try {
 
         await saveSiteDataToGitHub();
-
 
         setAdminStatus(
             message ||
             "Изменения сохранены!"
         );
 
-
         updateMainInfo();
-
         renderNews();
 
     } catch (error) {
@@ -4114,13 +3549,14 @@ async function saveAdminData(
             "Ошибка сохранения: " +
             error.message
         );
-    }
-}
 
+    }
+
+}
 
 /* =========================================
    MLText
-   ========================================= */
+========================================= */
 
 document.getElementById(
     "saveMLTextButton"
@@ -4133,9 +3569,7 @@ document.getElementById(
                 "adminMLText"
             ).value;
 
-
         updateMainInfo();
-
 
         await saveAdminData(
             "Текст сохранён!"
@@ -4144,10 +3578,9 @@ document.getElementById(
     }
 );
 
-
 /* =========================================
    OrText
-   ========================================= */
+========================================= */
 
 document.getElementById(
     "saveOrTextButton"
@@ -4160,9 +3593,7 @@ document.getElementById(
                 "adminOrText"
             ).value;
 
-
         updateMainInfo();
-
 
         await saveAdminData(
             "Текст под «или» сохранён!"
@@ -4171,10 +3602,9 @@ document.getElementById(
     }
 );
 
-
 /* =========================================
    ДОБАВЛЕНИЕ НОВОСТИ
-   ========================================= */
+========================================= */
 
 document.getElementById(
     "addNewsButton"
@@ -4187,48 +3617,40 @@ document.getElementById(
                 "newNewsTitle"
             ).value.trim();
 
-
         const date =
             document.getElementById(
                 "newNewsDate"
             ).value.trim();
-
 
         const info =
             document.getElementById(
                 "newNewsInfo"
             ).value.trim();
 
-
         const timer =
             document.getElementById(
                 "newNewsTimer"
             ).value.trim();
-
 
         const timeInput =
             document.getElementById(
                 "newNewsTime"
             );
 
-
         const main =
             document.getElementById(
                 "newNewsMain"
             ).checked;
-
 
         const imageInput =
             document.getElementById(
                 "newNewsImage"
             );
 
-
         const time =
             Number(
                 timeInput.value
             );
-
 
         if (!title) {
 
@@ -4237,8 +3659,8 @@ document.getElementById(
             );
 
             return;
-        }
 
+        }
 
         if (
             !Number.isFinite(time) ||
@@ -4250,8 +3672,8 @@ document.getElementById(
             );
 
             return;
-        }
 
+        }
 
         try {
 
@@ -4259,9 +3681,7 @@ document.getElementById(
                 "Добавляем новость..."
             );
 
-
             let imagePath = "";
-
 
             if (
                 imageInput.files.length
@@ -4271,13 +3691,12 @@ document.getElementById(
                     "Загружаем изображение..."
                 );
 
-
                 imagePath =
                     await uploadGitHubImage(
                         imageInput.files[0]
                     );
-            }
 
+            }
 
             const newNews = {
 
@@ -4307,61 +3726,48 @@ document.getElementById(
 
             };
 
-
             News.push(
                 newNews
             );
-
 
             News =
                 News.map(
                     prepareNews
                 );
 
-
             PokazanoNovostei = 3;
-
 
             await saveAdminData(
                 "Новость добавлена!"
             );
 
-
             document.getElementById(
                 "newNewsTitle"
             ).value = "";
-
 
             document.getElementById(
                 "newNewsDate"
             ).value = "";
 
-
             document.getElementById(
                 "newNewsInfo"
             ).value = "";
-
 
             document.getElementById(
                 "newNewsTimer"
             ).value = "";
 
-
             document.getElementById(
                 "newNewsTime"
             ).value = "";
-
 
             document.getElementById(
                 "newNewsMain"
             ).checked = false;
 
-
             imageInput.value = "";
 
-
             renderAdminNews();
-
             updateNewsTimers();
 
         } catch (error) {
@@ -4370,15 +3776,15 @@ document.getElementById(
                 "Ошибка: " +
                 error.message
             );
+
         }
 
     }
 );
 
-
 /* =========================================
    АДМИН НОВОСТИ
-   ========================================= */
+========================================= */
 
 function renderAdminNews() {
 
@@ -4387,13 +3793,10 @@ function renderAdminNews() {
             "adminNewsList"
         );
 
-
     container.innerHTML = "";
-
 
     const sorted =
         getSortedNews();
-
 
     if (!sorted.length) {
 
@@ -4401,8 +3804,8 @@ function renderAdminNews() {
             '<div class="admin-status">Новостей пока нет.</div>';
 
         return;
-    }
 
+    }
 
     sorted.forEach(
         item => {
@@ -4410,20 +3813,16 @@ function renderAdminNews() {
             const news =
                 item.news;
 
-
             const index =
                 item.originalIndex;
-
 
             const card =
                 document.createElement(
                     "div"
                 );
 
-
             card.className =
                 "admin-news-card";
-
 
             card.innerHTML = `
 
@@ -4540,48 +3939,40 @@ function renderAdminNews() {
                 </div>
             `;
 
-
             const titleInput =
                 card.querySelector(
                     '[data-field="title"]'
                 );
-
 
             const dateInput =
                 card.querySelector(
                     '[data-field="date"]'
                 );
 
-
             const infoInput =
                 card.querySelector(
                     '[data-field="info"]'
                 );
-
 
             const timerInput =
                 card.querySelector(
                     '[data-field="timer"]'
                 );
 
-
             const timeInput =
                 card.querySelector(
                     '[data-field="time"]'
                 );
-
 
             const mainInput =
                 card.querySelector(
                     '[data-field="main"]'
                 );
 
-
             const imageInput =
                 card.querySelector(
                     '[data-field="image"]'
                 );
-
 
             card.querySelector(
                 '[data-action="save"]'
@@ -4595,11 +3986,9 @@ function renderAdminNews() {
                             "Сохраняем новость..."
                         );
 
-
                         let image =
                             news.Изображение ||
                             "";
-
 
                         if (
                             imageInput.files.length
@@ -4609,14 +3998,13 @@ function renderAdminNews() {
                                 await uploadGitHubImage(
                                     imageInput.files[0]
                                 );
-                        }
 
+                        }
 
                         const time =
                             Number(
                                 timeInput.value
                             );
-
 
                         if (
                             !Number.isFinite(time) ||
@@ -4628,14 +4016,13 @@ function renderAdminNews() {
                             );
 
                             return;
-                        }
 
+                        }
 
                         const oldTime =
                             Number(
                                 news.Время || 0
                             );
-
 
                         if (
                             oldTime !== time
@@ -4643,8 +4030,8 @@ function renderAdminNews() {
 
                             news.Создано =
                                 Date.now();
-                        }
 
+                        }
 
                         News[index] = {
 
@@ -4677,20 +4064,16 @@ function renderAdminNews() {
 
                         };
 
-
                         News[index] =
                             prepareNews(
                                 News[index]
                             );
 
-
                         await saveAdminData(
                             "Новость сохранена!"
                         );
 
-
                         renderAdminNews();
-
                         updateNewsTimers();
 
                     } catch (error) {
@@ -4699,11 +4082,11 @@ function renderAdminNews() {
                             "Ошибка: " +
                             error.message
                         );
+
                     }
 
                 }
             );
-
 
             card.querySelector(
                 '[data-action="delete"]'
@@ -4716,27 +4099,22 @@ function renderAdminNews() {
                             "Удалить эту новость?"
                         )
                     ) {
-
                         return;
                     }
-
 
                     News.splice(
                         index,
                         1
                     );
 
-
                     await saveAdminData(
                         "Новость удалена!"
                     );
-
 
                     renderAdminNews();
 
                 }
             );
-
 
             container.appendChild(
                 card
@@ -4744,12 +4122,12 @@ function renderAdminNews() {
 
         }
     );
-}
 
+}
 
 /* =========================================
    INFO
-   ========================================= */
+========================================= */
 
 document.getElementById(
     "saveInfoButton"
@@ -4762,9 +4140,7 @@ document.getElementById(
                 "adminInfoText"
             ).value;
 
-
         updateMainInfo();
-
 
         await saveAdminData(
             "Информация сохранена!"
@@ -4773,10 +4149,9 @@ document.getElementById(
     }
 );
 
-
 /* =========================================
    RULES
-   ========================================= */
+========================================= */
 
 document.getElementById(
     "saveRulesButton"
@@ -4789,7 +4164,6 @@ document.getElementById(
                 "adminRulesText"
             ).value;
 
-
         await saveAdminData(
             "Правила сохранены!"
         );
@@ -4797,10 +4171,9 @@ document.getElementById(
     }
 );
 
-
 /* =========================================
    ОЦЕНИВАНИЕ
-   ========================================= */
+========================================= */
 
 document.getElementById(
     "saveRatingButton"
@@ -4813,7 +4186,6 @@ document.getElementById(
                 "adminRatingText"
             ).value;
 
-
         await saveAdminData(
             "Система оценивания сохранена!"
         );
@@ -4821,10 +4193,9 @@ document.getElementById(
     }
 );
 
-
 /* =========================================
    ВЫХОД
-   ========================================= */
+========================================= */
 
 document.getElementById(
     "logoutButton"
@@ -4836,11 +4207,9 @@ document.getElementById(
             "randomgdps_github_token"
         );
 
-
         adminPanel.classList.remove(
             "active"
         );
-
 
         openPage(
             "home"
@@ -4849,10 +4218,9 @@ document.getElementById(
     }
 );
 
-
 /* =========================================
    ЗАПУСК
-   ========================================= */
+========================================= */
 
 updateMainInfo();
 
@@ -4869,4 +4237,4 @@ openPage("home");
 </script>
 
 </body>
-  </html>
+        </html>
