@@ -125,16 +125,6 @@ main {
     overflow:hidden;
 }
 
-/*
-    ВАЖНО:
-    main больше НЕ скроллится.
-
-    Каждая .page имеет собственный скролл.
-    Поэтому при переключении страниц браузер
-    не может сохранить scrollTop старой страницы
-    и перенести его на новую.
-*/
-
 .page {
     display:none;
     width:100%;
@@ -493,19 +483,6 @@ main {
     white-space:pre-wrap;
 }
 
-.news-timer {
-    margin-top:16px;
-    padding-top:13px;
-    border-top:1px solid var(--border);
-    color:#8f98ad;
-    font-size:13px;
-}
-
-.news-timer-value {
-    color:#bcb8ff;
-    font-variant-numeric:tabular-nums;
-}
-
 .highlight {
     border-radius:3px;
     background:rgba(113,104,255,.35);
@@ -694,13 +671,6 @@ main {
 }
 
 /* CHECKBOX */
-
-/*
-    Больше нет скрытого input внутри label.
-
-    Сам input является настоящим видимым
-    элементом управления.
-*/
 
 .admin-checkbox {
     display:flex;
@@ -1306,21 +1276,6 @@ Windows
     placeholder="Информация"
 ></textarea>
 
-<input
-    id="newNewsTimer"
-    class="admin-input"
-    placeholder="Таймер"
->
-
-<input
-    id="newNewsTime"
-    class="admin-input"
-    type="number"
-    min="0"
-    step="1"
-    placeholder="Время в минутах"
->
-
 <div class="admin-checkbox">
 
 <input
@@ -1490,8 +1445,6 @@ let PokazanoNovostei = 3;
 let SearchResults = [];
 let SearchIndex = -1;
 
-let TimerInterval = null;
-
 const DATA_FILE = "randomgdps-data.json";
 const IMAGE_FOLDER = "news-images";
 
@@ -1621,70 +1574,12 @@ async function loadSiteData() {
 
         News =
             Array.isArray(data.News)
-                ? data.News.map(news => {
-
-                    const prepared = {
-
-                        Заголовок:
-                            String(
-                                news?.Заголовок || ""
-                            ),
-
-                        Изображение:
-                            String(
-                                news?.Изображение || ""
-                            ),
-
-                        Дата:
-                            String(
-                                news?.Дата || ""
-                            ),
-
-                        Таймер:
-                            String(
-                                news?.Таймер || ""
-                            ),
-
-                        Время:
-                            Number(
-                                news?.Время || 0
-                            ),
-
-                        Главная:
-                            Boolean(
-                                news?.Главная
-                            ),
-
-                        Информация:
-                            String(
-                                news?.Информация || ""
-                            ),
-
-                        Создано:
-                            Number(
-                                news?.Создано || 0
-                            )
-
-                    };
-
-                    if (
-                        prepared.Создано <= 0 &&
-                        prepared.Время > 0
-                    ) {
-
-                        prepared.Создано =
-                            Date.now();
-
-                    }
-
-                    return prepared;
-
-                })
+                ? data.News.map(
+                    news => prepareNews(news)
+                )
                 : [];
 
         updateMainInfo();
-
-        removeExpiredNews(false);
 
         renderNews();
 
@@ -1724,16 +1619,6 @@ function prepareNews(news) {
                 news?.Дата || ""
             ),
 
-        Таймер:
-            String(
-                news?.Таймер || ""
-            ),
-
-        Время:
-            Number(
-                news?.Время || 0
-            ),
-
         Главная:
             Boolean(
                 news?.Главная
@@ -1742,149 +1627,9 @@ function prepareNews(news) {
         Информация:
             String(
                 news?.Информация || ""
-            ),
-
-        Создано:
-            Number(
-                news?.Создано || 0
             )
 
     };
-
-}
-
-function isNewsExpired(news) {
-
-    const minutes =
-        Number(news.Время);
-
-    const created =
-        Number(news.Создано);
-
-    if (
-        !Number.isFinite(minutes) ||
-        minutes <= 0 ||
-        !Number.isFinite(created) ||
-        created <= 0
-    ) {
-        return false;
-    }
-
-    return Date.now() >=
-        created +
-        minutes * 60 * 1000;
-
-}
-
-function removeExpiredNews(
-    saveToGitHub = true
-) {
-
-    const oldLength =
-        News.length;
-
-    News =
-        News.filter(
-            news =>
-                !isNewsExpired(news)
-        );
-
-    if (
-        oldLength !== News.length
-    ) {
-
-        renderNews();
-        renderAdminNews();
-
-        if (
-            saveToGitHub &&
-            getGitHubToken()
-        ) {
-
-            saveSiteDataToGitHub()
-                .catch(
-                    console.error
-                );
-
-        }
-
-    }
-
-}
-
-function getNewsRemainingSeconds(news) {
-
-    const minutes =
-        Number(news.Время);
-
-    const created =
-        Number(news.Создано);
-
-    if (
-        !Number.isFinite(minutes) ||
-        minutes <= 0 ||
-        !Number.isFinite(created) ||
-        created <= 0
-    ) {
-        return null;
-    }
-
-    return Math.max(
-        0,
-        Math.ceil(
-            (
-                created +
-                minutes * 60 * 1000 -
-                Date.now()
-            ) / 1000
-        )
-    );
-
-}
-
-function formatNewsTime(seconds) {
-
-    seconds =
-        Math.max(
-            0,
-            Math.floor(seconds)
-        );
-
-    const s =
-        String(
-            seconds % 60
-        ).padStart(2,"0");
-
-    const totalMinutes =
-        Math.floor(
-            seconds / 60
-        );
-
-    const m =
-        String(
-            totalMinutes % 60
-        ).padStart(2,"0");
-
-    const totalHours =
-        Math.floor(
-            totalMinutes / 60
-        );
-
-    const h =
-        String(
-            totalHours % 24
-        ).padStart(2,"0");
-
-    const d =
-        Math.floor(
-            totalHours / 24
-        );
-
-    if (d > 0) {
-        return `${d}:${h}:${m}:${s}`;
-    }
-
-    return `${h}:${m}:${s}`;
 
 }
 
@@ -1901,18 +1646,6 @@ const pages =
     );
 
 function openPage(pageName) {
-
-    /*
-        Здесь намеренно НЕТ:
-        scrollTo()
-        scrollIntoView()
-        scrollTop
-        requestAnimationFrame()
-
-        Страница просто меняется.
-        Её собственная позиция прокрутки
-        остаётся браузеру.
-    */
 
     pages.forEach(page => {
 
@@ -2087,16 +1820,7 @@ function getSortedNews() {
 
             }
 
-            return (
-                Number(
-                    b.news.Создано
-                ) || 0
-            ) -
-            (
-                Number(
-                    a.news.Создано
-                ) || 0
-            );
+            return 0;
 
         });
 
@@ -2179,9 +1903,11 @@ function renderNews() {
             item.index;
 
         if (news.Главная) {
+
             card.classList.add(
                 "main-news"
             );
+
         }
 
         if (news.Изображение) {
@@ -2291,38 +2017,6 @@ function renderNews() {
             info
         );
 
-        if (
-            news.Таймер &&
-            Number(news.Время) > 0
-        ) {
-
-            const timer =
-                document.createElement(
-                    "div"
-                );
-
-            timer.className =
-                "news-timer";
-
-            timer.innerHTML =
-                escapeHtml(
-                    news.Таймер
-                ) +
-                " " +
-                `<span class="news-timer-value" data-news-index="${item.index}">` +
-                formatNewsTime(
-                    getNewsRemainingSeconds(
-                        news
-                    ) || 0
-                ) +
-                "</span>";
-
-            content.appendChild(
-                timer
-            );
-
-        }
-
         card.appendChild(
             content
         );
@@ -2338,88 +2032,6 @@ function renderNews() {
         normalNews.length
             ? "block"
             : "none";
-
-}
-
-/* TIMERS */
-
-function updateNewsTimers() {
-
-    let expired = false;
-
-    News.forEach(news => {
-
-        if (
-            isNewsExpired(news)
-        ) {
-
-            expired = true;
-
-        }
-
-    });
-
-    if (expired) {
-
-        removeExpiredNews(
-            true
-        );
-
-        return;
-
-    }
-
-    document
-        .querySelectorAll(
-            ".news-timer-value"
-        )
-        .forEach(element => {
-
-            const index =
-                Number(
-                    element.dataset.newsIndex
-                );
-
-            const news =
-                News[index];
-
-            if (!news) {
-                return;
-            }
-
-            const remaining =
-                getNewsRemainingSeconds(
-                    news
-                );
-
-            if (remaining !== null) {
-
-                element.textContent =
-                    formatNewsTime(
-                        remaining
-                    );
-
-            }
-
-        });
-
-}
-
-function startNewsTimer() {
-
-    if (TimerInterval) {
-
-        clearInterval(
-            TimerInterval
-        );
-
-    }
-
-    TimerInterval =
-        setInterval(
-            updateNewsTimers,
-            1000
-        );
 
 }
 
@@ -2767,14 +2379,6 @@ const newNewsImageButton =
     document.getElementById(
         "newNewsImageButton"
     );
-
-/*
-    Не используем label для открытия file input.
-
-    Кнопка вызывает input.click().
-    Сам input находится далеко за пределами
-    экрана, поэтому браузеру нечего прокручивать.
-*/
 
 newNewsImageButton.addEventListener(
     "click",
@@ -3315,18 +2919,6 @@ document
                     "newNewsInfo"
                 ).value.trim();
 
-            const timer =
-                document.getElementById(
-                    "newNewsTimer"
-                ).value.trim();
-
-            const time =
-                Number(
-                    document.getElementById(
-                        "newNewsTime"
-                    ).value
-                );
-
             const main =
                 document.getElementById(
                     "newNewsMain"
@@ -3341,19 +2933,6 @@ document
 
                 setAdminStatus(
                     "Укажи заголовок новости."
-                );
-
-                return;
-
-            }
-
-            if (
-                !Number.isFinite(time) ||
-                time < 0
-            ) {
-
-                setAdminStatus(
-                    "Время должно быть числом."
                 );
 
                 return;
@@ -3386,11 +2965,8 @@ document
                         Заголовок:title,
                         Изображение:image,
                         Дата:date,
-                        Таймер:timer,
-                        Время:time,
                         Главная:main,
-                        Информация:info,
-                        Создано:Date.now()
+                        Информация:info
 
                     })
                 );
@@ -3409,14 +2985,6 @@ document
 
                 document.getElementById(
                     "newNewsInfo"
-                ).value = "";
-
-                document.getElementById(
-                    "newNewsTimer"
-                ).value = "";
-
-                document.getElementById(
-                    "newNewsTime"
                 ).value = "";
 
                 document.getElementById(
@@ -3487,14 +3055,6 @@ function renderAdminNews() {
         card.className =
             "admin-news-card";
 
-        const uniqueId =
-            "news-image-" +
-            index +
-            "-" +
-            Math.random()
-                .toString(36)
-                .slice(2);
-
         card.innerHTML = `
 
             <strong>
@@ -3525,24 +3085,6 @@ function renderAdminNews() {
             >${escapeHtml(
                 news.Информация
             )}</textarea>
-
-            <input
-                class="admin-input"
-                value="${escapeHtml(
-                    news.Таймер
-                )}"
-                data-field="timer"
-            >
-
-            <input
-                class="admin-input"
-                type="number"
-                min="0"
-                value="${Number(
-                    news.Время || 0
-                )}"
-                data-field="time"
-            >
 
             <div class="admin-checkbox">
 
@@ -3579,7 +3121,6 @@ function renderAdminNews() {
                 <div class="custom-file">
 
                     <input
-                        id="${uniqueId}"
                         class="custom-file-input"
                         type="file"
                         accept="image/*"
@@ -3644,12 +3185,6 @@ function renderAdminNews() {
                 "[data-file-name]"
             );
 
-        /*
-            Важно:
-            кнопка сама вызывает file input.
-            Label здесь больше нет.
-        */
-
         imageButton.addEventListener(
             "click",
             () => {
@@ -3711,29 +3246,9 @@ function renderAdminNews() {
                                 '[data-field="info"]'
                             );
 
-                        const timerInput =
-                            card.querySelector(
-                                '[data-field="timer"]'
-                            );
-
-                        const timeInput =
-                            card.querySelector(
-                                '[data-field="time"]'
-                            );
-
                         const mainInput =
                             card.querySelector(
                                 '[data-field="main"]'
-                            );
-
-                        const oldTime =
-                            Number(
-                                news.Время || 0
-                            );
-
-                        const newTime =
-                            Number(
-                                timeInput.value
                             );
 
                         let image =
@@ -3755,16 +3270,6 @@ function renderAdminNews() {
 
                         }
 
-                        if (
-                            oldTime !==
-                            newTime
-                        ) {
-
-                            news.Создано =
-                                Date.now();
-
-                        }
-
                         News[index] =
                             prepareNews({
 
@@ -3777,21 +3282,11 @@ function renderAdminNews() {
                                 Дата:
                                     dateInput.value.trim(),
 
-                                Таймер:
-                                    timerInput.value.trim(),
-
-                                Время:
-                                    newTime,
-
                                 Главная:
                                     mainInput.checked,
 
                                 Информация:
-                                    infoInput.value.trim(),
-
-                                Создано:
-                                    news.Создано ||
-                                    Date.now()
+                                    infoInput.value.trim()
 
                             });
 
@@ -3918,8 +3413,6 @@ updateMainInfo();
 renderNews();
 
 updateSearchStatus();
-
-startNewsTimer();
 
 loadSiteData();
 
