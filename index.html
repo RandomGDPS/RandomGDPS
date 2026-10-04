@@ -3,894 +3,530 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
 <title>RandomGDPS</title>
 
 <style>
-:root {
-    --bg:#080a12;
-    --bg2:#0d101b;
-    --panel:#111522;
-    --panel-hover:#171c2d;
-    --text:#fff;
-    --muted:#9da6bd;
-    --accent:#7168ff;
-    --accent-light:#928bff;
-    --border:rgba(255,255,255,.075);
-    --border-hover:rgba(255,255,255,.14);
-    --radius:16px;
-}
-
 * {
-    box-sizing:border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html,
 body {
-    width:100%;
-    height:100%;
-    margin:0;
-    overflow:hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #090909;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
 }
 
 body {
-    min-height:100vh;
-    background:
-        radial-gradient(circle at 50% -20%, rgba(113,104,255,.13), transparent 38%),
-        var(--bg);
-    color:var(--text);
-    font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    -webkit-tap-highlight-color:transparent;
+    overscroll-behavior: none;
 }
 
 button,
 input,
 textarea {
-    font:inherit;
+    font: inherit;
 }
 
 button {
-    -webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
 
 button:focus,
-input:focus,
-textarea:focus {
-    outline:none;
+button:active {
+    outline: none;
 }
 
-/* HEADER */
-
-header {
-    position:relative;
-    z-index:100;
-    width:100%;
-    height:62px;
-    background:rgba(8,10,18,.78);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-    border-bottom:1px solid var(--border);
-}
-
-.nav {
-    width:min(760px,calc(100% - 20px));
-    height:100%;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:4px;
-    white-space:nowrap;
-}
-
-.nav-button {
-    position:relative;
-    flex:1 1 0;
-    min-width:0;
-    border:0;
-    background:transparent;
-    color:#9da6bd;
-    padding:17px 8px;
-    cursor:pointer;
-    font-size:14px;
-    font-weight:500;
-    transition:color .2s ease,background .2s ease;
-}
-
-.nav-button:hover {
-    color:#fff;
-}
-
-.nav-button.active {
-    color:#fff;
-}
-
-.nav-button.active::after {
-    content:"";
-    position:absolute;
-    left:22%;
-    right:22%;
-    bottom:-1px;
-    height:2px;
-    border-radius:2px;
-    background:linear-gradient(90deg,var(--accent),var(--accent-light));
-    box-shadow:0 0 12px rgba(113,104,255,.65);
-}
-
-/* MAIN */
-
-main {
-    width:min(1180px,calc(100% - 30px));
-    height:calc(100vh - 62px);
-    margin:auto;
-    overflow:hidden;
+.app {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #090909;
 }
 
 .page {
-    display:none;
-    width:100%;
-    height:calc(100vh - 62px);
-    min-height:0;
-    overflow-y:auto;
-    overflow-x:hidden;
-    overscroll-behavior:contain;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:thin;
-    scrollbar-color:rgba(113,104,255,.4) transparent;
-}
-
-.page::-webkit-scrollbar {
-    width:7px;
-}
-
-.page::-webkit-scrollbar-track {
-    background:transparent;
-}
-
-.page::-webkit-scrollbar-thumb {
-    background:rgba(113,104,255,.4);
-    border-radius:10px;
-}
-
-.page::-webkit-scrollbar-thumb:hover {
-    background:rgba(113,104,255,.6);
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 35px 18px 125px;
+    overflow: hidden;
 }
 
 .page.active {
-    display:block;
+    display: flex;
 }
 
-/* HOME */
-
-.home {
-    min-height:calc(100vh - 62px);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:40px 20px;
+#homePage {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
 }
 
-.home-greeting {
-    margin-bottom:14px;
-    color:#9da6bd;
-    font-size:18px;
-    font-weight:500;
+.welcome {
+    font-size: clamp(25px, 6vw, 42px);
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
 }
 
-.home h1 {
-    margin:0;
-    font-size:clamp(42px,7vw,78px);
-    line-height:1;
-    font-weight:700;
-    letter-spacing:-3px;
-    background:linear-gradient(135deg,#ffffff,#928bff);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
+.continue-text {
+    margin-top: 14px;
+    max-width: 650px;
+    color: #999;
+    font-size: 15px;
+    line-height: 1.5;
 }
 
-.home-subtext {
-    margin-top:20px;
-    color:var(--muted);
-    font-size:18px;
-    font-weight:400;
-    min-height:24px;
+#downloadPage,
+#newsPage,
+#infoPage {
+    flex-direction: column;
+    align-items: center;
 }
 
-.admin-home-button {
-    position:fixed;
-    right:22px;
-    bottom:22px;
-    border:1px solid var(--border);
-    border-radius:13px;
-    background:rgba(17,21,34,.9);
-    color:#cfd4e3;
-    padding:11px 16px;
-    cursor:pointer;
-    font-size:14px;
-    font-weight:500;
-    box-shadow:0 10px 30px rgba(0,0,0,.25);
-    transition:background .2s ease,border-color .2s ease,transform .2s ease;
-}
-
-.admin-home-button:hover {
-    background:var(--panel-hover);
-    border-color:var(--border-hover);
-    transform:translateY(-2px);
-}
-
-/* DOWNLOAD */
-
-.download-page {
-    padding:90px 20px;
-    text-align:center;
-}
-
-.section-title {
-    margin:0 0 12px;
-    font-size:clamp(30px,5vw,48px);
-    font-weight:700;
-    letter-spacing:-1px;
-}
-
-.section-description {
-    margin:0 auto 35px;
-    max-width:600px;
-    color:var(--muted);
-    font-size:16px;
+.download-title,
+.news-title,
+.info-title {
+    margin: 25px 0 30px;
+    font-size: 30px;
+    font-weight: 700;
+    flex-shrink: 0;
 }
 
 .download-buttons {
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:12px;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
-.primary-button {
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-width:190px;
-    padding:13px 22px;
-    border:0;
-    border-radius:13px;
-    background:linear-gradient(135deg,#665cff,#827aff);
-    color:#fff;
-    text-decoration:none;
-    font-size:15px;
-    font-weight:600;
-    box-shadow:0 10px 30px rgba(113,104,255,.18);
-    transition:transform .2s ease,box-shadow .2s ease;
+.download-button,
+.add-news-button,
+.edit-info-button,
+.modal-button,
+.news-action {
+    border: 0;
+    border-radius: 16px;
+    padding: 15px 18px;
+    background: #1c1c1c;
+    color: #fff;
+    cursor: pointer;
+    transition: transform .15s ease, background .2s ease;
 }
 
-.primary-button:hover {
-    transform:translateY(-2px);
-    box-shadow:0 14px 34px rgba(113,104,255,.28);
+.download-button:hover,
+.add-news-button:hover,
+.edit-info-button:hover,
+.modal-button:hover,
+.news-action:hover {
+    background: #282828;
 }
 
-.or-text {
-    margin:18px 0 6px;
-    color:#6f7582;
-    font-size:16px;
-    font-weight:700;
+.download-button:active,
+.add-news-button:active,
+.edit-info-button:active,
+.modal-button:active,
+.news-action:active {
+    transform: scale(.97);
 }
 
-/* STATS */
-
-.stats-page {
-    min-height:calc(100vh - 62px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
+.bottom-menu {
+    position: fixed;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px;
+    border-radius: 22px;
+    background: rgba(25, 25, 25, .92);
+    border: 1px solid rgba(255,255,255,.07);
+    box-shadow: 0 12px 35px rgba(0,0,0,.45);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 }
 
-.stats {
-    color:#fff;
-    font-size:42px;
-    font-weight:500;
+.tab-button {
+    border: 0;
+    outline: none;
+    min-width: 82px;
+    padding: 12px 14px;
+    border-radius: 17px;
+    background: transparent;
+    color: #888;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background .2s ease, color .2s ease, transform .15s ease;
 }
 
-/* NEWS */
-
-.news-page {
-    padding:70px 0 90px;
+.tab-button:hover {
+    color: #fff;
 }
 
-.news-header {
-    text-align:center;
-    margin-bottom:30px;
+.tab-button:active {
+    transform: scale(.94);
 }
 
-.news-header h2 {
-    margin:0 0 10px;
-    font-size:clamp(30px,5vw,48px);
-    font-weight:700;
-    letter-spacing:-1px;
+.tab-button.active {
+    background: #fff;
+    color: #090909;
 }
 
-.news-header p {
-    margin:0;
-    color:var(--muted);
-    font-size:16px;
+.news-container {
+    width: 100%;
+    max-width: 760px;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
-.search-container {
-    max-width:720px;
-    margin:0 auto 28px;
-    display:flex;
-    align-items:center;
-    gap:8px;
+.news-search-row {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-shrink: 0;
 }
 
-.search-box {
-    position:relative;
-    flex:1;
+.news-search {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid #252525;
+    border-radius: 15px;
+    background: #151515;
+    color: #fff;
+    padding: 14px 16px;
+    outline: none;
 }
 
-#newsSearch {
-    width:100%;
-    padding:13px 45px 13px 15px;
-    border:1px solid var(--border);
-    border-radius:13px;
-    background:var(--panel);
-    color:#fff;
-    font-size:15px;
+.news-search:focus {
+    border-color: #444;
 }
 
-#newsSearch::placeholder {
-    color:#6f7582;
+.clear-search {
+    width: 48px;
+    border: 0;
+    border-radius: 15px;
+    background: #151515;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 20px;
 }
 
-#newsSearch:focus {
-    border-color:rgba(113,104,255,.5);
-    background:#131827;
-}
-
-#clearSearch {
-    position:absolute;
-    right:10px;
-    top:50%;
-    transform:translateY(-50%);
-    width:28px;
-    height:28px;
-    border:0;
-    border-radius:8px;
-    background:transparent;
-    color:#777f94;
-    cursor:pointer;
-    font-size:20px;
-}
-
-.search-arrow {
-    position:relative;
-    width:42px;
-    height:42px;
-    flex:0 0 42px;
-    border:1px solid var(--border);
-    border-radius:12px;
-    background:var(--panel);
-    cursor:pointer;
-}
-
-.search-arrow:disabled {
-    opacity:.35;
-    cursor:default;
-}
-
-.search-arrow::before {
-    content:"";
-    position:absolute;
-    width:8px;
-    height:8px;
-    border-left:2px solid #fff;
-    border-top:2px solid #fff;
-    left:50%;
-    top:50%;
-}
-
-.search-arrow.up::before {
-    transform:translate(-50%,-25%) rotate(45deg);
-}
-
-.search-arrow.down::before {
-    transform:translate(-50%,-75%) rotate(225deg);
-}
-
-#searchStatus {
-    min-width:55px;
-    text-align:center;
-    color:#858da1;
-    font-size:13px;
+.add-news-button {
+    width: 100%;
+    margin-bottom: 18px;
+    flex-shrink: 0;
 }
 
 .news-list {
-    display:grid;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 10px;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
 .news-card {
-    overflow:hidden;
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    background:linear-gradient(180deg,rgba(17,21,34,.98),rgba(13,16,27,.98));
-    box-shadow:0 12px 35px rgba(0,0,0,.16);
-    transition:transform .2s ease,border-color .2s ease;
-}
-
-.news-card:hover {
-    transform:translateY(-3px);
-    border-color:var(--border-hover);
-}
-
-.news-card.main-news {
-    border-color:rgba(113,104,255,.4);
-}
-
-.news-card.search-active {
-    border-color:rgba(146,139,255,.9);
-    box-shadow:
-        0 0 0 2px rgba(113,104,255,.2),
-        0 16px 45px rgba(113,104,255,.18);
+    overflow: hidden;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: #151515;
+    border: 1px solid rgba(255,255,255,.05);
 }
 
 .news-image {
-    display:block;
-    width:100%;
-    height:auto;
-    max-height:600px;
-    object-fit:contain;
-    background:#0a0d15;
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 600px;
+    object-fit: contain;
 }
 
-.news-content {
-    padding:18px;
+.news-text {
+    padding: 15px 18px 17px;
+    text-align: left;
 }
 
 .news-main-label {
-    display:inline-block;
-    margin-bottom:10px;
-    padding:5px 9px;
-    border-radius:7px;
-    background:rgba(113,104,255,.13);
-    color:#aaa5ff;
-    font-size:12px;
-    font-weight:600;
+    display: inline-block;
+    margin-bottom: 7px;
+    padding: 5px 9px;
+    border-radius: 9px;
+    background: #fff;
+    color: #090909;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.news-heading-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.news-heading {
+    margin: 0;
+    font-size: 19px;
+    line-height: 1.25;
 }
 
 .news-date {
-    margin-bottom:8px;
-    color:#6f788e;
-    font-size:13px;
-}
-
-.news-title {
-    margin:0 0 10px;
-    color:#fff;
-    font-size:20px;
-    font-weight:600;
-    line-height:1.3;
+    flex-shrink: 0;
+    color: #777;
+    font-size: 12px;
+    white-space: nowrap;
 }
 
 .news-info {
-    margin:0;
-    color:#aeb6c9;
-    font-size:14px;
-    line-height:1.6;
-    white-space:pre-wrap;
+    margin: 9px 0 0;
+    color: #bbb;
+    font-size: 14px;
+    line-height: 1.45;
+    white-space: pre-wrap;
 }
 
-.highlight {
-    border-radius:3px;
-    background:rgba(113,104,255,.35);
-    color:#fff;
-    padding:1px 2px;
+.news-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
 }
 
-.no-news {
-    grid-column:1/-1;
-    padding:80px 20px;
-    text-align:center;
-    color:#70798e;
-    font-size:17px;
+.news-action {
+    padding: 9px 12px;
+    border-radius: 11px;
+    font-size: 13px;
 }
 
-#showMore {
-    display:block;
-    margin:30px auto 0;
-    padding:11px 20px;
-    border:1px solid var(--border);
-    border-radius:12px;
-    background:var(--panel);
-    color:#cbd1df;
-    cursor:pointer;
-    font-size:14px;
-}
-
-/* INFO */
-
-.info-page {
-    padding:70px 0 90px;
+.news-action.delete {
+    background: #241515;
+    color: #ff9a9a;
 }
 
 .info-container {
-    max-width:850px;
-    margin:auto;
-}
-
-.info-container h2 {
-    margin:0 0 25px;
-    text-align:center;
-    font-size:clamp(30px,5vw,48px);
+    width: 100%;
+    max-width: 760px;
+    min-height: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .info-text {
-    color:#b9c1d3;
-    font-size:16px;
-    line-height:1.75;
-    white-space:pre-wrap;
+    width: 100%;
+    min-height: 0;
+    flex: 1;
+    padding: 20px;
+    border-radius: 20px;
+    background: #151515;
+    color: #ccc;
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: left;
+    white-space: pre-wrap;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
-.info-buttons {
-    display:flex;
-    justify-content:center;
-    gap:12px;
-    margin-top:35px;
-    flex-wrap:wrap;
+.edit-info-button {
+    margin-top: 14px;
+    width: 100%;
+    flex-shrink: 0;
 }
 
-.action-button {
-    padding:11px 18px;
-    border:1px solid var(--border);
-    border-radius:11px;
-    background:var(--panel);
-    color:#d2d7e4;
-    cursor:pointer;
-    font-size:14px;
-    font-weight:600;
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(0,0,0,.72);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
-.action-button:hover {
-    background:var(--panel-hover);
-    border-color:var(--border-hover);
+.modal-overlay.active {
+    display: flex;
 }
-
-/* MODAL */
 
 .modal {
-    position:fixed;
-    inset:0;
-    z-index:500;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    background:rgba(0,0,0,.68);
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 22px;
+    border-radius: 22px;
+    background: #151515;
+    border: 1px solid rgba(255,255,255,.07);
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
 }
 
-.modal.active {
-    display:flex;
+.modal h2 {
+    margin: 0 0 18px;
+    font-size: 22px;
 }
 
-.modal-box {
-    position:relative;
-    width:min(600px,100%);
-    max-height:min(700px,90vh);
-    overflow:auto;
-    padding:25px;
-    border:1px solid var(--border);
-    border-radius:18px;
-    background:linear-gradient(180deg,#121725,#0e121d);
-    box-shadow:0 30px 80px rgba(0,0,0,.45);
+.modal input,
+.modal textarea {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 13px 14px;
+    border: 1px solid #292929;
+    border-radius: 13px;
+    outline: none;
+    background: #0e0e0e;
+    color: #fff;
 }
 
-.modal-box h3 {
-    margin:0 40px 18px 0;
-    color:#fff;
-    font-size:24px;
+.modal textarea {
+    min-height: 110px;
+    resize: vertical;
 }
 
-.modal-content {
-    color:#b9c1d3;
-    font-size:15px;
-    line-height:1.7;
-    white-space:pre-wrap;
+.modal input:focus,
+.modal textarea:focus {
+    border-color: #444;
 }
 
-.close-modal {
-    position:absolute;
-    top:16px;
-    right:16px;
-    width:34px;
-    height:34px;
-    border:0;
-    border-radius:9px;
-    background:rgba(255,255,255,.05);
-    color:#9da6bd;
-    cursor:pointer;
-    font-size:22px;
+.modal label {
+    display: block;
+    margin-bottom: 7px;
+    color: #aaa;
+    font-size: 13px;
 }
-
-/* ADMIN */
-
-.admin-page {
-    padding:50px 0 90px;
-}
-
-.admin-panel {
-    display:none;
-    max-width:900px;
-    margin:auto;
-}
-
-.admin-panel.active {
-    display:block;
-}
-
-.admin-panel h2 {
-    margin:0 0 30px;
-    text-align:center;
-    font-size:clamp(30px,5vw,44px);
-}
-
-.admin-section {
-    margin-bottom:20px;
-    padding:20px;
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    background:var(--panel);
-}
-
-.admin-section h3 {
-    margin:0 0 14px;
-    color:#fff;
-    font-size:18px;
-}
-
-.admin-input,
-.admin-textarea {
-    width:100%;
-    margin-bottom:10px;
-    padding:12px 13px;
-    border:1px solid var(--border);
-    border-radius:10px;
-    background:#0c101a;
-    color:#fff;
-    font-size:14px;
-}
-
-.admin-textarea {
-    min-height:120px;
-    resize:vertical;
-    line-height:1.5;
-}
-
-/* CHECKBOX */
-
-.admin-checkbox {
-    display:flex;
-    align-items:center;
-    gap:10px;
-    width:max-content;
-    margin:7px 0 13px;
-    color:#b8c0d2;
-    font-size:14px;
-    font-weight:500;
-    cursor:pointer;
-    user-select:none;
-}
-
-.admin-checkbox input {
-    appearance:none;
-    -webkit-appearance:none;
-    width:20px;
-    height:20px;
-    flex:0 0 20px;
-    margin:0;
-    border:1px solid var(--border-hover);
-    border-radius:7px;
-    background:#0c101a;
-    cursor:pointer;
-    position:relative;
-}
-
-.admin-checkbox input::after {
-    content:"";
-    position:absolute;
-    left:6px;
-    top:3px;
-    width:6px;
-    height:10px;
-    border-right:2px solid #fff;
-    border-bottom:2px solid #fff;
-    transform:rotate(45deg) scale(0);
-    opacity:0;
-}
-
-.admin-checkbox input:checked {
-    background:linear-gradient(135deg,#665cff,#827aff);
-    border-color:rgba(146,139,255,.8);
-}
-
-.admin-checkbox input:checked::after {
-    transform:rotate(45deg) scale(1);
-    opacity:1;
-}
-
-/* FILE */
 
 .file-label {
-    display:block;
-    margin:8px 0 12px;
-    color:#8e97ab;
-    font-size:13px;
+    display: block;
+    margin-bottom: 12px;
+    padding: 13px 14px;
+    border-radius: 13px;
+    background: #0e0e0e;
+    border: 1px solid #292929;
+    color: #aaa;
+    cursor: pointer;
 }
 
-.custom-file {
-    display:flex;
-    align-items:center;
-    gap:10px;
-    width:100%;
-    margin-top:8px;
+.file-label input {
+    display: none;
 }
 
-.custom-file-input {
-    position:fixed;
-    left:-10000px;
-    top:-10000px;
-    width:1px;
-    height:1px;
-    opacity:0;
-    pointer-events:none;
+.checkbox-row {
+    display: flex !important;
+    align-items: center;
+    gap: 9px;
+    margin: 5px 0 15px;
+    color: #ccc !important;
+    cursor: pointer;
 }
 
-.custom-file-button {
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-height:42px;
-    padding:10px 15px;
-    border:1px solid var(--border);
-    border-radius:11px;
-    background:var(--panel);
-    color:#d2d7e4;
-    cursor:pointer;
-    font-size:14px;
-    font-weight:600;
-    white-space:nowrap;
+.checkbox-row input {
+    width: 17px;
+    height: 17px;
+    margin: 0;
 }
 
-.custom-file-button:hover {
-    background:var(--panel-hover);
-    border-color:var(--border-hover);
+.modal-buttons {
+    display: flex;
+    gap: 9px;
+    margin-top: 8px;
 }
 
-.custom-file-name {
-    min-width:0;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    color:#737d92;
-    font-size:13px;
+.modal-button {
+    flex: 1;
 }
 
-.custom-file.has-file .custom-file-name {
-    color:#b9c1d3;
+.modal-button.cancel {
+    background: #222;
+    color: #aaa;
 }
 
-.admin-status {
-    margin-top:12px;
-    color:#858ea3;
-    font-size:13px;
-    white-space:pre-wrap;
+.modal-button.danger {
+    background: #351818;
+    color: #ff9b9b;
 }
 
-.admin-news-card {
-    margin-top:15px;
-    padding:16px;
-    border:1px solid var(--border);
-    border-radius:13px;
-    background:#0d111c;
+.site-notification {
+    position: fixed;
+    left: 50%;
+    top: 22px;
+    z-index: 500;
+    transform: translate(-50%, -20px);
+    opacity: 0;
+    pointer-events: none;
+    padding: 13px 18px;
+    border-radius: 14px;
+    background: #fff;
+    color: #090909;
+    font-size: 14px;
+    box-shadow: 0 10px 35px rgba(0,0,0,.4);
+    transition: opacity .25s ease, transform .25s ease;
 }
 
-.admin-news-card strong {
-    display:block;
-    margin-bottom:13px;
-    color:#fff;
-    font-size:16px;
+.site-notification.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
 }
 
-.admin-image-preview {
-    display:block;
-    width:100%;
-    max-height:300px;
-    object-fit:contain;
-    margin:12px 0;
-    border-radius:10px;
-    background:#080b12;
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 7px;
+    vertical-align: -3px;
+    border: 2px solid rgba(255,255,255,.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
 }
 
-/* FULLSCREEN */
-
-.fullscreen-button {
-    position:fixed;
-    left:18px;
-    bottom:18px;
-    width:46px;
-    height:46px;
-    padding:0;
-    border:1px solid var(--border);
-    border-radius:14px;
-    background:rgba(17,21,34,.9);
-    color:#9da6bd;
-    font-size:23px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:9999;
-}
-
-@media (max-width:800px) {
-
-    .news-list {
-        grid-template-columns:1fr;
-    }
-
-    .nav {
-        width:100%;
-    }
-
-    .nav-button {
-        padding-left:4px;
-        padding-right:4px;
-        font-size:12px;
-    }
-
-    .download-page,
-    .news-page,
-    .info-page,
-    .admin-page {
-        padding-top:50px;
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
     }
 }
 
-@media (max-width:500px) {
+.hidden {
+    display: none !important;
+}
 
-    .download-buttons {
-        flex-direction:column;
+@media (max-width: 520px) {
+    .bottom-menu {
+        width: calc(100% - 24px);
+        justify-content: center;
     }
 
-    .primary-button {
-        width:100%;
+    .tab-button {
+        flex: 1;
+        min-width: 0;
+        padding: 12px 7px;
+        font-size: 12px;
     }
 
-    .search-container {
-        gap:5px;
-    }
-
-    .search-arrow {
-        width:38px;
-        height:42px;
-        flex-basis:38px;
-    }
-
-    #searchStatus {
-        display:none;
-    }
-
-    .custom-file {
-        align-items:flex-start;
-        flex-direction:column;
-    }
-
-    .custom-file-button {
-        width:100%;
+    .news-heading-row {
+        flex-direction: column;
+        gap: 5px;
     }
 }
 </style>
@@ -898,999 +534,833 @@ main {
 
 <body>
 
-<header>
-<nav class="nav">
+<div class="app">
 
-<button class="nav-button active" data-page="home" type="button">
-Главная
-</button>
+<section id="homePage" class="page active">
+    <div class="welcome" id="welcomeText">Добро пожаловать на сайт RandomGDPS!</div>
+    <div class="continue-text">
+        Для продолжения работы со страницой нажмите на любую вкладку внизу.
+    </div>
+</section>
 
-<button class="nav-button" data-page="download" type="button">
-Скачивание
-</button>
+<section id="downloadPage" class="page">
+    <div class="download-title">Скачайте наш GDPS</div>
 
-<button class="nav-button" data-page="stats" type="button">
-Статистика
-</button>
+    <div class="download-buttons">
+        <button class="download-button"
+            onclick="window.location.href='https://github.com/RandomGDPS/RandomGDPS/releases/download/1.0/RandomGDPS.zip'">
+            Windows 277МБ
+        </button>
 
-<button class="nav-button" data-page="news" type="button">
-Новости
-</button>
+        <button class="download-button"
+            onclick="window.location.href='https://github.com/RandomGDPS/RandomGDPS/releases/download/1.0/RandomGDPS.apk'">
+            Android 154МБ
+        </button>
+    </div>
+</section>
 
-<button class="nav-button" data-page="info" type="button">
-Инфо
-</button>
+<section id="newsPage" class="page">
+    <div class="news-title">Новости</div>
 
+    <div class="news-container">
+        <div class="news-search-row">
+            <input
+                id="newsSearch"
+                class="news-search"
+                type="search"
+                placeholder="Найти новость"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                name="news-search-field"
+            >
+            <button class="clear-search" id="clearSearch">×</button>
+        </div>
+
+        <button id="addNewsButton" class="add-news-button hidden">
+            Добавить новость
+        </button>
+
+        <div id="newsList" class="news-list"></div>
+    </div>
+</section>
+
+<section id="infoPage" class="page">
+    <div class="info-title">Инфо</div>
+
+    <div class="info-container">
+        <div id="infoText" class="info-text"></div>
+
+        <button id="editInfoButton" class="edit-info-button hidden">
+            Изменить
+        </button>
+    </div>
+</section>
+
+<nav class="bottom-menu">
+    <button class="tab-button active" data-page="homePage">Главная</button>
+    <button class="tab-button" data-page="downloadPage">Скачать</button>
+    <button class="tab-button" data-page="newsPage">Новости</button>
+    <button class="tab-button" data-page="infoPage">Инфо</button>
 </nav>
-</header>
-
-<button
-    id="fullscreenButton"
-    class="fullscreen-button"
-    type="button"
-    title="Полный экран"
->
-⛶
-</button>
-
-<main>
-
-<section id="home" class="page active">
-
-<div class="home">
-
-<div class="home-greeting">
-Добро пожаловать!
-</div>
-
-<h1>
-RandomGDPS
-</h1>
-
-<div
-    id="homeSubtext"
-    class="home-subtext"
-></div>
-
-<button
-    id="adminButton"
-    class="admin-home-button"
-    type="button"
->
-Администратор
-</button>
 
 </div>
 
-</section>
+<div id="tokenModal" class="modal-overlay">
+    <div class="modal">
+        <h2>GitHub Token</h2>
 
-<section id="download" class="page">
+        <input
+            id="tokenInput"
+            type="password"
+            placeholder="Введите GitHub Token"
+            autocomplete="new-password"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            name="github-token"
+        >
 
-<div class="download-page">
-
-<h2 class="section-title">
-Скачайте наш GDPS!
-</h2>
-
-<p class="section-description">
-Выберите нужную версию для своего устройства.
-</p>
-
-<div class="download-buttons">
-
-<a
-    class="primary-button"
-    href="https://github.com/RandomGDPS/RandomGDPS/releases/download/1.0/RandomGDPS.apk"
-    download
->
-Android
-</a>
-
-<a
-    class="primary-button"
-    href="https://github.com/RandomGDPS/RandomGDPS/releases/download/1.0/RandomGDPS.zip"
-    download
->
-Windows
-</a>
-
+        <div class="modal-buttons">
+            <button class="modal-button cancel" id="tokenCancel">Отмена</button>
+            <button class="modal-button" id="tokenConfirm">Продолжить</button>
+        </div>
+    </div>
 </div>
 
-<div
-    id="orBlock"
-    class="or-text"
-    style="display:none;"
->
+<div id="newsModal" class="modal-overlay">
+    <div class="modal">
+        <h2 id="newsModalTitle">Добавить новость</h2>
 
-<div>или</div>
+        <label for="newsTitleInput">Заголовок</label>
+        <input id="newsTitleInput" type="text" autocomplete="off">
 
-<div id="orText"></div>
+        <label for="newsInfoInput">Информация</label>
+        <textarea id="newsInfoInput" autocomplete="off"></textarea>
 
+        <label for="newsDateInput">Дата</label>
+        <input id="newsDateInput" type="date">
+
+        <label class="file-label">
+            Выбрать изображение
+            <input id="newsImageInput" type="file" accept="image/*">
+        </label>
+
+        <label class="checkbox-row">
+            <input id="newsMainInput" type="checkbox">
+            <span>Главная новость</span>
+        </label>
+
+        <div class="modal-buttons">
+            <button class="modal-button cancel" id="newsCancel">Отмена</button>
+            <button class="modal-button" id="newsSave">Создать</button>
+        </div>
+    </div>
 </div>
 
+<div id="deleteModal" class="modal-overlay">
+    <div class="modal">
+        <h2>Удалить новость?</h2>
+
+        <p style="color:#aaa;line-height:1.5;">
+            Новость и её изображение будут удалены.
+        </p>
+
+        <div class="modal-buttons">
+            <button class="modal-button cancel" id="deleteCancel">Отмена</button>
+            <button class="modal-button danger" id="deleteConfirm">Удалить</button>
+        </div>
+    </div>
 </div>
 
-</section>
+<div id="infoModal" class="modal-overlay">
+    <div class="modal">
+        <h2>Изменить информацию</h2>
 
-<section id="stats" class="page">
+        <textarea id="infoInput" autocomplete="off"></textarea>
 
-<div class="stats-page">
-
-<div class="stats">
-Скоро!
+        <div class="modal-buttons">
+            <button class="modal-button cancel" id="infoCancel">Отмена</button>
+            <button class="modal-button" id="infoSave">Сохранить</button>
+        </div>
+    </div>
 </div>
 
-</div>
-
-</section>
-
-<section id="news" class="page">
-
-<div class="news-page">
-
-<div class="news-header">
-
-<h2>
-Новости
-</h2>
-
-<p>
-Тут вы можете посмотреть историю GDPS!
-</p>
-
-</div>
-
-<div class="search-container">
-
-<div class="search-box">
-
-<input
-    id="newsSearch"
-    type="text"
-    placeholder="Поиск по новостям..."
-    autocomplete="off"
->
-
-<button
-    id="clearSearch"
-    type="button"
->
-×
-</button>
-
-</div>
-
-<button
-    id="previousSearch"
-    class="search-arrow up"
-    type="button"
-    disabled
-></button>
-
-<div id="searchStatus"></div>
-
-<button
-    id="nextSearch"
-    class="search-arrow down"
-    type="button"
-    disabled
-></button>
-
-</div>
-
-<div
-    id="newsList"
-    class="news-list"
-></div>
-
-<button
-    id="showMore"
-    type="button"
-    style="display:none;"
->
-Посмотреть ещё
-</button>
-
-</div>
-
-</section>
-
-<section id="info" class="page">
-
-<div class="info-page">
-
-<div class="info-container">
-
-<h2>
-Информация
-</h2>
-
-<div
-    id="infoText"
-    class="info-text"
-></div>
-
-<div class="info-buttons">
-
-<button
-    id="rulesButton"
-    class="action-button"
-    type="button"
->
-Правила
-</button>
-
-<button
-    id="ratingButton"
-    class="action-button"
-    type="button"
->
-Система оценивания
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="admin" class="page">
-
-<div
-    id="adminPanel"
-    class="admin-panel"
->
-
-<h2>
-Администратор
-</h2>
-
-<div class="admin-section">
-
-<h3>
-Текст под приветствием
-</h3>
-
-<textarea
-    id="adminMLText"
-    class="admin-textarea"
-></textarea>
-
-<button
-    id="saveMLTextButton"
-    class="action-button"
-    type="button"
->
-Сохранить
-</button>
-
-</div>
-
-<div class="admin-section">
-
-<h3>
-Текст под «или»
-</h3>
-
-<textarea
-    id="adminOrText"
-    class="admin-textarea"
-></textarea>
-
-<button
-    id="saveOrTextButton"
-    class="action-button"
-    type="button"
->
-Сохранить
-</button>
-
-</div>
-
-<div class="admin-section">
-
-<h3>
-Информация
-</h3>
-
-<textarea
-    id="adminInfoText"
-    class="admin-textarea"
-></textarea>
-
-<button
-    id="saveInfoButton"
-    class="action-button"
-    type="button"
->
-Сохранить
-</button>
-
-</div>
-
-<div class="admin-section">
-
-<h3>
-Правила
-</h3>
-
-<textarea
-    id="adminRulesText"
-    class="admin-textarea"
-></textarea>
-
-<button
-    id="saveRulesButton"
-    class="action-button"
-    type="button"
->
-Сохранить
-</button>
-
-</div>
-
-<div class="admin-section">
-
-<h3>
-Система оценивания
-</h3>
-
-<textarea
-    id="adminRatingText"
-    class="admin-textarea"
-></textarea>
-
-<button
-    id="saveRatingButton"
-    class="action-button"
-    type="button"
->
-Сохранить
-</button>
-
-</div>
-
-<div class="admin-section">
-
-<h3>
-Добавить новость
-</h3>
-
-<input
-    id="newNewsTitle"
-    class="admin-input"
-    placeholder="Заголовок"
->
-
-<input
-    id="newNewsDate"
-    class="admin-input"
-    placeholder="Дата"
->
-
-<textarea
-    id="newNewsInfo"
-    class="admin-textarea"
-    placeholder="Информация"
-></textarea>
-
-<div class="admin-checkbox">
-
-<input
-    id="newNewsMain"
-    type="checkbox"
->
-
-<span>
-Главная новость
-</span>
-
-</div>
-
-<div class="file-label">
-
-Изображение
-
-<div class="custom-file">
-
-<input
-    id="newNewsImage"
-    class="custom-file-input"
-    type="file"
-    accept="image/*"
->
-
-<button
-    id="newNewsImageButton"
-    class="custom-file-button"
-    type="button"
->
-Выбрать файл
-</button>
-
-<span
-    id="newNewsImageName"
-    class="custom-file-name"
->
-Файл не выбран
-</span>
-
-</div>
-
-</div>
-
-<button
-    id="addNewsButton"
-    class="action-button"
-    type="button"
->
-Добавить новость
-</button>
-
-</div>
-
-<div class="admin-section">
-
-<h3>
-Новости
-</h3>
-
-<div id="adminNewsList"></div>
-
-</div>
-
-<div
-    id="adminStatus"
-    class="admin-status"
-></div>
-
-<button
-    id="logoutButton"
-    class="action-button"
-    type="button"
->
-Выйти
-</button>
-
-</div>
-
-</section>
-
-</main>
-
-<div
-    id="infoModal"
-    class="modal"
->
-
-<div class="modal-box">
-
-<button
-    class="close-modal"
-    data-close="infoModal"
-    type="button"
->
-×
-</button>
-
-<h3 id="infoModalTitle"></h3>
-
-<div
-    id="infoModalContent"
-    class="modal-content"
-></div>
-
-</div>
-
-</div>
-
-<div
-    id="loginModal"
-    class="modal"
->
-
-<div class="modal-box">
-
-<button
-    class="close-modal"
-    data-close="loginModal"
-    type="button"
->
-×
-</button>
-
-<h3>
-Вход администратора
-</h3>
-
-<input
-    id="githubTokenInput"
-    class="admin-input"
-    type="password"
-    placeholder="GitHub Token"
-    autocomplete="off"
->
-
-<button
-    id="loginButton"
-    class="action-button"
-    type="button"
->
-Войти
-</button>
-
-<div
-    id="loginStatus"
-    class="admin-status"
-></div>
-
-</div>
-
-</div>
+<div id="notification" class="site-notification"></div>
 
 <script>
-
-let MLText = "";
-let OrText = "";
-let Info = "";
-let Rules = "";
-let AssessmentSystem = "";
-
-let News = [];
-
-let PokazanoNovostei = 3;
-
-let SearchResults = [];
-let SearchIndex = -1;
-
-const DATA_FILE = "randomgdps-data.json";
-const IMAGE_FOLDER = "news-images";
-
 const GITHUB_OWNER = "RandomGDPS";
 const GITHUB_REPO = "RandomGDPS";
+const GITHUB_FILE = "data.json";
+const GITHUB_BRANCH = "main";
 
-/* GITHUB */
+let developerMode = false;
+let githubToken = "";
+let newsItems = [];
+let infoTextValue = "";
+let editingNewsId = null;
+let deletingNewsId = null;
 
-function getGitHubRepository() {
+let welcomeClicks = [];
+let notificationTimer = null;
 
-    return {
-        owner:GITHUB_OWNER,
-        repo:GITHUB_REPO
-    };
+const pages = document.querySelectorAll(".page");
+const tabButtons = document.querySelectorAll(".tab-button");
 
+const tokenModal = document.getElementById("tokenModal");
+const tokenInput = document.getElementById("tokenInput");
+
+const newsModal = document.getElementById("newsModal");
+const deleteModal = document.getElementById("deleteModal");
+const infoModal = document.getElementById("infoModal");
+
+const newsTitleInput = document.getElementById("newsTitleInput");
+const newsInfoInput = document.getElementById("newsInfoInput");
+const newsDateInput = document.getElementById("newsDateInput");
+const newsImageInput = document.getElementById("newsImageInput");
+const newsMainInput = document.getElementById("newsMainInput");
+
+const newsSearch = document.getElementById("newsSearch");
+const newsList = document.getElementById("newsList");
+
+const addNewsButton = document.getElementById("addNewsButton");
+const editInfoButton = document.getElementById("editInfoButton");
+
+const infoText = document.getElementById("infoText");
+const infoInput = document.getElementById("infoInput");
+
+const notification = document.getElementById("notification");
+
+function showNotification(text) {
+    notification.textContent = text;
+    notification.classList.add("show");
+
+    clearTimeout(notificationTimer);
+
+    notificationTimer = setTimeout(() => {
+        notification.classList.remove("show");
+    }, 2800);
 }
 
-function getGitHubToken() {
+function setButtonLoading(button, loading, text) {
+    if (!button) return;
 
-    return sessionStorage.getItem(
-        "randomgdps_github_token"
-    );
-
-}
-
-async function githubRequest(
-    url,
-    options = {}
-) {
-
-    const token =
-        getGitHubToken();
-
-    const headers = {
-        Accept:"application/vnd.github+json",
-        ...(options.headers || {})
-    };
-
-    if (token) {
-
-        headers.Authorization =
-            `Bearer ${token}`;
-
+    if (loading) {
+        button.dataset.oldText = button.innerHTML;
+        button.disabled = true;
+        button.innerHTML = '<span class="spinner"></span>' + text;
+    } else {
+        button.disabled = false;
+        button.innerHTML = button.dataset.oldText || text;
     }
-
-    const response =
-        await fetch(
-            url,
-            {
-                ...options,
-                headers
-            }
-        );
-
-    if (!response.ok) {
-
-        let message =
-            `GitHub HTTP ${response.status}`;
-
-        try {
-
-            const data =
-                await response.json();
-
-            if (data.message) {
-                message =
-                    data.message;
-            }
-
-        } catch {}
-
-        throw new Error(message);
-
-    }
-
-    return response;
-
 }
 
-/* LOAD */
+tabButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        const pageId = button.dataset.page;
 
-async function loadSiteData() {
+        pages.forEach(page => page.classList.remove("active"));
+        document.getElementById(pageId).classList.add("active");
 
-    try {
-
-        const response =
-            await fetch(
-                `${DATA_FILE}?t=${Date.now()}`,
-                {
-                    cache:"no-store"
-                }
-            );
-
-        if (!response.ok) {
-            throw new Error(
-                "Файл данных не найден."
-            );
-        }
-
-        const data =
-            await response.json();
-
-        MLText =
-            String(
-                data.MLText ?? ""
-            );
-
-        OrText =
-            String(
-                data.OrText ?? ""
-            );
-
-        Info =
-            String(
-                data.Info ?? ""
-            );
-
-        Rules =
-            String(
-                data.Rules ?? ""
-            );
-
-        AssessmentSystem =
-            String(
-                data.AssessmentSystem ?? ""
-            );
-
-        News =
-            Array.isArray(data.News)
-                ? data.News.map(
-                    news => prepareNews(news)
-                )
-                : [];
-
-        updateMainInfo();
-
-        renderNews();
-
-        renderAdminNews();
-
-        updateSearchStatus();
-
-    } catch(error) {
-
-        console.log(
-            "Ошибка загрузки:",
-            error
-        );
-
-    }
-
-}
-
-/* NEWS */
-
-function prepareNews(news) {
-
-    return {
-
-        Заголовок:
-            String(
-                news?.Заголовок || ""
-            ),
-
-        Изображение:
-            String(
-                news?.Изображение || ""
-            ),
-
-        Дата:
-            String(
-                news?.Дата || ""
-            ),
-
-        Главная:
-            Boolean(
-                news?.Главная
-            ),
-
-        Информация:
-            String(
-                news?.Информация || ""
-            )
-
-    };
-
-}
-
-/* NAVIGATION */
-
-const navButtons =
-    document.querySelectorAll(
-        ".nav-button"
-    );
-
-const pages =
-    document.querySelectorAll(
-        ".page"
-    );
-
-function openPage(pageName) {
-
-    pages.forEach(page => {
-
-        page.classList.toggle(
-            "active",
-            page.id === pageName
-        );
-
+        tabButtons.forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
     });
-
-    navButtons.forEach(button => {
-
-        button.classList.toggle(
-            "active",
-            button.dataset.page === pageName
-        );
-
-    });
-
-    const adminButton =
-        document.getElementById(
-            "adminButton"
-        );
-
-    adminButton.style.display =
-        pageName === "home"
-            ? "block"
-            : "none";
-
-}
-
-navButtons.forEach(button => {
-
-    button.addEventListener(
-        "click",
-        () => openPage(
-            button.dataset.page
-        )
-    );
-
 });
 
-/* MAIN INFO */
+document.getElementById("welcomeText").addEventListener("click", () => {
+    if (developerMode) return;
 
-function updateMainInfo() {
+    const now = Date.now();
 
-    document.getElementById(
-        "homeSubtext"
-    ).textContent =
-        MLText;
+    welcomeClicks = welcomeClicks.filter(
+        time => now - time <= 3500
+    );
 
-    document.getElementById(
-        "orText"
-    ).textContent =
-        OrText;
+    welcomeClicks.push(now);
 
-    document.getElementById(
-        "orBlock"
-    ).style.display =
-        OrText.trim()
-            ? "block"
-            : "none";
+    if (welcomeClicks.length >= 7) {
+        welcomeClicks = [];
 
-    document.getElementById(
-        "infoText"
-    ).textContent =
-        Info;
+        tokenInput.value = "";
+        tokenModal.classList.add("active");
 
-}
-
-/* HTML */
-
-function escapeHtml(text) {
-
-    return String(text ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-function highlightText(
-    text,
-    query
-) {
-
-    if (!query) {
-        return escapeHtml(text);
+        setTimeout(() => tokenInput.focus(), 50);
     }
+});
 
-    const source =
-        String(text ?? "");
+document.getElementById("tokenCancel").addEventListener("click", () => {
+    tokenModal.classList.remove("active");
+    tokenInput.value = "";
+});
 
-    const lower =
-        source.toLowerCase();
+document.getElementById("tokenConfirm").addEventListener("click", validateToken);
 
-    const q =
-        query.toLowerCase();
+tokenInput.addEventListener("keydown", event => {
+    if (event.key === "Enter") validateToken();
+});
 
-    let result = "";
-    let position = 0;
+async function validateToken() {
+    const token = tokenInput.value.trim();
 
-    while (true) {
+    if (!token) return;
 
-        const index =
-            lower.indexOf(
-                q,
-                position
-            );
+    const button =
+        document.getElementById("tokenConfirm");
 
-        if (index === -1) {
+    setButtonLoading(button, true, "Проверка");
 
-            result +=
-                escapeHtml(
-                    source.slice(
-                        position
-                    )
-                );
+    try {
+        const response = await fetch(
+            "https://api.github.com/user",
+            {
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Accept": "application/vnd.github+json",
+                    "X-GitHub-Api-Version": "2026-03-10"
+                }
+            }
+        );
 
-            break;
-
+        if (response.status === 401) {
+            showNotification("Ошибка: неверный GitHub Token.");
+            return;
         }
 
-        result +=
-            escapeHtml(
-                source.slice(
-                    position,
-                    index
-                )
+        if (response.status === 403) {
+            showNotification("Ошибка: GitHub отклонил запрос.");
+            return;
+        }
+
+        if (!response.ok) {
+            showNotification(
+                "Ошибка подключения: HTTP " +
+                response.status
             );
+            return;
+        }
 
-        result +=
-            '<span class="highlight">' +
-            escapeHtml(
-                source.slice(
-                    index,
-                    index + query.length
-                )
-            ) +
-            "</span>";
+        githubToken = token;
+        developerMode = true;
 
-        position =
-            index + query.length;
+        tokenModal.classList.remove("active");
+        tokenInput.value = "";
 
+        updateDeveloperUI();
+        renderNews();
+        renderInfo();
+
+        showNotification(
+            "Режим разработчика включен."
+        );
+    } catch {
+        showNotification(
+            "Ошибка подключения к GitHub."
+        );
+    } finally {
+        setButtonLoading(
+            button,
+            false,
+            "Продолжить"
+        );
     }
-
-    return result;
-
 }
 
-function getSortedNews() {
+function updateDeveloperUI() {
+    addNewsButton.classList.toggle(
+        "hidden",
+        !developerMode
+    );
 
-    return News
-        .map(
-            (news,index) => ({
-                news,
-                index
-            })
+    editInfoButton.classList.toggle(
+        "hidden",
+        !developerMode
+    );
+}
+
+function githubHeaders(extra = {}) {
+    return {
+        "Authorization": "Bearer " + githubToken,
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2026-03-10",
+        ...extra
+    };
+}
+
+async function githubRequest(url, options = {}) {
+    return fetch(url, {
+        ...options,
+        headers: githubHeaders(
+            options.headers || {}
         )
-        .sort((a,b) => {
+    });
+}
 
-            if (
-                a.news.Главная !==
-                b.news.Главная
-            ) {
+function githubContentsUrl(path) {
+    return (
+        "https://api.github.com/repos/" +
+        GITHUB_OWNER + "/" +
+        GITHUB_REPO +
+        "/contents/" +
+        path
+    );
+}
 
-                return b.news.Главная
-                    ? 1
-                    : -1;
+function sleep(ms) {
+    return new Promise(resolve =>
+        setTimeout(resolve, ms)
+    );
+}
 
+async function getGitHubFile(path) {
+    const response = await githubRequest(
+        githubContentsUrl(path) +
+        "?ref=" +
+        encodeURIComponent(GITHUB_BRANCH) +
+        "&t=" +
+        Date.now()
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            "HTTP " + response.status
+        );
+    }
+
+    return response.json();
+}
+
+async function getPublicData() {
+    const response = await fetch(
+        githubContentsUrl(GITHUB_FILE) +
+        "?ref=" +
+        encodeURIComponent(GITHUB_BRANCH) +
+        "&t=" +
+        Date.now(),
+        {
+            cache: "no-store"
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            "HTTP " + response.status
+        );
+    }
+
+    const file = await response.json();
+
+    const binary =
+        atob(file.content.replace(/\n/g, ""));
+
+    const bytes = Uint8Array.from(
+        binary,
+        char => char.charCodeAt(0)
+    );
+
+    const data =
+        JSON.parse(
+            new TextDecoder().decode(bytes)
+        );
+
+    if (Array.isArray(data)) {
+        return {
+            news: data,
+            info: ""
+        };
+    }
+
+    return {
+        news: Array.isArray(data.news)
+            ? data.news
+            : [],
+        info: typeof data.info === "string"
+            ? data.info
+            : ""
+    };
+}
+
+async function loadPublicData() {
+    try {
+        const data =
+            await getPublicData();
+
+        newsItems = data.news;
+        infoTextValue = data.info;
+
+        renderNews();
+        renderInfo();
+    } catch {
+        newsItems = [];
+        infoTextValue = "";
+
+        renderNews();
+        renderInfo();
+    }
+}
+
+function utf8ToBase64(text) {
+    const bytes =
+        new TextEncoder().encode(text);
+
+    let binary = "";
+
+    for (let i = 0; i < bytes.length; i++) {
+        binary += String.fromCharCode(
+            bytes[i]
+        );
+    }
+
+    return btoa(binary);
+}
+
+async function saveDataToGitHub() {
+    if (!githubToken) {
+        throw new Error("NO_TOKEN");
+    }
+
+    const content =
+        JSON.stringify(
+            {
+                news: newsItems,
+                info: infoTextValue
+            },
+            null,
+            2
+        );
+
+    let lastError = null;
+
+    for (let attempt = 0; attempt < 8; attempt++) {
+        try {
+            const file =
+                await getGitHubFile(
+                    GITHUB_FILE
+                );
+
+            const response =
+                await githubRequest(
+                    githubContentsUrl(
+                        GITHUB_FILE
+                    ),
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+                        body: JSON.stringify({
+                            message:
+                                "Update data.json",
+                            content:
+                                utf8ToBase64(
+                                    content
+                                ),
+                            branch:
+                                GITHUB_BRANCH,
+                            sha:
+                                file.sha
+                        })
+                    }
+                );
+
+            if (response.ok) {
+                return true;
             }
 
-            return 0;
+            if (
+                response.status === 409 ||
+                response.status === 422
+            ) {
+                await sleep(
+                    400 + attempt * 250
+                );
 
-        });
+                continue;
+            }
 
-}
+            lastError =
+                new Error(
+                    "HTTP " +
+                    response.status
+                );
+        } catch (error) {
+            lastError = error;
+        }
 
-/* RENDER NEWS */
-
-function renderNews() {
-
-    const list =
-        document.getElementById(
-            "newsList"
+        await sleep(
+            400 + attempt * 250
         );
-
-    const showMore =
-        document.getElementById(
-            "showMore"
-        );
-
-    const search =
-        document.getElementById(
-            "newsSearch"
-        );
-
-    const query =
-        search.value.trim();
-
-    list.innerHTML = "";
-
-    const sorted =
-        getSortedNews();
-
-    if (!sorted.length) {
-
-        list.innerHTML =
-            '<div class="no-news">Тут пока ничего нет!</div>';
-
-        showMore.style.display =
-            "none";
-
-        return;
-
     }
 
-    const mainNews =
-        sorted.filter(
-            item =>
-                item.news.Главная
+    throw (
+        lastError ||
+        new Error("SAVE_FAILED")
+    );
+}
+
+function extensionFromFile(file) {
+    const name = file.name || "";
+
+    const match =
+        name.match(
+            /\.([a-zA-Z0-9]+)$/
         );
 
-    const normalNews =
-        sorted.filter(
-            item =>
-                !item.news.Главная
+    return match
+        ? match[1].toLowerCase()
+        : "png";
+}
+
+function fileToBase64(file) {
+    return new Promise(
+        (resolve, reject) => {
+            const reader =
+                new FileReader();
+
+            reader.onload = () => {
+                const result =
+                    String(reader.result);
+
+                resolve(
+                    result.split(",")[1]
+                );
+            };
+
+            reader.onerror = reject;
+
+            reader.readAsDataURL(file);
+        }
+    );
+}
+
+async function uploadNewsImage(
+    file,
+    id
+) {
+    const extension =
+        extensionFromFile(file);
+
+    const filename =
+        "news_" +
+        id +
+        "." +
+        extension;
+
+    const content =
+        await fileToBase64(file);
+
+    for (
+        let attempt = 0;
+        attempt < 8;
+        attempt++
+    ) {
+        try {
+            let sha = null;
+
+            try {
+                const existing =
+                    await getGitHubFile(
+                        filename
+                    );
+
+                sha = existing.sha;
+            } catch {}
+
+            const response =
+                await githubRequest(
+                    githubContentsUrl(
+                        filename
+                    ),
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+                        body: JSON.stringify({
+                            message:
+                                "Upload news image",
+                            content,
+                            branch:
+                                GITHUB_BRANCH,
+                            ...(sha
+                                ? { sha }
+                                : {})
+                        })
+                    }
+                );
+
+            if (response.ok) {
+                return filename;
+            }
+
+            if (
+                response.status === 409 ||
+                response.status === 422
+            ) {
+                await sleep(
+                    400 + attempt * 250
+                );
+
+                continue;
+            }
+        } catch {}
+
+        await sleep(
+            400 + attempt * 250
         );
+    }
 
-    const visible =
-        [
-            ...mainNews,
-            ...normalNews.slice(
-                0,
-                PokazanoNovostei
-            )
-        ];
+    throw new Error(
+        "IMAGE_UPLOAD_FAILED"
+    );
+}
 
-    visible.forEach(item => {
+async function deleteGitHubImage(
+    filename
+) {
+    if (!filename) return true;
 
-        const news =
-            item.news;
+    for (
+        let attempt = 0;
+        attempt < 10;
+        attempt++
+    ) {
+        try {
+            let file;
 
+            try {
+                file =
+                    await getGitHubFile(
+                        filename
+                    );
+            } catch (error) {
+                if (
+                    String(
+                        error.message
+                    ).includes("404")
+                ) {
+                    return true;
+                }
+
+                await sleep(
+                    400 + attempt * 250
+                );
+
+                continue;
+            }
+
+            const response =
+                await githubRequest(
+                    githubContentsUrl(
+                        filename
+                    ),
+                    {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+                        body: JSON.stringify({
+                            message:
+                                "Delete news image",
+                            sha:
+                                file.sha,
+                            branch:
+                                GITHUB_BRANCH
+                        })
+                    }
+                );
+
+            if (
+                response.ok ||
+                response.status === 404
+            ) {
+                return true;
+            }
+
+            if (
+                response.status === 409 ||
+                response.status === 422
+            ) {
+                await sleep(
+                    450 + attempt * 250
+                );
+
+                continue;
+            }
+        } catch {}
+
+        await sleep(
+            450 + attempt * 250
+        );
+    }
+
+    return false;
+}
+
+function imageUrl(filename) {
+    if (!filename) return "";
+
+    return (
+        "https://raw.githubusercontent.com/" +
+        GITHUB_OWNER + "/" +
+        GITHUB_REPO + "/" +
+        GITHUB_BRANCH + "/" +
+        filename +
+        "?t=" +
+        Date.now()
+    );
+}
+
+function renderNews() {
+    const search =
+        newsSearch.value
+            .trim()
+            .toLowerCase();
+
+    let items = [...newsItems];
+
+    items.sort((a, b) => {
+        if (
+            Boolean(a.main) !==
+            Boolean(b.main)
+        ) {
+            return a.main ? -1 : 1;
+        }
+
+        return String(
+            b.date || ""
+        ).localeCompare(
+            String(a.date || "")
+        );
+    });
+
+    if (search) {
+        items = items.filter(
+            item => {
+                const title =
+                    String(
+                        item.title || ""
+                    ).toLowerCase();
+
+                const info =
+                    String(
+                        item.info || ""
+                    ).toLowerCase();
+
+                return (
+                    title.includes(search) ||
+                    info.includes(search)
+                );
+            }
+        );
+    }
+
+    newsList.innerHTML = "";
+
+    items.forEach(item => {
         const card =
             document.createElement(
                 "article"
@@ -1899,19 +1369,7 @@ function renderNews() {
         card.className =
             "news-card";
 
-        card.dataset.index =
-            item.index;
-
-        if (news.Главная) {
-
-            card.classList.add(
-                "main-news"
-            );
-
-        }
-
-        if (news.Изображение) {
-
+        if (item.image) {
             const image =
                 document.createElement(
                     "img"
@@ -1921,31 +1379,23 @@ function renderNews() {
                 "news-image";
 
             image.src =
-                news.Изображение;
+                imageUrl(item.image);
 
-            image.alt =
-                news.Заголовок ||
-                "Новость";
+            image.alt = "";
+            image.loading = "lazy";
 
-            image.onerror = () =>
-                image.remove();
-
-            card.appendChild(
-                image
-            );
-
+            card.appendChild(image);
         }
 
-        const content =
+        const text =
             document.createElement(
                 "div"
             );
 
-        content.className =
-            "news-content";
+        text.className =
+            "news-text";
 
-        if (news.Главная) {
-
+        if (item.main) {
             const label =
                 document.createElement(
                     "div"
@@ -1955,13 +1405,29 @@ function renderNews() {
                 "news-main-label";
 
             label.textContent =
-                "Главная новость";
+                "ГЛАВНАЯ НОВОСТЬ";
 
-            content.appendChild(
-                label
+            text.appendChild(label);
+        }
+
+        const headingRow =
+            document.createElement(
+                "div"
             );
 
-        }
+        headingRow.className =
+            "news-heading-row";
+
+        const heading =
+            document.createElement(
+                "h3"
+            );
+
+        heading.className =
+            "news-heading";
+
+        heading.textContent =
+            item.title || "";
 
         const date =
             document.createElement(
@@ -1971,1454 +1437,583 @@ function renderNews() {
         date.className =
             "news-date";
 
-        date.innerHTML =
-            highlightText(
-                news.Дата,
-                query
-            );
+        date.textContent =
+            item.date || "";
 
-        content.appendChild(
+        headingRow.appendChild(
+            heading
+        );
+
+        headingRow.appendChild(
             date
         );
 
-        const title =
-            document.createElement(
-                "h3"
-            );
-
-        title.className =
-            "news-title";
-
-        title.innerHTML =
-            highlightText(
-                news.Заголовок,
-                query
-            );
-
-        content.appendChild(
-            title
+        text.appendChild(
+            headingRow
         );
 
-        const info =
-            document.createElement(
-                "p"
+        if (item.info) {
+            const info =
+                document.createElement(
+                    "div"
+                );
+
+            info.className =
+                "news-info";
+
+            info.textContent =
+                item.info;
+
+            text.appendChild(
+                info
+            );
+        }
+
+        if (developerMode) {
+            const actions =
+                document.createElement(
+                    "div"
+                );
+
+            actions.className =
+                "news-actions";
+
+            const edit =
+                document.createElement(
+                    "button"
+                );
+
+            edit.className =
+                "news-action";
+
+            edit.textContent =
+                "Изменить";
+
+            edit.addEventListener(
+                "click",
+                () => openEditNews(
+                    item.id
+                )
             );
 
-        info.className =
-            "news-info";
+            const remove =
+                document.createElement(
+                    "button"
+                );
 
-        info.innerHTML =
-            highlightText(
-                news.Информация,
-                query
+            remove.className =
+                "news-action delete";
+
+            remove.textContent =
+                "Удалить";
+
+            remove.addEventListener(
+                "click",
+                () => openDeleteNews(
+                    item.id
+                )
             );
 
-        content.appendChild(
-            info
-        );
+            actions.appendChild(edit);
+            actions.appendChild(remove);
 
-        card.appendChild(
-            content
-        );
+            text.appendChild(
+                actions
+            );
+        }
 
-        list.appendChild(
-            card
-        );
-
+        card.appendChild(text);
+        newsList.appendChild(card);
     });
-
-    showMore.style.display =
-        PokazanoNovostei <
-        normalNews.length
-            ? "block"
-            : "none";
-
 }
 
-/* MORE */
+function openCreateNews() {
+    editingNewsId = null;
 
-document
-    .getElementById(
-        "showMore"
-    )
-    .addEventListener(
-        "click",
-        () => {
+    document.getElementById(
+        "newsModalTitle"
+    ).textContent =
+        "Добавить новость";
 
-            PokazanoNovostei += 3;
+    document.getElementById(
+        "newsSave"
+    ).textContent =
+        "Создать";
+
+    newsTitleInput.value = "";
+    newsInfoInput.value = "";
+
+    newsDateInput.value =
+        new Date()
+            .toISOString()
+            .slice(0, 10);
+
+    newsImageInput.value = "";
+    newsMainInput.checked = false;
+
+    newsModal.classList.add(
+        "active"
+    );
+}
+
+function openEditNews(id) {
+    const item =
+        newsItems.find(
+            news => news.id === id
+        );
+
+    if (!item) return;
+
+    editingNewsId = id;
+
+    document.getElementById(
+        "newsModalTitle"
+    ).textContent =
+        "Изменить новость";
+
+    document.getElementById(
+        "newsSave"
+    ).textContent =
+        "Сохранить";
+
+    newsTitleInput.value =
+        item.title || "";
+
+    newsInfoInput.value =
+        item.info || "";
+
+    newsDateInput.value =
+        item.date || "";
+
+    newsImageInput.value = "";
+
+    newsMainInput.checked =
+        Boolean(item.main);
+
+    newsModal.classList.add(
+        "active"
+    );
+}
+
+document.getElementById(
+    "newsCancel"
+).addEventListener(
+    "click",
+    () => {
+        newsModal.classList.remove(
+            "active"
+        );
+    }
+);
+
+addNewsButton.addEventListener(
+    "click",
+    openCreateNews
+);
+
+document.getElementById(
+    "newsSave"
+).addEventListener(
+    "click",
+    async () => {
+        const title =
+            newsTitleInput.value.trim();
+
+        const info =
+            newsInfoInput.value;
+
+        const date =
+            newsDateInput.value;
+
+        const imageFile =
+            newsImageInput.files[0] ||
+            null;
+
+        const main =
+            newsMainInput.checked;
+
+        if (!title || !date) {
+            showNotification(
+                "Заполните заголовок и дату."
+            );
+
+            return;
+        }
+
+        const button =
+            document.getElementById(
+                "newsSave"
+            );
+
+        const wasEditing =
+            Boolean(editingNewsId);
+
+        setButtonLoading(
+            button,
+            true,
+            wasEditing
+                ? "Сохранение"
+                : "Создание"
+        );
+
+        let uploadedImage = null;
+        let oldImage = null;
+
+        try {
+            if (editingNewsId) {
+                const item =
+                    newsItems.find(
+                        news =>
+                            news.id ===
+                            editingNewsId
+                    );
+
+                if (!item) {
+                    throw new Error(
+                        "NEWS_NOT_FOUND"
+                    );
+                }
+
+                oldImage =
+                    item.image || null;
+
+                if (imageFile) {
+                    uploadedImage =
+                        await uploadNewsImage(
+                            imageFile,
+                            editingNewsId
+                        );
+
+                    item.image =
+                        uploadedImage;
+                }
+
+                item.title = title;
+                item.info = info;
+                item.date = date;
+                item.main = main;
+            } else {
+                const id =
+                    Date.now()
+                        .toString(36) +
+                    Math.random()
+                        .toString(36)
+                        .slice(2, 8);
+
+                if (imageFile) {
+                    uploadedImage =
+                        await uploadNewsImage(
+                            imageFile,
+                            id
+                        );
+                }
+
+                newsItems.push({
+                    id,
+                    title,
+                    info,
+                    date,
+                    image:
+                        uploadedImage || "",
+                    main
+                });
+            }
+
+            await saveDataToGitHub();
+
+            if (
+                wasEditing &&
+                oldImage &&
+                uploadedImage &&
+                oldImage !==
+                    uploadedImage &&
+                !newsItems.some(
+                    item =>
+                        item.image ===
+                        oldImage
+                )
+            ) {
+                await deleteGitHubImage(
+                    oldImage
+                );
+            }
+
+            newsModal.classList.remove(
+                "active"
+            );
 
             renderNews();
 
-        }
-    );
-
-/* SEARCH */
-
-function performSearch() {
-
-    const query =
-        document
-            .getElementById(
-                "newsSearch"
-            )
-            .value
-            .trim()
-            .toLowerCase();
-
-    SearchResults = [];
-
-    if (query) {
-
-        News.forEach(
-            (news,index) => {
-
-                const title =
-                    String(
-                        news.Заголовок
-                    ).toLowerCase();
-
-                const info =
-                    String(
-                        news.Информация
-                    ).toLowerCase();
-
-                if (
-                    title.includes(query) ||
-                    info.includes(query)
-                ) {
-
-                    SearchResults.push(
-                        index
-                    );
-
-                }
-
-            }
-        );
-
-    }
-
-    SearchIndex =
-        SearchResults.length
-            ? 0
-            : -1;
-
-    renderNews();
-
-    updateSearchStatus();
-
-}
-
-function updateSearchStatus() {
-
-    const status =
-        document.getElementById(
-            "searchStatus"
-        );
-
-    status.textContent =
-        SearchResults.length
-            ? `${SearchIndex + 1} / ${SearchResults.length}`
-            : "";
-
-    document.getElementById(
-        "previousSearch"
-    ).disabled =
-        !SearchResults.length;
-
-    document.getElementById(
-        "nextSearch"
-    ).disabled =
-        !SearchResults.length;
-
-}
-
-function nextSearchResult() {
-
-    if (!SearchResults.length) {
-        return;
-    }
-
-    SearchIndex =
-        (
-            SearchIndex + 1
-        ) %
-        SearchResults.length;
-
-    updateSearchStatus();
-
-}
-
-function previousSearchResult() {
-
-    if (!SearchResults.length) {
-        return;
-    }
-
-    SearchIndex =
-        (
-            SearchIndex - 1 +
-            SearchResults.length
-        ) %
-        SearchResults.length;
-
-    updateSearchStatus();
-
-}
-
-document
-    .getElementById(
-        "newsSearch"
-    )
-    .addEventListener(
-        "input",
-        performSearch
-    );
-
-document
-    .getElementById(
-        "clearSearch"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            document.getElementById(
-                "newsSearch"
-            ).value = "";
-
-            performSearch();
-
-        }
-    );
-
-document
-    .getElementById(
-        "nextSearch"
-    )
-    .addEventListener(
-        "click",
-        nextSearchResult
-    );
-
-document
-    .getElementById(
-        "previousSearch"
-    )
-    .addEventListener(
-        "click",
-        previousSearchResult
-    );
-
-/* MODALS */
-
-function openModal(id) {
-
-    document
-        .getElementById(id)
-        .classList.add(
-            "active"
-        );
-
-}
-
-document
-    .querySelectorAll(
-        ".close-modal"
-    )
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                document
-                    .getElementById(
-                        button.dataset.close
-                    )
-                    .classList.remove(
-                        "active"
-                    );
-
-            }
-        );
-
-    });
-
-document
-    .querySelectorAll(
-        ".modal"
-    )
-    .forEach(modal => {
-
-        modal.addEventListener(
-            "click",
-            event => {
-
-                if (
-                    event.target === modal
-                ) {
-
-                    modal.classList.remove(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-    });
-
-/* INFO */
-
-document
-    .getElementById(
-        "rulesButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            document.getElementById(
-                "infoModalTitle"
-            ).textContent =
-                "Правила";
-
-            document.getElementById(
-                "infoModalContent"
-            ).textContent =
-                Rules;
-
-            openModal(
-                "infoModal"
+            showNotification(
+                wasEditing
+                    ? "Новость изменена."
+                    : "Новость создана."
             );
+        } catch {
+            await loadPublicData();
 
-        }
-    );
-
-document
-    .getElementById(
-        "ratingButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            document.getElementById(
-                "infoModalTitle"
-            ).textContent =
-                "Система оценивания";
-
-            document.getElementById(
-                "infoModalContent"
-            ).textContent =
-                AssessmentSystem;
-
-            openModal(
-                "infoModal"
+            showNotification(
+                wasEditing
+                    ? "Сохранение не завершилось."
+                    : "Создание не завершилось."
             );
-
+        } finally {
+            setButtonLoading(
+                button,
+                false,
+                wasEditing
+                    ? "Сохранить"
+                    : "Создать"
+            );
         }
+    }
+);
+
+function openDeleteNews(id) {
+    deletingNewsId = id;
+
+    deleteModal.classList.add(
+        "active"
     );
+}
 
-/* ADMIN */
-
-const adminButton =
-    document.getElementById(
-        "adminButton"
-    );
-
-const adminPanel =
-    document.getElementById(
-        "adminPanel"
-    );
-
-adminButton.addEventListener(
+document.getElementById(
+    "deleteCancel"
+).addEventListener(
     "click",
     () => {
+        deletingNewsId = null;
 
-        if (
-            getGitHubToken()
-        ) {
+        deleteModal.classList.remove(
+            "active"
+        );
+    }
+);
 
-            openPage(
-                "admin"
+document.getElementById(
+    "deleteConfirm"
+).addEventListener(
+    "click",
+    async () => {
+        if (!deletingNewsId) return;
+
+        const button =
+            document.getElementById(
+                "deleteConfirm"
             );
 
-            adminPanel.classList.add(
+        setButtonLoading(
+            button,
+            true,
+            "Удаление"
+        );
+
+        const id =
+            deletingNewsId;
+
+        try {
+            let deleted = false;
+
+            for (
+                let attempt = 0;
+                attempt < 10;
+                attempt++
+            ) {
+                try {
+                    const freshData =
+                        await getPublicData();
+
+                    const freshNews =
+                        Array.isArray(
+                            freshData.news
+                        )
+                            ? freshData.news
+                            : [];
+
+                    const item =
+                        freshNews.find(
+                            news =>
+                                news.id === id
+                        );
+
+                    if (!item) {
+                        newsItems =
+                            freshNews;
+
+                        infoTextValue =
+                            freshData.info;
+
+                        deleted = true;
+
+                        break;
+                    }
+
+                    newsItems =
+                        freshNews.filter(
+                            news =>
+                                news.id !== id
+                        );
+
+                    infoTextValue =
+                        freshData.info;
+
+                    await saveDataToGitHub();
+
+                    if (item.image) {
+                        await deleteGitHubImage(
+                            item.image
+                        );
+                    }
+
+                    deleted = true;
+
+                    break;
+                } catch {
+                    await sleep(
+                        500 +
+                        attempt * 300
+                    );
+                }
+            }
+
+            if (!deleted) {
+                /*
+                    Последняя синхронизация.
+                    Интерфейс не оставляем
+                    в старом состоянии.
+                */
+                await loadPublicData();
+            }
+
+            deleteModal.classList.remove(
                 "active"
             );
 
-            fillAdminFields();
+            deletingNewsId = null;
 
-        } else {
+            renderNews();
 
-            openModal(
-                "loginModal"
+            showNotification(
+                "Новость удалена."
             );
-
+        } finally {
+            setButtonLoading(
+                button,
+                false,
+                "Удалить"
+            );
         }
-
     }
 );
 
-/* FILE */
+newsSearch.addEventListener(
+    "input",
+    renderNews
+);
 
-const newNewsImage =
-    document.getElementById(
-        "newNewsImage"
-    );
-
-const newNewsImageName =
-    document.getElementById(
-        "newNewsImageName"
-    );
-
-const newNewsImageButton =
-    document.getElementById(
-        "newNewsImageButton"
-    );
-
-newNewsImageButton.addEventListener(
+document.getElementById(
+    "clearSearch"
+).addEventListener(
     "click",
     () => {
-
-        newNewsImage.click();
-
-    }
-);
-
-newNewsImage.addEventListener(
-    "change",
-    () => {
-
-        if (
-            newNewsImage.files.length
-        ) {
-
-            newNewsImageName.textContent =
-                newNewsImage.files[0].name;
-
-            newNewsImageName
-                .parentElement
-                .classList.add(
-                    "has-file"
-                );
-
-        } else {
-
-            newNewsImageName.textContent =
-                "Файл не выбран";
-
-            newNewsImageName
-                .parentElement
-                .classList.remove(
-                    "has-file"
-                );
-
-        }
-
-    }
-);
-
-/* LOGIN */
-
-document
-    .getElementById(
-        "loginButton"
-    )
-    .addEventListener(
-        "click",
-        async () => {
-
-            const input =
-                document.getElementById(
-                    "githubTokenInput"
-                );
-
-            const status =
-                document.getElementById(
-                    "loginStatus"
-                );
-
-            const token =
-                input.value.trim();
-
-            if (!token) {
-
-                status.textContent =
-                    "Введи GitHub Token.";
-
-                return;
-
-            }
-
-            status.textContent =
-                "Проверяем токен...";
-
-            try {
-
-                const response =
-                    await fetch(
-                        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`,
-                        {
-                            headers:{
-                                Accept:
-                                    "application/vnd.github+json",
-                                Authorization:
-                                    `Bearer ${token}`
-                            }
-                        }
-                    );
-
-                if (!response.ok) {
-                    throw new Error(
-                        "Неверный GitHub Token или нет доступа."
-                    );
-                }
-
-                sessionStorage.setItem(
-                    "randomgdps_github_token",
-                    token
-                );
-
-                closeLoginAndOpenAdmin();
-
-            } catch(error) {
-
-                status.textContent =
-                    error.message;
-
-            }
-
-        }
-    );
-
-function closeLoginAndOpenAdmin() {
-
-    document
-        .getElementById(
-            "loginModal"
-        )
-        .classList.remove(
-            "active"
-        );
-
-    openPage(
-        "admin"
-    );
-
-    adminPanel.classList.add(
-        "active"
-    );
-
-    fillAdminFields();
-
-}
-
-/* GITHUB FILE */
-
-async function getGitHubFile(
-    path
-) {
-
-    const repository =
-        getGitHubRepository();
-
-    const response =
-        await githubRequest(
-            `https://api.github.com/repos/${repository.owner}/${repository.repo}/contents/${path}`
-        );
-
-    return response.json();
-
-}
-
-async function saveGitHubFile(
-    path,
-    content,
-    sha,
-    message
-) {
-
-    const repository =
-        getGitHubRepository();
-
-    const encoded =
-        btoa(
-            unescape(
-                encodeURIComponent(
-                    content
-                )
-            )
-        );
-
-    const body = {
-        message,
-        content:encoded
-    };
-
-    if (sha) {
-        body.sha = sha;
-    }
-
-    const response =
-        await githubRequest(
-            `https://api.github.com/repos/${repository.owner}/${repository.repo}/contents/${path}`,
-            {
-                method:"PUT",
-
-                headers:{
-                    "Content-Type":
-                        "application/json"
-                },
-
-                body:
-                    JSON.stringify(
-                        body
-                    )
-            }
-        );
-
-    return response.json();
-
-}
-
-/* IMAGE */
-
-async function uploadGitHubImage(
-    file
-) {
-
-    if (!file) {
-
-        throw new Error(
-            "Изображение не выбрано."
-        );
-
-    }
-
-    const repository =
-        getGitHubRepository();
-
-    const extension =
-        file.name.includes(".")
-            ? file.name
-                .split(".")
-                .pop()
-                .toLowerCase()
-            : "png";
-
-    const filename =
-        `news-${Date.now()}-${Math.random()
-            .toString(36)
-            .slice(2,10)}.${extension}`;
-
-    const path =
-        `${IMAGE_FOLDER}/${filename}`;
-
-    const buffer =
-        await file.arrayBuffer();
-
-    let binary = "";
-
-    const bytes =
-        new Uint8Array(
-            buffer
-        );
-
-    const chunkSize =
-        0x8000;
-
-    for (
-        let i = 0;
-        i < bytes.length;
-        i += chunkSize
-    ) {
-
-        binary +=
-            String.fromCharCode(
-                ...bytes.subarray(
-                    i,
-                    Math.min(
-                        i + chunkSize,
-                        bytes.length
-                    )
-                )
-            );
-
-    }
-
-    await githubRequest(
-        `https://api.github.com/repos/${repository.owner}/${repository.repo}/contents/${path}`,
-        {
-            method:"PUT",
-
-            headers:{
-                "Content-Type":
-                    "application/json"
-            },
-
-            body:JSON.stringify({
-
-                message:
-                    `Добавлено изображение новости: ${filename}`,
-
-                content:
-                    btoa(binary)
-
-            })
-        }
-    );
-
-    return `https://raw.githubusercontent.com/${repository.owner}/${repository.repo}/main/${path}`;
-
-}
-
-/* SAVE DATA */
-
-async function saveSiteDataToGitHub() {
-
-    let sha = null;
-
-    try {
-
-        const existing =
-            await getGitHubFile(
-                DATA_FILE
-            );
-
-        sha =
-            existing.sha;
-
-    } catch {}
-
-    await saveGitHubFile(
-        DATA_FILE,
-
-        JSON.stringify(
-            {
-                MLText,
-                OrText,
-                Info,
-                Rules,
-                AssessmentSystem,
-                News
-            },
-            null,
-            2
-        ),
-
-        sha,
-
-        "Обновлены данные RandomGDPS"
-    );
-
-}
-
-/* ADMIN FIELDS */
-
-function fillAdminFields() {
-
-    document.getElementById(
-        "adminMLText"
-    ).value =
-        MLText;
-
-    document.getElementById(
-        "adminOrText"
-    ).value =
-        OrText;
-
-    document.getElementById(
-        "adminInfoText"
-    ).value =
-        Info;
-
-    document.getElementById(
-        "adminRulesText"
-    ).value =
-        Rules;
-
-    document.getElementById(
-        "adminRatingText"
-    ).value =
-        AssessmentSystem;
-
-    renderAdminNews();
-
-}
-
-function setAdminStatus(
-    message
-) {
-
-    document.getElementById(
-        "adminStatus"
-    ).textContent =
-        message;
-
-}
-
-async function saveAdminData(
-    message
-) {
-
-    setAdminStatus(
-        "Сохраняем..."
-    );
-
-    try {
-
-        await saveSiteDataToGitHub();
-
-        setAdminStatus(
-            message
-        );
-
-        updateMainInfo();
+        newsSearch.value = "";
 
         renderNews();
 
-    } catch(error) {
-
-        setAdminStatus(
-            "Ошибка сохранения: " +
-            error.message
-        );
-
+        newsSearch.focus();
     }
+);
 
+function renderInfo() {
+    infoText.textContent =
+        infoTextValue;
+
+    editInfoButton.classList.toggle(
+        "hidden",
+        !developerMode
+    );
 }
 
-/* ADMIN TEXT */
+editInfoButton.addEventListener(
+    "click",
+    () => {
+        infoInput.value =
+            infoTextValue;
 
-document
-    .getElementById(
-        "saveMLTextButton"
-    )
-    .addEventListener(
-        "click",
-        async () => {
-
-            MLText =
-                document.getElementById(
-                    "adminMLText"
-                ).value;
-
-            await saveAdminData(
-                "Текст сохранён!"
-            );
-
-        }
-    );
-
-document
-    .getElementById(
-        "saveOrTextButton"
-    )
-    .addEventListener(
-        "click",
-        async () => {
-
-            OrText =
-                document.getElementById(
-                    "adminOrText"
-                ).value;
-
-            await saveAdminData(
-                "Текст сохранён!"
-            );
-
-        }
-    );
-
-document
-    .getElementById(
-        "saveInfoButton"
-    )
-    .addEventListener(
-        "click",
-        async () => {
-
-            Info =
-                document.getElementById(
-                    "adminInfoText"
-                ).value;
-
-            await saveAdminData(
-                "Информация сохранена!"
-            );
-
-        }
-    );
-
-document
-    .getElementById(
-        "saveRulesButton"
-    )
-    .addEventListener(
-        "click",
-        async () => {
-
-            Rules =
-                document.getElementById(
-                    "adminRulesText"
-                ).value;
-
-            await saveAdminData(
-                "Правила сохранены!"
-            );
-
-        }
-    );
-
-document
-    .getElementById(
-        "saveRatingButton"
-    )
-    .addEventListener(
-        "click",
-        async () => {
-
-            AssessmentSystem =
-                document.getElementById(
-                    "adminRatingText"
-                ).value;
-
-            await saveAdminData(
-                "Система оценивания сохранена!"
-            );
-
-        }
-    );
-
-/* ADD NEWS */
-
-document
-    .getElementById(
-        "addNewsButton"
-    )
-    .addEventListener(
-        "click",
-        async () => {
-
-            const title =
-                document.getElementById(
-                    "newNewsTitle"
-                ).value.trim();
-
-            const date =
-                document.getElementById(
-                    "newNewsDate"
-                ).value.trim();
-
-            const info =
-                document.getElementById(
-                    "newNewsInfo"
-                ).value.trim();
-
-            const main =
-                document.getElementById(
-                    "newNewsMain"
-                ).checked;
-
-            const imageInput =
-                document.getElementById(
-                    "newNewsImage"
-                );
-
-            if (!title) {
-
-                setAdminStatus(
-                    "Укажи заголовок новости."
-                );
-
-                return;
-
-            }
-
-            try {
-
-                let image = "";
-
-                if (
-                    imageInput.files &&
-                    imageInput.files.length
-                ) {
-
-                    setAdminStatus(
-                        "Загружаем изображение..."
-                    );
-
-                    image =
-                        await uploadGitHubImage(
-                            imageInput.files[0]
-                        );
-
-                }
-
-                News.push(
-                    prepareNews({
-
-                        Заголовок:title,
-                        Изображение:image,
-                        Дата:date,
-                        Главная:main,
-                        Информация:info
-
-                    })
-                );
-
-                await saveAdminData(
-                    "Новость добавлена!"
-                );
-
-                document.getElementById(
-                    "newNewsTitle"
-                ).value = "";
-
-                document.getElementById(
-                    "newNewsDate"
-                ).value = "";
-
-                document.getElementById(
-                    "newNewsInfo"
-                ).value = "";
-
-                document.getElementById(
-                    "newNewsMain"
-                ).checked = false;
-
-                imageInput.value = "";
-
-                newNewsImageName.textContent =
-                    "Файл не выбран";
-
-                newNewsImageName
-                    .parentElement
-                    .classList.remove(
-                        "has-file"
-                    );
-
-                renderAdminNews();
-
-            } catch(error) {
-
-                setAdminStatus(
-                    "Ошибка: " +
-                    error.message
-                );
-
-            }
-
-        }
-    );
-
-/* ADMIN NEWS */
-
-function renderAdminNews() {
-
-    const container =
-        document.getElementById(
-            "adminNewsList"
+        infoModal.classList.add(
+            "active"
         );
-
-    container.innerHTML = "";
-
-    const sorted =
-        getSortedNews();
-
-    if (!sorted.length) {
-
-        container.innerHTML =
-            '<div class="admin-status">Новостей пока нет.</div>';
-
-        return;
-
     }
+);
 
-    sorted.forEach(item => {
+document.getElementById(
+    "infoCancel"
+).addEventListener(
+    "click",
+    () => {
+        infoModal.classList.remove(
+            "active"
+        );
+    }
+);
 
-        const news =
-            item.news;
-
-        const index =
-            item.index;
-
-        const card =
-            document.createElement(
-                "div"
+document.getElementById(
+    "infoSave"
+).addEventListener(
+    "click",
+    async () => {
+        const button =
+            document.getElementById(
+                "infoSave"
             );
 
-        card.className =
-            "admin-news-card";
-
-        card.innerHTML = `
-
-            <strong>
-                ${escapeHtml(
-                    news.Заголовок
-                )}
-            </strong>
-
-            <input
-                class="admin-input"
-                value="${escapeHtml(
-                    news.Заголовок
-                )}"
-                data-field="title"
-            >
-
-            <input
-                class="admin-input"
-                value="${escapeHtml(
-                    news.Дата
-                )}"
-                data-field="date"
-            >
-
-            <textarea
-                class="admin-textarea"
-                data-field="info"
-            >${escapeHtml(
-                news.Информация
-            )}</textarea>
-
-            <div class="admin-checkbox">
-
-                <input
-                    type="checkbox"
-                    data-field="main"
-                    ${news.Главная ? "checked" : ""}
-                >
-
-                <span>
-                    Главная новость
-                </span>
-
-            </div>
-
-            ${
-                news.Изображение
-                    ? `
-                    <img
-                        class="admin-image-preview"
-                        src="${escapeHtml(
-                            news.Изображение
-                        )}"
-                        onerror="this.style.display='none'"
-                    >
-                    `
-                    : ""
-            }
-
-            <div class="file-label">
-
-                Заменить изображение
-
-                <div class="custom-file">
-
-                    <input
-                        class="custom-file-input"
-                        type="file"
-                        accept="image/*"
-                        data-field="image"
-                    >
-
-                    <button
-                        class="custom-file-button"
-                        type="button"
-                        data-file-button
-                    >
-                        Выбрать файл
-                    </button>
-
-                    <span
-                        class="custom-file-name"
-                        data-file-name
-                    >
-                        Файл не выбран
-                    </span>
-
-                </div>
-
-            </div>
-
-            <div
-                class="admin-row"
-                style="display:flex;gap:10px;"
-            >
-
-                <button
-                    class="action-button"
-                    data-action="save"
-                    type="button"
-                >
-                    Сохранить
-                </button>
-
-                <button
-                    class="action-button"
-                    data-action="delete"
-                    type="button"
-                >
-                    Удалить
-                </button>
-
-            </div>
-        `;
-
-        const imageInput =
-            card.querySelector(
-                '[data-field="image"]'
-            );
-
-        const imageButton =
-            card.querySelector(
-                "[data-file-button]"
-            );
-
-        const imageName =
-            card.querySelector(
-                "[data-file-name]"
-            );
-
-        imageButton.addEventListener(
-            "click",
-            () => {
-
-                imageInput.click();
-
-            }
+        setButtonLoading(
+            button,
+            true,
+            "Сохранение"
         );
 
-        imageInput.addEventListener(
-            "change",
-            () => {
+        const oldInfo =
+            infoTextValue;
 
-                if (
-                    imageInput.files.length
-                ) {
+        infoTextValue =
+            infoInput.value;
 
-                    imageName.textContent =
-                        imageInput.files[0].name;
+        try {
+            await saveDataToGitHub();
 
-                    imageName
-                        .parentElement
-                        .classList.add(
-                            "has-file"
-                        );
-
-                } else {
-
-                    imageName.textContent =
-                        "Файл не выбран";
-
-                }
-
-            }
-        );
-
-        card
-            .querySelector(
-                '[data-action="save"]'
-            )
-            .addEventListener(
-                "click",
-                async () => {
-
-                    try {
-
-                        const titleInput =
-                            card.querySelector(
-                                '[data-field="title"]'
-                            );
-
-                        const dateInput =
-                            card.querySelector(
-                                '[data-field="date"]'
-                            );
-
-                        const infoInput =
-                            card.querySelector(
-                                '[data-field="info"]'
-                            );
-
-                        const mainInput =
-                            card.querySelector(
-                                '[data-field="main"]'
-                            );
-
-                        let image =
-                            news.Изображение;
-
-                        if (
-                            imageInput.files &&
-                            imageInput.files.length
-                        ) {
-
-                            setAdminStatus(
-                                "Загружаем изображение..."
-                            );
-
-                            image =
-                                await uploadGitHubImage(
-                                    imageInput.files[0]
-                                );
-
-                        }
-
-                        News[index] =
-                            prepareNews({
-
-                                Заголовок:
-                                    titleInput.value.trim(),
-
-                                Изображение:
-                                    image,
-
-                                Дата:
-                                    dateInput.value.trim(),
-
-                                Главная:
-                                    mainInput.checked,
-
-                                Информация:
-                                    infoInput.value.trim()
-
-                            });
-
-                        await saveAdminData(
-                            "Новость сохранена!"
-                        );
-
-                        renderAdminNews();
-
-                    } catch(error) {
-
-                        setAdminStatus(
-                            "Ошибка: " +
-                            error.message
-                        );
-
-                    }
-
-                }
-            );
-
-        card
-            .querySelector(
-                '[data-action="delete"]'
-            )
-            .addEventListener(
-                "click",
-                async () => {
-
-                    if (
-                        !confirm(
-                            "Удалить эту новость?"
-                        )
-                    ) {
-                        return;
-                    }
-
-                    News.splice(
-                        index,
-                        1
-                    );
-
-                    await saveAdminData(
-                        "Новость удалена!"
-                    );
-
-                    renderAdminNews();
-
-                }
-            );
-
-        container.appendChild(
-            card
-        );
-
-    });
-
-}
-
-/* LOGOUT */
-
-document
-    .getElementById(
-        "logoutButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            sessionStorage.removeItem(
-                "randomgdps_github_token"
-            );
-
-            adminPanel.classList.remove(
+            infoModal.classList.remove(
                 "active"
             );
 
-            openPage(
-                "home"
+            renderInfo();
+
+            showNotification(
+                "Информация изменена."
             );
+        } catch {
+            infoTextValue =
+                oldInfo;
 
+            renderInfo();
+
+            showNotification(
+                "Сохранение не завершилось."
+            );
+        } finally {
+            setButtonLoading(
+                button,
+                false,
+                "Сохранить"
+            );
         }
-    );
+    }
+);
 
-/* FULLSCREEN */
-
-document
-    .getElementById(
-        "fullscreenButton"
-    )
-    .addEventListener(
-        "click",
-        async () => {
-
-            try {
-
-                if (
-                    !document.fullscreenElement
-                ) {
-
-                    await document
-                        .documentElement
-                        .requestFullscreen();
-
-                } else {
-
-                    await document.exitFullscreen();
-
-                }
-
-            } catch(error) {
-
-                console.error(error);
-
-            }
-
-        }
-    );
-
-/* START */
-
-updateMainInfo();
-
-renderNews();
-
-updateSearchStatus();
-
-loadSiteData();
-
-openPage("home");
-
+loadPublicData();
+updateDeveloperUI();
+renderInfo();
 </script>
 
 </body>
-    </html>
+            </html>
