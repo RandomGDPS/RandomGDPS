@@ -1,4 +1,13 @@
 {
-  "news": [],
+  "news": [
+    {
+      "id": "mutjgjk2yid61u",
+      "title": "Тест",
+      "info": "Это тестовая новость.",
+      "date": "2026-10-04",
+      "image": "news_mutjgjk2yid61u.jpg",
+      "main": true
+    }
+  ],
   "info": "Хай"
 }
