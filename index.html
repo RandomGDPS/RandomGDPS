@@ -20,9 +20,7 @@
     --radius:16px;
 }
 
-* {
-    box-sizing:border-box;
-}
+* { box-sizing:border-box; }
 
 html,body {
     width:100%;
@@ -608,10 +606,6 @@ main::-webkit-scrollbar-thumb:hover {
     flex-wrap:wrap;
 }
 
-/* =========================
-   BUTTONS
-========================= */
-
 .action-button {
     padding:11px 18px;
     border:1px solid var(--border);
@@ -771,7 +765,7 @@ main::-webkit-scrollbar-thumb:hover {
 }
 
 /* =========================
-   CUSTOM CHECKBOX
+   CHECKBOX
 ========================= */
 
 .admin-checkbox {
@@ -790,6 +784,8 @@ main::-webkit-scrollbar-thumb:hover {
 .admin-checkbox input {
     position:absolute;
     opacity:0;
+    width:1px;
+    height:1px;
     pointer-events:none;
 }
 
@@ -808,7 +804,6 @@ main::-webkit-scrollbar-thumb:hover {
     border:1px solid var(--border-hover);
     border-radius:7px;
     background:#0c101a;
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.015);
     transition:
         background .18s ease,
         border-color .18s ease,
@@ -845,12 +840,8 @@ main::-webkit-scrollbar-thumb:hover {
     border-color:rgba(146,139,255,.55);
 }
 
-.admin-checkbox:active span::before {
-    transform:scale(.94);
-}
-
 /* =========================
-   CUSTOM FILE
+   FILE INPUT
 ========================= */
 
 .file-label {
@@ -873,12 +864,8 @@ main::-webkit-scrollbar-thumb:hover {
     position:absolute;
     width:1px;
     height:1px;
-    padding:0;
-    margin:-1px;
-    overflow:hidden;
-    clip:rect(0,0,0,0);
-    white-space:nowrap;
-    border:0;
+    opacity:0;
+    pointer-events:none;
 }
 
 .custom-file-button {
@@ -982,7 +969,6 @@ main::-webkit-scrollbar-thumb:hover {
         color .2s ease,
         border-color .2s ease,
         transform .2s ease;
-    -webkit-tap-highlight-color:transparent;
 }
 
 .fullscreen-button:hover {
@@ -1001,6 +987,7 @@ main::-webkit-scrollbar-thumb:hover {
 ========================= */
 
 @media (max-width:800px) {
+
     .news-list {
         grid-template-columns:1fr;
     }
@@ -1029,6 +1016,7 @@ main::-webkit-scrollbar-thumb:hover {
 }
 
 @media (max-width:500px) {
+
     .home h1 {
         letter-spacing:-2px;
     }
@@ -1108,68 +1096,123 @@ main::-webkit-scrollbar-thumb:hover {
 
 <section id="home" class="page active">
 <div class="home">
-<div class="home-greeting">Добро пожаловать!</div>
-<h1>RandomGDPS</h1>
-<div id="homeSubtext" class="home-subtext"></div>
-<button id="adminButton" class="admin-home-button">Администратор</button>
+
+<div class="home-greeting">
+Добро пожаловать!
+</div>
+
+<h1>
+RandomGDPS
+</h1>
+
+<div
+    id="homeSubtext"
+    class="home-subtext"
+></div>
+
+<button
+    id="adminButton"
+    class="admin-home-button"
+>
+Администратор
+</button>
+
 </div>
 </section>
 
 <section id="download" class="page">
+
 <div class="download-page">
-<h2 class="section-title">Скачайте наш GDPS!</h2>
-<p class="section-description">Выберите нужную версию для своего устройства.</p>
+
+<h2 class="section-title">
+Скачайте наш GDPS!
+</h2>
+
+<p class="section-description">
+Выберите нужную версию для своего устройства.
+</p>
 
 <div class="download-buttons">
+
 <a
     class="primary-button"
     href="https://github.com/RandomGDPS/RandomGDPS/releases/download/1.0/RandomGDPS.apk"
     download
->Android</a>
+>
+Android
+</a>
 
 <a
     class="primary-button"
     href="https://github.com/RandomGDPS/RandomGDPS/releases/download/1.0/RandomGDPS.zip"
     download
->Windows</a>
+>
+Windows
+</a>
+
 </div>
 
-<div id="orBlock" class="or-text" style="display:none;">
+<div
+    id="orBlock"
+    class="or-text"
+    style="display:none;"
+>
+
 <div>или</div>
+
 <div id="orText"></div>
+
 </div>
 
 </div>
+
 </section>
 
 <section id="stats" class="page">
+
 <div class="stats-page">
-<div class="stats">Скоро!</div>
+<div class="stats">
+Скоро!
 </div>
+</div>
+
 </section>
 
 <section id="news" class="page">
+
 <div class="news-page">
 
 <div class="news-header">
-<h2>Новости</h2>
-<p>Тут вы можете посмотреть историю GDPS!</p>
+
+<h2>
+Новости
+</h2>
+
+<p>
+Тут вы можете посмотреть историю GDPS!
+</p>
+
 </div>
 
 <div class="search-container">
 
 <div class="search-box">
+
 <input
     id="newsSearch"
     type="text"
     placeholder="Поиск по новостям..."
     autocomplete="off"
 >
+
 <button
     id="clearSearch"
     type="button"
     aria-label="Очистить поиск"
->×</button>
+>
+×
+</button>
+
 </div>
 
 <button
@@ -1192,48 +1235,80 @@ main::-webkit-scrollbar-thumb:hover {
 
 </div>
 
-<div id="newsList" class="news-list"></div>
+<div
+    id="newsList"
+    class="news-list"
+></div>
 
 <button
     id="showMore"
     type="button"
     style="display:none;"
->Посмотреть ещё</button>
+>
+Посмотреть ещё
+</button>
 
 </div>
+
 </section>
 
 <section id="info" class="page">
+
 <div class="info-page">
+
 <div class="info-container">
 
-<h2>Информация</h2>
+<h2>
+Информация
+</h2>
 
-<div id="infoText" class="info-text"></div>
+<div
+    id="infoText"
+    class="info-text"
+></div>
 
 <div class="info-buttons">
-<button id="rulesButton" class="action-button" type="button">
+
+<button
+    id="rulesButton"
+    class="action-button"
+    type="button"
+>
 Правила
 </button>
 
-<button id="ratingButton" class="action-button" type="button">
+<button
+    id="ratingButton"
+    class="action-button"
+    type="button"
+>
 Система оценивания
 </button>
+
 </div>
 
 </div>
+
 </div>
+
 </section>
 
 <section id="admin" class="page">
 
-<div id="adminPanel" class="admin-panel">
+<div
+    id="adminPanel"
+    class="admin-panel"
+>
 
-<h2>Администратор</h2>
+<h2>
+Администратор
+</h2>
 
 <div class="admin-section">
 
-<h3>Текст под приветствием</h3>
+<h3>
+Текст под приветствием
+</h3>
 
 <textarea
     id="adminMLText"
@@ -1245,13 +1320,17 @@ main::-webkit-scrollbar-thumb:hover {
     id="saveMLTextButton"
     class="action-button"
     type="button"
->Сохранить</button>
+>
+Сохранить
+</button>
 
 </div>
 
 <div class="admin-section">
 
-<h3>Текст под «или»</h3>
+<h3>
+Текст под «или»
+</h3>
 
 <textarea
     id="adminOrText"
@@ -1263,13 +1342,17 @@ main::-webkit-scrollbar-thumb:hover {
     id="saveOrTextButton"
     class="action-button"
     type="button"
->Сохранить</button>
+>
+Сохранить
+</button>
 
 </div>
 
 <div class="admin-section">
 
-<h3>Информация</h3>
+<h3>
+Информация
+</h3>
 
 <textarea
     id="adminInfoText"
@@ -1281,13 +1364,17 @@ main::-webkit-scrollbar-thumb:hover {
     id="saveInfoButton"
     class="action-button"
     type="button"
->Сохранить</button>
+>
+Сохранить
+</button>
 
 </div>
 
 <div class="admin-section">
 
-<h3>Правила</h3>
+<h3>
+Правила
+</h3>
 
 <textarea
     id="adminRulesText"
@@ -1299,13 +1386,17 @@ main::-webkit-scrollbar-thumb:hover {
     id="saveRulesButton"
     class="action-button"
     type="button"
->Сохранить</button>
+>
+Сохранить
+</button>
 
 </div>
 
 <div class="admin-section">
 
-<h3>Система оценивания</h3>
+<h3>
+Система оценивания
+</h3>
 
 <textarea
     id="adminRatingText"
@@ -1317,7 +1408,9 @@ main::-webkit-scrollbar-thumb:hover {
     id="saveRatingButton"
     class="action-button"
     type="button"
->Сохранить</button>
+>
+Сохранить
+</button>
 
 </div>
 
@@ -1325,7 +1418,9 @@ main::-webkit-scrollbar-thumb:hover {
 
 <div class="admin-section">
 
-<h3>Добавить новость</h3>
+<h3>
+Добавить новость
+</h3>
 
 <input
     id="newNewsTitle"
@@ -1361,11 +1456,20 @@ main::-webkit-scrollbar-thumb:hover {
 >
 
 <label class="admin-checkbox">
-<input id="newNewsMain" type="checkbox">
-<span>Главная новость</span>
+
+<input
+    id="newNewsMain"
+    type="checkbox"
+>
+
+<span>
+Главная новость
+</span>
+
 </label>
 
-<label class="file-label">
+<div class="file-label">
+
 Изображение
 
 <div class="custom-file">
@@ -1380,21 +1484,28 @@ main::-webkit-scrollbar-thumb:hover {
 <label
     for="newNewsImage"
     class="custom-file-button"
->Выбрать файл</label>
+>
+Выбрать файл
+</label>
 
 <span
     id="newNewsImageName"
     class="custom-file-name"
->Файл не выбран</span>
+>
+Файл не выбран
+</span>
 
 </div>
-</label>
+
+</div>
 
 <button
     id="addNewsButton"
     class="action-button"
     type="button"
->Добавить новость</button>
+>
+Добавить новость
+</button>
 
 </div>
 
@@ -1402,19 +1513,26 @@ main::-webkit-scrollbar-thumb:hover {
 
 <div class="admin-section">
 
-<h3>Новости</h3>
+<h3>
+Новости
+</h3>
 
 <div id="adminNewsList"></div>
 
 </div>
 
-<div id="adminStatus" class="admin-status"></div>
+<div
+    id="adminStatus"
+    class="admin-status"
+></div>
 
 <button
     id="logoutButton"
     class="action-button"
     type="button"
->Выйти</button>
+>
+Выйти
+</button>
 
 </div>
 
@@ -1424,7 +1542,10 @@ main::-webkit-scrollbar-thumb:hover {
 
 <!-- INFO MODAL -->
 
-<div id="infoModal" class="modal">
+<div
+    id="infoModal"
+    class="modal"
+>
 
 <div class="modal-box">
 
@@ -1432,7 +1553,9 @@ main::-webkit-scrollbar-thumb:hover {
     class="close-modal"
     data-close="infoModal"
     type="button"
->×</button>
+>
+×
+</button>
 
 <h3 id="infoModalTitle"></h3>
 
@@ -1447,7 +1570,10 @@ main::-webkit-scrollbar-thumb:hover {
 
 <!-- LOGIN MODAL -->
 
-<div id="loginModal" class="modal">
+<div
+    id="loginModal"
+    class="modal"
+>
 
 <div class="modal-box">
 
@@ -1455,9 +1581,13 @@ main::-webkit-scrollbar-thumb:hover {
     class="close-modal"
     data-close="loginModal"
     type="button"
->×</button>
+>
+×
+</button>
 
-<h3>Вход администратора</h3>
+<h3>
+Вход администратора
+</h3>
 
 <input
     id="githubTokenInput"
@@ -1471,7 +1601,9 @@ main::-webkit-scrollbar-thumb:hover {
     id="loginButton"
     class="action-button"
     type="button"
->Войти</button>
+>
+Войти
+</button>
 
 <div
     id="loginStatus"
@@ -1514,19 +1646,29 @@ const GITHUB_REPO = "RandomGDPS";
 ========================================= */
 
 function getGitHubRepository() {
+
     return {
         owner:GITHUB_OWNER,
         repo:GITHUB_REPO
     };
+
 }
 
 function getGitHubToken() {
-    return sessionStorage.getItem("randomgdps_github_token");
+
+    return sessionStorage.getItem(
+        "randomgdps_github_token"
+    );
+
 }
 
-async function githubRequest(url,options = {}) {
+async function githubRequest(
+    url,
+    options = {}
+) {
 
-    const token = getGitHubToken();
+    const token =
+        getGitHubToken();
 
     const headers = {
         Accept:"application/vnd.github+json",
@@ -1534,56 +1676,71 @@ async function githubRequest(url,options = {}) {
     };
 
     if (token) {
-        headers.Authorization = `Bearer ${token}`;
+
+        headers.Authorization =
+            `Bearer ${token}`;
+
     }
 
-    const response = await fetch(
-        url,
-        {
-            ...options,
-            headers
-        }
-    );
+    const response =
+        await fetch(
+            url,
+            {
+                ...options,
+                headers
+            }
+        );
 
     if (!response.ok) {
 
-        let message = `GitHub HTTP ${response.status}`;
+        let message =
+            `GitHub HTTP ${response.status}`;
 
         try {
 
-            const data = await response.json();
+            const data =
+                await response.json();
 
             if (data.message) {
-                message = data.message;
+                message =
+                    data.message;
             }
 
         } catch {}
 
         throw new Error(message);
+
     }
 
     return response;
+
 }
 
 async function checkGitHubToken(token) {
 
-    const response = await fetch(
-        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`,
-        {
-            headers:{
-                Accept:"application/vnd.github+json",
-                Authorization:`Bearer ${token}`
+    const response =
+        await fetch(
+            `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`,
+            {
+                headers:{
+                    Accept:
+                        "application/vnd.github+json",
+                    Authorization:
+                        `Bearer ${token}`
+                }
             }
-        }
-    );
+        );
 
     if (!response.ok) {
+
         throw new Error(
             "Неверный GitHub Token или нет доступа к репозиторию."
         );
+
     }
 
     return true;
+
 }
 
 /* =========================================
@@ -1594,84 +1751,115 @@ async function loadSiteData() {
 
     try {
 
-        const response = await fetch(
-            `${DATA_FILE}?t=${Date.now()}`,
-            {
-                cache:"no-store"
-            }
-        );
+        const response =
+            await fetch(
+                `${DATA_FILE}?t=${Date.now()}`,
+                {
+                    cache:"no-store"
+                }
+            );
 
         if (!response.ok) {
-            throw new Error("Файл данных не найден.");
+            throw new Error(
+                "Файл данных не найден."
+            );
         }
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
-        MLText = String(
-            data.MLText ?? MLText
-        );
+        MLText =
+            String(
+                data.MLText ?? MLText
+            );
 
-        OrText = String(
-            data.OrText ?? OrText
-        );
+        OrText =
+            String(
+                data.OrText ?? OrText
+            );
 
-        Info = String(
-            data.Info ?? Info
-        );
+        Info =
+            String(
+                data.Info ?? Info
+            );
 
-        Rules = String(
-            data.Rules ?? Rules
-        );
+        Rules =
+            String(
+                data.Rules ?? Rules
+            );
 
-        AssessmentSystem = String(
-            data.AssessmentSystem ?? AssessmentSystem
-        );
-
-        /*
-         * ВАЖНО:
-         *
-         * Старый код мог создать Создано заново
-         * при перезагрузке страницы.
-         *
-         * Теперь существующее время Создано
-         * никогда не заменяется на Date.now().
-         *
-         * Если старой новости вообще нет поля Создано,
-         * оно создаётся один раз и сразу сохраняется
-         * в GitHub только если пользователь вошёл.
-         */
+        AssessmentSystem =
+            String(
+                data.AssessmentSystem ??
+                AssessmentSystem
+            );
 
         let dataChanged = false;
 
         if (Array.isArray(data.News)) {
 
-            News = data.News.map(news => {
+            News =
+                data.News.map(news => {
 
-                const prepared = {
-                    Заголовок:String(news?.Заголовок || ""),
-                    Изображение:String(news?.Изображение || ""),
-                    Дата:String(news?.Дата || ""),
-                    Таймер:String(news?.Таймер || ""),
-                    Время:Number(news?.Время || 0),
-                    Главная:Boolean(news?.Главная),
-                    Информация:String(news?.Информация || ""),
-                    Создано:Number(news?.Создано || 0)
-                };
+                    const prepared = {
 
-                /*
-                 * Только если Создано отсутствует,
-                 * создаём его один раз.
-                 */
-                if (
-                    prepared.Создано <= 0 &&
-                    prepared.Время > 0
-                ) {
-                    prepared.Создано = Date.now();
-                    dataChanged = true;
-                }
+                        Заголовок:
+                            String(
+                                news?.Заголовок || ""
+                            ),
 
-                return prepared;
-            });
+                        Изображение:
+                            String(
+                                news?.Изображение || ""
+                            ),
+
+                        Дата:
+                            String(
+                                news?.Дата || ""
+                            ),
+
+                        Таймер:
+                            String(
+                                news?.Таймер || ""
+                            ),
+
+                        Время:
+                            Number(
+                                news?.Время || 0
+                            ),
+
+                        Главная:
+                            Boolean(
+                                news?.Главная
+                            ),
+
+                        Информация:
+                            String(
+                                news?.Информация || ""
+                            ),
+
+                        Создано:
+                            Number(
+                                news?.Создано || 0
+                            )
+
+                    };
+
+                    if (
+                        prepared.Создано <= 0 &&
+                        prepared.Время > 0
+                    ) {
+
+                        prepared.Создано =
+                            Date.now();
+
+                        dataChanged = true;
+
+                    }
+
+                    return prepared;
+
+                });
 
         } else {
 
@@ -1689,22 +1877,22 @@ async function loadSiteData() {
 
         updateSearchStatus();
 
-        /*
-         * Если в старом JSON были новости без Создано,
-         * сохраняем созданные timestamps.
-         */
         if (
             dataChanged &&
             getGitHubToken()
         ) {
 
             try {
+
                 await saveSiteDataToGitHub();
+
             } catch(error) {
+
                 console.log(
                     "Не удалось обновить время создания новостей:",
                     error
                 );
+
             }
 
         }
@@ -1721,56 +1909,65 @@ async function loadSiteData() {
 }
 
 /* =========================================
-   НОВОСТИ
+   ПОДГОТОВКА НОВОСТИ
 ========================================= */
 
 function prepareNews(news) {
 
     return {
 
-        Заголовок:String(
-            news?.Заголовок || ""
-        ),
+        Заголовок:
+            String(
+                news?.Заголовок || ""
+            ),
 
-        Изображение:String(
-            news?.Изображение || ""
-        ),
+        Изображение:
+            String(
+                news?.Изображение || ""
+            ),
 
-        Дата:String(
-            news?.Дата || ""
-        ),
+        Дата:
+            String(
+                news?.Дата || ""
+            ),
 
-        Таймер:String(
-            news?.Таймер || ""
-        ),
+        Таймер:
+            String(
+                news?.Таймер || ""
+            ),
 
-        Время:Number(
-            news?.Время || 0
-        ),
+        Время:
+            Number(
+                news?.Время || 0
+            ),
 
-        Главная:Boolean(
-            news?.Главная
-        ),
+        Главная:
+            Boolean(
+                news?.Главная
+            ),
 
-        Информация:String(
-            news?.Информация || ""
-        ),
+        Информация:
+            String(
+                news?.Информация || ""
+            ),
 
-        /*
-         * НИКОГДА не используем Date.now()
-         * здесь для существующей новости.
-         */
-        Создано:Number(
-            news?.Создано || 0
-        )
+        Создано:
+            Number(
+                news?.Создано || 0
+            )
 
     };
 
 }
 
+/* =========================================
+   ПРОВЕРКА ВРЕМЕНИ
+========================================= */
+
 function isNewsExpired(news) {
 
-    const minutes = Number(news.Время);
+    const minutes =
+        Number(news.Время);
 
     if (
         !Number.isFinite(minutes) ||
@@ -1779,7 +1976,8 @@ function isNewsExpired(news) {
         return false;
     }
 
-    const created = Number(news.Создано);
+    const created =
+        Number(news.Создано);
 
     if (
         !Number.isFinite(created) ||
@@ -1793,15 +1991,21 @@ function isNewsExpired(news) {
         minutes * 60 * 1000;
 
     return Date.now() >= expiration;
+
 }
 
-function removeExpiredNews(saveToGitHub = true) {
+function removeExpiredNews(
+    saveToGitHub = true
+) {
 
-    const before = News.length;
+    const before =
+        News.length;
 
-    News = News.filter(
-        news => !isNewsExpired(news)
-    );
+    News =
+        News.filter(
+            news =>
+                !isNewsExpired(news)
+        );
 
     const removed =
         before !== News.length;
@@ -1834,54 +2038,70 @@ function removeExpiredNews(saveToGitHub = true) {
     }
 
     return removed;
+
 }
 
 /* =========================================
-   ТАЙМЕР
+   ФОРМАТ ТАЙМЕРА
 ========================================= */
 
-function formatNewsTime(totalSeconds) {
+function formatNewsTime(
+    totalSeconds
+) {
 
-    totalSeconds = Math.max(
-        0,
-        Math.floor(totalSeconds)
-    );
+    totalSeconds =
+        Math.max(
+            0,
+            Math.floor(totalSeconds)
+        );
 
     const seconds =
         totalSeconds % 60;
 
     const totalMinutes =
-        Math.floor(totalSeconds / 60);
+        Math.floor(
+            totalSeconds / 60
+        );
 
     const minutes =
         totalMinutes % 60;
 
     const totalHours =
-        Math.floor(totalMinutes / 60);
+        Math.floor(
+            totalMinutes / 60
+        );
 
     const hours =
         totalHours % 24;
 
     const totalDays =
-        Math.floor(totalHours / 24);
+        Math.floor(
+            totalHours / 24
+        );
 
     const days =
         totalDays % 365;
 
     const years =
-        Math.floor(totalDays / 365);
+        Math.floor(
+            totalDays / 365
+        );
 
     const ss =
-        String(seconds).padStart(2,"0");
+        String(seconds)
+            .padStart(2,"0");
 
     const mm =
-        String(minutes).padStart(2,"0");
+        String(minutes)
+            .padStart(2,"0");
 
     const hh =
-        String(hours).padStart(2,"0");
+        String(hours)
+            .padStart(2,"0");
 
     const dd =
-        String(days).padStart(3,"0");
+        String(days)
+            .padStart(3,"0");
 
     if (years > 0) {
         return `${years}:${dd}:${hh}:${mm}:${ss}`;
@@ -1892,6 +2112,7 @@ function formatNewsTime(totalSeconds) {
     }
 
     return `${hh}:${mm}:${ss}`;
+
 }
 
 function getNewsRemainingSeconds(news) {
@@ -1921,6 +2142,7 @@ function getNewsRemainingSeconds(news) {
             (expiration - Date.now()) / 1000
         )
     );
+
 }
 
 /* =========================================
@@ -1928,10 +2150,14 @@ function getNewsRemainingSeconds(news) {
 ========================================= */
 
 const navButtons =
-    document.querySelectorAll(".nav-button");
+    document.querySelectorAll(
+        ".nav-button"
+    );
 
 const pages =
-    document.querySelectorAll(".page");
+    document.querySelectorAll(
+        ".page"
+    );
 
 function openPage(pageName) {
 
@@ -1954,7 +2180,9 @@ function openPage(pageName) {
     });
 
     const adminButton =
-        document.getElementById("adminButton");
+        document.getElementById(
+            "adminButton"
+        );
 
     if (adminButton) {
 
@@ -1983,7 +2211,9 @@ navButtons.forEach(button => {
 
     button.addEventListener(
         "click",
-        () => openPage(button.dataset.page)
+        () => openPage(
+            button.dataset.page
+        )
     );
 
 });
@@ -1999,12 +2229,17 @@ function updateMainInfo() {
     ).textContent = MLText;
 
     const orBlock =
-        document.getElementById("orBlock");
+        document.getElementById(
+            "orBlock"
+        );
 
     const orText =
-        document.getElementById("orText");
+        document.getElementById(
+            "orText"
+        );
 
-    orText.textContent = OrText;
+    orText.textContent =
+        OrText;
 
     orBlock.style.display =
         OrText.trim()
@@ -2013,12 +2248,13 @@ function updateMainInfo() {
 
     document.getElementById(
         "infoText"
-    ).textContent = Info;
+    ).textContent =
+        Info;
 
 }
 
 /* =========================================
-   БЕЗОПАСНЫЙ HTML
+   HTML
 ========================================= */
 
 function escapeHtml(text) {
@@ -2032,7 +2268,10 @@ function escapeHtml(text) {
 
 }
 
-function highlightText(text,query) {
+function highlightText(
+    text,
+    query
+) {
 
     if (!query) {
         return escapeHtml(text);
@@ -2060,19 +2299,24 @@ function highlightText(text,query) {
 
         if (index === -1) {
 
-            result += escapeHtml(
-                safeText.slice(position)
-            );
+            result +=
+                escapeHtml(
+                    safeText.slice(
+                        position
+                    )
+                );
 
             break;
+
         }
 
-        result += escapeHtml(
-            safeText.slice(
-                position,
-                index
-            )
-        );
+        result +=
+            escapeHtml(
+                safeText.slice(
+                    position,
+                    index
+                )
+            );
 
         result +=
             '<span class="highlight">' +
@@ -2086,9 +2330,11 @@ function highlightText(text,query) {
 
         position =
             index + query.length;
+
     }
 
     return result;
+
 }
 
 /* =========================================
@@ -2112,15 +2358,23 @@ function getSortedNews() {
             const bMain =
                 b.news.Главная ? 1 : 0;
 
-            if (aMain !== bMain) {
+            if (
+                aMain !== bMain
+            ) {
+
                 return bMain - aMain;
+
             }
 
             const aCreated =
-                Number(a.news.Создано) || 0;
+                Number(
+                    a.news.Создано
+                ) || 0;
 
             const bCreated =
-                Number(b.news.Создано) || 0;
+                Number(
+                    b.news.Создано
+                ) || 0;
 
             return bCreated - aCreated;
 
@@ -2135,13 +2389,19 @@ function getSortedNews() {
 function renderNews() {
 
     const list =
-        document.getElementById("newsList");
+        document.getElementById(
+            "newsList"
+        );
 
     const showMore =
-        document.getElementById("showMore");
+        document.getElementById(
+            "showMore"
+        );
 
     const search =
-        document.getElementById("newsSearch");
+        document.getElementById(
+            "newsSearch"
+        );
 
     const query =
         search
@@ -2164,16 +2424,19 @@ function renderNews() {
         updateSearchStatus();
 
         return;
+
     }
 
     const mainNews =
         sorted.filter(
-            item => item.news.Главная
+            item =>
+                item.news.Главная
         );
 
     const normalNews =
         sorted.filter(
-            item => !item.news.Главная
+            item =>
+                !item.news.Главная
         );
 
     const visibleNormal =
@@ -2196,15 +2459,19 @@ function renderNews() {
             item.originalIndex;
 
         const card =
-            document.createElement("article");
+            document.createElement(
+                "article"
+            );
 
         card.className =
             "news-card";
 
         if (news.Главная) {
+
             card.classList.add(
                 "main-news"
             );
+
         }
 
         card.dataset.index =
@@ -2213,7 +2480,9 @@ function renderNews() {
         if (news.Изображение) {
 
             const image =
-                document.createElement("img");
+                document.createElement(
+                    "img"
+                );
 
             image.className =
                 "news-image";
@@ -2225,15 +2494,19 @@ function renderNews() {
                 news.Заголовок ||
                 "Новость";
 
-            image.onerror = () => {
+            image.onerror = () =>
                 image.remove();
-            };
 
-            card.appendChild(image);
+            card.appendChild(
+                image
+            );
+
         }
 
         const content =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         content.className =
             "news-content";
@@ -2241,7 +2514,9 @@ function renderNews() {
         if (news.Главная) {
 
             const label =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             label.className =
                 "news-main-label";
@@ -2249,11 +2524,16 @@ function renderNews() {
             label.textContent =
                 "Главная новость";
 
-            content.appendChild(label);
+            content.appendChild(
+                label
+            );
+
         }
 
         const date =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         date.className =
             "news-date";
@@ -2264,10 +2544,14 @@ function renderNews() {
                 query
             );
 
-        content.appendChild(date);
+        content.appendChild(
+            date
+        );
 
         const title =
-            document.createElement("h3");
+            document.createElement(
+                "h3"
+            );
 
         title.className =
             "news-title";
@@ -2278,10 +2562,14 @@ function renderNews() {
                 query
             );
 
-        content.appendChild(title);
+        content.appendChild(
+            title
+        );
 
         const info =
-            document.createElement("p");
+            document.createElement(
+                "p"
+            );
 
         info.className =
             "news-info";
@@ -2292,7 +2580,9 @@ function renderNews() {
                 query
             );
 
-        content.appendChild(info);
+        content.appendChild(
+            info
+        );
 
         if (
             news.Таймер &&
@@ -2300,19 +2590,25 @@ function renderNews() {
         ) {
 
             const timer =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             timer.className =
                 "news-timer";
 
             const timerText =
-                document.createElement("span");
+                document.createElement(
+                    "span"
+                );
 
             timerText.textContent =
                 news.Таймер + " ";
 
             const timerValue =
-                document.createElement("span");
+                document.createElement(
+                    "span"
+                );
 
             timerValue.className =
                 "news-timer-value";
@@ -2321,22 +2617,36 @@ function renderNews() {
                 originalIndex;
 
             const remaining =
-                getNewsRemainingSeconds(news);
+                getNewsRemainingSeconds(
+                    news
+                );
 
             timerValue.textContent =
                 formatNewsTime(
                     remaining ?? 0
                 );
 
-            timer.appendChild(timerText);
-            timer.appendChild(timerValue);
+            timer.appendChild(
+                timerText
+            );
 
-            content.appendChild(timer);
+            timer.appendChild(
+                timerValue
+            );
+
+            content.appendChild(
+                timer
+            );
+
         }
 
-        card.appendChild(content);
+        card.appendChild(
+            content
+        );
 
-        list.appendChild(card);
+        list.appendChild(
+            card
+        );
 
     });
 
@@ -2360,17 +2670,24 @@ function updateNewsTimers() {
 
     News.forEach(news => {
 
-        if (isNewsExpired(news)) {
+        if (
+            isNewsExpired(news)
+        ) {
+
             expired = true;
+
         }
 
     });
 
     if (expired) {
 
-        removeExpiredNews(true);
+        removeExpiredNews(
+            true
+        );
 
         return;
+
     }
 
     document
@@ -2392,7 +2709,9 @@ function updateNewsTimers() {
             }
 
             const remaining =
-                getNewsRemainingSeconds(news);
+                getNewsRemainingSeconds(
+                    news
+                );
 
             if (remaining === null) {
                 return;
@@ -2410,9 +2729,11 @@ function updateNewsTimers() {
 function startNewsTimer() {
 
     if (TimerInterval) {
+
         clearInterval(
             TimerInterval
         );
+
     }
 
     TimerInterval =
@@ -2443,11 +2764,11 @@ document
 function performSearch() {
 
     const query =
-        document
-            .getElementById("newsSearch")
-            .value
-            .trim()
-            .toLowerCase();
+        document.getElementById(
+            "newsSearch"
+        ).value
+        .trim()
+        .toLowerCase();
 
     SearchResults = [];
 
@@ -2500,7 +2821,9 @@ function performSearch() {
 function updateActiveSearchCard() {
 
     document
-        .querySelectorAll(".news-card")
+        .querySelectorAll(
+            ".news-card"
+        )
         .forEach(card => {
 
             card.classList.remove(
@@ -2511,11 +2834,14 @@ function updateActiveSearchCard() {
 
     if (
         SearchIndex >= 0 &&
-        SearchIndex < SearchResults.length
+        SearchIndex <
+            SearchResults.length
     ) {
 
         const index =
-            SearchResults[SearchIndex];
+            SearchResults[
+                SearchIndex
+            ];
 
         const card =
             document.querySelector(
@@ -2523,9 +2849,11 @@ function updateActiveSearchCard() {
             );
 
         if (card) {
+
             card.classList.add(
                 "search-active"
             );
+
         }
 
     }
@@ -2549,11 +2877,13 @@ function updateSearchStatus() {
 
     document.getElementById(
         "previousSearch"
-    ).disabled = disabled;
+    ).disabled =
+        disabled;
 
     document.getElementById(
         "nextSearch"
-    ).disabled = disabled;
+    ).disabled =
+        disabled;
 
 }
 
@@ -2561,13 +2891,18 @@ function scrollToSearchResult() {
 
     if (
         SearchIndex < 0 ||
-        SearchIndex >= SearchResults.length
+        SearchIndex >=
+            SearchResults.length
     ) {
+
         return;
+
     }
 
     const index =
-        SearchResults[SearchIndex];
+        SearchResults[
+            SearchIndex
+        ];
 
     const sorted =
         getSortedNews();
@@ -2575,23 +2910,27 @@ function scrollToSearchResult() {
     const normalPosition =
         sorted
             .filter(
-                item => !item.news.Главная
+                item =>
+                    !item.news.Главная
             )
             .findIndex(
                 item =>
-                    item.originalIndex === index
+                    item.originalIndex ===
+                    index
             );
 
     const isMain =
         sorted.some(
             item =>
-                item.originalIndex === index &&
+                item.originalIndex ===
+                    index &&
                 item.news.Главная
         );
 
     if (
         !isMain &&
-        normalPosition >= PokazanoNovostei
+        normalPosition >=
+            PokazanoNovostei
     ) {
 
         PokazanoNovostei =
@@ -2609,13 +2948,17 @@ function scrollToSearchResult() {
     if (card) {
 
         const main =
-            document.querySelector("main");
+            document.querySelector(
+                "main"
+            );
 
         const cardTop =
-            card.getBoundingClientRect().top;
+            card.getBoundingClientRect()
+                .top;
 
         const mainTop =
-            main.getBoundingClientRect().top;
+            main.getBoundingClientRect()
+                .top;
 
         main.scrollTo({
 
@@ -2659,7 +3002,8 @@ function previousSearchResult() {
     }
 
     SearchIndex =
-        (SearchIndex - 1 + SearchResults.length) %
+        (SearchIndex - 1 +
+            SearchResults.length) %
         SearchResults.length;
 
     scrollToSearchResult();
@@ -2712,7 +3056,10 @@ document
         "keydown",
         event => {
 
-            if (event.key === "ArrowDown") {
+            if (
+                event.key ===
+                "ArrowDown"
+            ) {
 
                 event.preventDefault();
 
@@ -2720,7 +3067,10 @@ document
 
             }
 
-            if (event.key === "ArrowUp") {
+            if (
+                event.key ===
+                "ArrowUp"
+            ) {
 
                 event.preventDefault();
 
@@ -2739,7 +3089,9 @@ function openModal(id) {
 
     document
         .getElementById(id)
-        .classList.add("active");
+        .classList.add(
+            "active"
+        );
 
 }
 
@@ -2747,12 +3099,16 @@ function closeModal(id) {
 
     document
         .getElementById(id)
-        .classList.remove("active");
+        .classList.remove(
+            "active"
+        );
 
 }
 
 document
-    .querySelectorAll(".close-modal")
+    .querySelectorAll(
+        ".close-modal"
+    )
     .forEach(button => {
 
         button.addEventListener(
@@ -2766,7 +3122,9 @@ document
     });
 
 document
-    .querySelectorAll(".modal")
+    .querySelectorAll(
+        ".modal"
+    )
     .forEach(modal => {
 
         modal.addEventListener(
@@ -2776,9 +3134,11 @@ document
                 if (
                     event.target === modal
                 ) {
+
                     modal.classList.remove(
                         "active"
                     );
+
                 }
 
             }
@@ -2790,16 +3150,20 @@ document.addEventListener(
     "keydown",
     event => {
 
-        if (event.key === "Escape") {
+        if (
+            event.key ===
+            "Escape"
+        ) {
 
             document
                 .querySelectorAll(
                     ".modal.active"
                 )
-                .forEach(modal =>
-                    modal.classList.remove(
-                        "active"
-                    )
+                .forEach(
+                    modal =>
+                        modal.classList.remove(
+                            "active"
+                        )
                 );
 
         }
@@ -2812,20 +3176,26 @@ document.addEventListener(
 ========================================= */
 
 document
-    .getElementById("rulesButton")
+    .getElementById(
+        "rulesButton"
+    )
     .addEventListener(
         "click",
         () => {
 
             document.getElementById(
                 "infoModalTitle"
-            ).textContent = "Правила";
+            ).textContent =
+                "Правила";
 
             document.getElementById(
                 "infoModalContent"
-            ).textContent = Rules;
+            ).textContent =
+                Rules;
 
-            openModal("infoModal");
+            openModal(
+                "infoModal"
+            );
 
         }
     );
@@ -2835,7 +3205,9 @@ document
 ========================================= */
 
 document
-    .getElementById("ratingButton")
+    .getElementById(
+        "ratingButton"
+    )
     .addEventListener(
         "click",
         () => {
@@ -2850,7 +3222,9 @@ document
             ).textContent =
                 AssessmentSystem;
 
-            openModal("infoModal");
+            openModal(
+                "infoModal"
+            );
 
         }
     );
@@ -2873,9 +3247,13 @@ adminButton.addEventListener(
     "click",
     () => {
 
-        if (getGitHubToken()) {
+        if (
+            getGitHubToken()
+        ) {
 
-            openPage("admin");
+            openPage(
+                "admin"
+            );
 
             adminPanel.classList.add(
                 "active"
@@ -2885,7 +3263,9 @@ adminButton.addEventListener(
 
         } else {
 
-            openModal("loginModal");
+            openModal(
+                "loginModal"
+            );
 
         }
 
@@ -2893,7 +3273,7 @@ adminButton.addEventListener(
 );
 
 /* =========================================
-   ВЫБОР ФАЙЛА — ДОБАВЛЕНИЕ НОВОСТИ
+   ВЫБОР ФАЙЛА — НОВАЯ НОВОСТЬ
 ========================================= */
 
 const newNewsImage =
@@ -2908,25 +3288,31 @@ const newNewsImageName =
 
 newNewsImage.addEventListener(
     "change",
-    () => {
+    event => {
 
-        if (newNewsImage.files.length) {
+        event.preventDefault();
 
-            const file =
-                newNewsImage.files[0];
+        if (
+            newNewsImage.files &&
+            newNewsImage.files.length > 0
+        ) {
 
             newNewsImageName.textContent =
-                file.name;
+                newNewsImage.files[0].name;
 
-            newNewsImageName.parentElement
-                .classList.add("has-file");
+            newNewsImageName
+                .parentElement
+                .classList.add(
+                    "has-file"
+                );
 
         } else {
 
             newNewsImageName.textContent =
                 "Файл не выбран";
 
-            newNewsImageName.parentElement
+            newNewsImageName
+                .parentElement
                 .classList.remove(
                     "has-file"
                 );
@@ -2941,7 +3327,9 @@ newNewsImage.addEventListener(
 ========================================= */
 
 document
-    .getElementById("loginButton")
+    .getElementById(
+        "loginButton"
+    )
     .addEventListener(
         "click",
         async () => {
@@ -2965,6 +3353,7 @@ document
                     "Введи GitHub Token.";
 
                 return;
+
             }
 
             status.textContent =
@@ -2993,7 +3382,9 @@ document
                             "loginModal"
                         );
 
-                        openPage("admin");
+                        openPage(
+                            "admin"
+                        );
 
                         adminPanel.classList.add(
                             "active"
@@ -3020,7 +3411,9 @@ document
    GITHUB ФАЙЛЫ
 ========================================= */
 
-async function getGitHubFile(path) {
+async function getGitHubFile(
+    path
+) {
 
     const repository =
         getGitHubRepository();
@@ -3047,7 +3440,9 @@ async function saveGitHubFile(
     const encoded =
         btoa(
             unescape(
-                encodeURIComponent(content)
+                encodeURIComponent(
+                    content
+                )
             )
         );
 
@@ -3072,7 +3467,9 @@ async function saveGitHubFile(
                 },
 
                 body:
-                    JSON.stringify(body)
+                    JSON.stringify(
+                        body
+                    )
             }
         );
 
@@ -3081,15 +3478,19 @@ async function saveGitHubFile(
 }
 
 /* =========================================
-   ЗАГРУЗКА ИЗОБРАЖЕНИЯ
+   ИЗОБРАЖЕНИЯ
 ========================================= */
 
-async function uploadGitHubImage(file) {
+async function uploadGitHubImage(
+    file
+) {
 
     if (!file) {
+
         throw new Error(
             "Изображение не выбрано."
         );
+
     }
 
     const repository =
@@ -3117,7 +3518,9 @@ async function uploadGitHubImage(file) {
     let binary = "";
 
     const bytes =
-        new Uint8Array(buffer);
+        new Uint8Array(
+            buffer
+        );
 
     const chunkSize =
         0x8000;
@@ -3128,15 +3531,16 @@ async function uploadGitHubImage(file) {
         i += chunkSize
     ) {
 
-        binary += String.fromCharCode(
-            ...bytes.subarray(
-                i,
-                Math.min(
-                    i + chunkSize,
-                    bytes.length
+        binary +=
+            String.fromCharCode(
+                ...bytes.subarray(
+                    i,
+                    Math.min(
+                        i + chunkSize,
+                        bytes.length
+                    )
                 )
-            )
-        );
+            );
 
     }
 
@@ -3154,21 +3558,11 @@ async function uploadGitHubImage(file) {
                 message:
                     `Добавлено изображение новости: ${filename}`,
 
-                content:btoa(binary)
+                content:
+                    btoa(binary)
             })
         }
     );
-
-    /*
-     * ВАЖНО:
-     *
-     * Раньше возвращался только:
-     * news-images/file.png
-     *
-     * Такой путь мог не работать на сайте.
-     *
-     * Теперь возвращаем прямой GitHub URL.
-     */
 
     return `https://raw.githubusercontent.com/${repository.owner}/${repository.repo}/main/${path}`;
 
@@ -3189,15 +3583,10 @@ async function saveSiteDataToGitHub() {
                 DATA_FILE
             );
 
-        sha = existing.sha;
+        sha =
+            existing.sha;
 
     } catch {}
-
-    /*
-     * Создано сохраняется внутри News.
-     * Поэтому после перезагрузки таймер
-     * продолжает идти с прежнего момента.
-     */
 
     const data = {
         MLText,
@@ -3229,19 +3618,23 @@ function fillAdminFields() {
 
     document.getElementById(
         "adminMLText"
-    ).value = MLText;
+    ).value =
+        MLText;
 
     document.getElementById(
         "adminOrText"
-    ).value = OrText;
+    ).value =
+        OrText;
 
     document.getElementById(
         "adminInfoText"
-    ).value = Info;
+    ).value =
+        Info;
 
     document.getElementById(
         "adminRulesText"
-    ).value = Rules;
+    ).value =
+        Rules;
 
     document.getElementById(
         "adminRatingText"
@@ -3252,15 +3645,20 @@ function fillAdminFields() {
 
 }
 
-function setAdminStatus(message) {
+function setAdminStatus(
+    message
+) {
 
     document.getElementById(
         "adminStatus"
-    ).textContent = message;
+    ).textContent =
+        message;
 
 }
 
-async function saveAdminData(message) {
+async function saveAdminData(
+    message
+) {
 
     setAdminStatus(
         "Сохраняем изменения в GitHub..."
@@ -3291,11 +3689,13 @@ async function saveAdminData(message) {
 }
 
 /* =========================================
-   MLText
+   ML TEXT
 ========================================= */
 
 document
-    .getElementById("saveMLTextButton")
+    .getElementById(
+        "saveMLTextButton"
+    )
     .addEventListener(
         "click",
         async () => {
@@ -3315,11 +3715,13 @@ document
     );
 
 /* =========================================
-   OrText
+   OR TEXT
 ========================================= */
 
 document
-    .getElementById("saveOrTextButton")
+    .getElementById(
+        "saveOrTextButton"
+    )
     .addEventListener(
         "click",
         async () => {
@@ -3343,7 +3745,9 @@ document
 ========================================= */
 
 document
-    .getElementById("addNewsButton")
+    .getElementById(
+        "addNewsButton"
+    )
     .addEventListener(
         "click",
         async () => {
@@ -3395,6 +3799,7 @@ document
                 );
 
                 return;
+
             }
 
             if (
@@ -3407,6 +3812,7 @@ document
                 );
 
                 return;
+
             }
 
             try {
@@ -3416,11 +3822,6 @@ document
                 );
 
                 let imagePath = "";
-
-                /*
-                 * Изображение теперь проверяется
-                 * напрямую через files.length.
-                 */
 
                 if (
                     imageInput.files &&
@@ -3438,33 +3839,38 @@ document
 
                 }
 
-                /*
-                 * Создано устанавливается ровно один раз —
-                 * в момент создания новости.
-                 */
-
                 const newNews = {
 
-                    Заголовок:title,
+                    Заголовок:
+                        title,
 
-                    Изображение:imagePath,
+                    Изображение:
+                        imagePath,
 
-                    Дата:date,
+                    Дата:
+                        date,
 
-                    Таймер:timer,
+                    Таймер:
+                        timer,
 
-                    Время:time,
+                    Время:
+                        time,
 
-                    Главная:main,
+                    Главная:
+                        main,
 
-                    Информация:info,
+                    Информация:
+                        info,
 
-                    Создано:Date.now()
+                    Создано:
+                        Date.now()
 
                 };
 
                 News.push(
-                    prepareNews(newNews)
+                    prepareNews(
+                        newNews
+                    )
                 );
 
                 PokazanoNovostei = 3;
@@ -3502,7 +3908,8 @@ document
                 newNewsImageName.textContent =
                     "Файл не выбран";
 
-                newNewsImageName.parentElement
+                newNewsImageName
+                    .parentElement
                     .classList.remove(
                         "has-file"
                     );
@@ -3545,6 +3952,7 @@ function renderAdminNews() {
             '<div class="admin-status">Новостей пока нет.</div>';
 
         return;
+
     }
 
     sorted.forEach(item => {
@@ -3556,10 +3964,29 @@ function renderAdminNews() {
             item.originalIndex;
 
         const card =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         card.className =
             "admin-news-card";
+
+        /*
+         * ВАЖНО:
+         *
+         * Здесь больше НЕТ label вокруг
+         * custom-file.
+         *
+         * Это и исправляет прыжок страницы.
+         */
+
+        const uniqueId =
+            "news-image-" +
+            index +
+            "-" +
+            Math.random()
+                .toString(36)
+                .slice(2);
 
         card.innerHTML = `
 
@@ -3613,9 +4040,13 @@ function renderAdminNews() {
                 placeholder="Время в минутах"
             >
 
-            <label class="admin-checkbox">
+            <div
+                class="admin-checkbox"
+                data-checkbox-wrapper
+            >
 
                 <input
+                    id="${uniqueId}-main"
                     type="checkbox"
                     data-field="main"
                     ${news.Главная ? "checked" : ""}
@@ -3625,7 +4056,7 @@ function renderAdminNews() {
                     Главная новость
                 </span>
 
-            </label>
+            </div>
 
             ${
                 news.Изображение
@@ -3641,13 +4072,14 @@ function renderAdminNews() {
                     : ""
             }
 
-            <label class="file-label">
+            <div class="file-label">
 
                 Заменить изображение
 
                 <div class="custom-file">
 
                     <input
+                        id="${uniqueId}"
                         class="custom-file-input"
                         type="file"
                         accept="image/*"
@@ -3655,17 +4087,22 @@ function renderAdminNews() {
                     >
 
                     <label
+                        for="${uniqueId}"
                         class="custom-file-button"
-                    >Выбрать файл</label>
+                    >
+                        Выбрать файл
+                    </label>
 
                     <span
                         class="custom-file-name"
                         data-file-name
-                    >Файл не выбран</span>
+                    >
+                        Файл не выбран
+                    </span>
 
                 </div>
 
-            </label>
+            </div>
 
             <div
                 class="admin-row"
@@ -3676,13 +4113,17 @@ function renderAdminNews() {
                     class="action-button"
                     data-action="save"
                     type="button"
-                >Сохранить</button>
+                >
+                    Сохранить
+                </button>
 
                 <button
                     class="action-button"
                     data-action="delete"
                     type="button"
-                >Удалить</button>
+                >
+                    Удалить
+                </button>
 
             </div>
         `;
@@ -3722,36 +4163,67 @@ function renderAdminNews() {
                 '[data-field="image"]'
             );
 
-        const imageButton =
-            card.querySelector(
-                ".custom-file-button"
-            );
-
         const imageName =
             card.querySelector(
                 "[data-file-name]"
             );
 
         /*
-         * Привязываем label к конкретному input.
+         * Запрещаем клику по кастомным
+         * элементам вызывать лишнюю прокрутку.
          */
-        const uniqueId =
-            "news-image-" +
-            index +
-            "-" +
-            Math.random()
-                .toString(36)
-                .slice(2);
 
-        imageInput.id =
-            uniqueId;
+        const checkboxWrapper =
+            card.querySelector(
+                "[data-checkbox-wrapper]"
+            );
 
-        imageButton.htmlFor =
-            uniqueId;
+        checkboxWrapper.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+            }
+        );
+
+        mainInput.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+            }
+        );
+
+        const fileButton =
+            card.querySelector(
+                ".custom-file-button"
+            );
+
+        fileButton.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+            }
+        );
+
+        imageInput.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+            }
+        );
 
         imageInput.addEventListener(
             "change",
-            () => {
+            event => {
+
+                event.stopPropagation();
 
                 if (
                     imageInput.files &&
@@ -3761,7 +4233,8 @@ function renderAdminNews() {
                     imageName.textContent =
                         imageInput.files[0].name;
 
-                    imageName.parentElement
+                    imageName
+                        .parentElement
                         .classList.add(
                             "has-file"
                         );
@@ -3771,7 +4244,8 @@ function renderAdminNews() {
                     imageName.textContent =
                         "Файл не выбран";
 
-                    imageName.parentElement
+                    imageName
+                        .parentElement
                         .classList.remove(
                             "has-file"
                         );
@@ -3796,12 +4270,17 @@ function renderAdminNews() {
                         );
 
                         let image =
-                            news.Изображение || "";
+                            news.Изображение ||
+                            "";
 
                         if (
                             imageInput.files &&
                             imageInput.files.length
                         ) {
+
+                            setAdminStatus(
+                                "Загружаем изображение..."
+                            );
 
                             image =
                                 await uploadGitHubImage(
@@ -3816,7 +4295,9 @@ function renderAdminNews() {
                             );
 
                         if (
-                            !Number.isFinite(time) ||
+                            !Number.isFinite(
+                                time
+                            ) ||
                             time < 0
                         ) {
 
@@ -3825,22 +4306,13 @@ function renderAdminNews() {
                             );
 
                             return;
+
                         }
 
                         const oldTime =
                             Number(
                                 news.Время || 0
                             );
-
-                        /*
-                         * Если пользователь изменил
-                         * продолжительность таймера,
-                         * таймер начинается заново.
-                         *
-                         * Если просто перезагрузить сайт,
-                         * это место НЕ выполняется,
-                         * поэтому Создано не меняется.
-                         */
 
                         if (
                             oldTime !== time
@@ -3854,30 +4326,34 @@ function renderAdminNews() {
                         News[index] = {
 
                             Заголовок:
-                                titleInput.value.trim(),
+                                titleInput
+                                    .value
+                                    .trim(),
 
                             Изображение:
                                 image,
 
                             Дата:
-                                dateInput.value.trim(),
+                                dateInput
+                                    .value
+                                    .trim(),
 
                             Таймер:
-                                timerInput.value.trim(),
+                                timerInput
+                                    .value
+                                    .trim(),
 
                             Время:
                                 time,
 
                             Главная:
-                                mainInput.checked,
+                                mainInput
+                                    .checked,
 
                             Информация:
-                                infoInput.value.trim(),
-
-                            /*
-                             * Очень важно:
-                             * сохраняем старое Создано.
-                             */
+                                infoInput
+                                    .value
+                                    .trim(),
 
                             Создано:
                                 Number(
@@ -3945,7 +4421,9 @@ function renderAdminNews() {
                 }
             );
 
-        container.appendChild(card);
+        container.appendChild(
+            card
+        );
 
     });
 
@@ -3956,7 +4434,9 @@ function renderAdminNews() {
 ========================================= */
 
 document
-    .getElementById("saveInfoButton")
+    .getElementById(
+        "saveInfoButton"
+    )
     .addEventListener(
         "click",
         async () => {
@@ -3980,7 +4460,9 @@ document
 ========================================= */
 
 document
-    .getElementById("saveRulesButton")
+    .getElementById(
+        "saveRulesButton"
+    )
     .addEventListener(
         "click",
         async () => {
@@ -4002,7 +4484,9 @@ document
 ========================================= */
 
 document
-    .getElementById("saveRatingButton")
+    .getElementById(
+        "saveRatingButton"
+    )
     .addEventListener(
         "click",
         async () => {
@@ -4024,7 +4508,9 @@ document
 ========================================= */
 
 document
-    .getElementById("logoutButton")
+    .getElementById(
+        "logoutButton"
+    )
     .addEventListener(
         "click",
         () => {
@@ -4037,7 +4523,9 @@ document
                 "active"
             );
 
-            openPage("home");
+            openPage(
+                "home"
+            );
 
         }
     );
@@ -4109,7 +4597,9 @@ startNewsTimer();
 
 loadSiteData();
 
-openPage("home");
+openPage(
+    "home"
+);
 
 </script>
 
