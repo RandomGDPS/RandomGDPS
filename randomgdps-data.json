@@ -9,7 +9,7 @@
       "Заголовок": "Тест новость",
       "Изображение": "https://raw.githubusercontent.com/RandomGDPS/RandomGDPS/main/news-images/news-1791077006927-0avtzgd8.jpg",
       "Дата": "4 октября 2026",
-      "Главная": true,
+      "Главная": false,
       "Информация": ""
     }
   ]
